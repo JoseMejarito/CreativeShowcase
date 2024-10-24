@@ -1,0 +1,24 @@
+.anton-regular {
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.bg-uphsl-blue {
+    background-color: #0E0A64;
+}
+.bg-uphsl-yellow {
+    background-color: #F1F93C;
+}
+.bg-uphsl-maroon {
+    background-color: #760101;
+}
+.text-uphsl-blue {
+    color: #0E0A64;
+}
+.text-uphsl-yellow {
+    color: #F1F93C;
+}
+.text-uphsl-maroon {
+    color: #760101;
+}
