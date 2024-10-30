@@ -1,8 +1,6 @@
 <?php 
     include 'connection.php'; 
 ?>
-
-<body>
     <nav class="p-4 bg-uphsl-blue">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-5">
@@ -20,9 +18,8 @@
 
             <button id="menuToggle" class="text-white anton-regular md:hidden" onclick="toggleMenu()">Menu</button>
 
-            <!-- Desktop Menu, hidden on mobile -->
-            <div class="hidden md:flex space-x-8 items-center">
-                <a href="exhibition.php" class="text-white anton-regular text-sm md:text-base lg:text-lg">Exhibition</a>
+            <div id="desktopMenu" class="hidden md:flex space-x-8 items-center">
+                <a href="exhibition.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Exhibition</a>
                 <a href="news&events.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow whitespace-nowrap">News & Events</a>
                 <a href="collection.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Collection</a>
                 <a href="opportunity.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Opportunity</a>
@@ -30,8 +27,7 @@
             </div>
         </div>
 
-        <!-- Mobile Menu, hidden on desktop -->
-        <div id="mobileMenu" class="hidden flex flex-col space-y-2 mt-2 md:hidden">
+        <div id="mobileMenu" class="hidden flex flex-col space-y-2 mt-2">
             <a href="exhibition.php" class="text-white anton-regular hover:text-uphsl-yellow">Exhibition</a>
             <a href="news&events.php" class="text-white anton-regular hover:text-uphsl-yellow">News & Events</a>
             <a href="collection.php" class="text-white anton-regular hover:text-uphsl-yellow">Collection</a>
@@ -43,7 +39,9 @@
     <script>
         function toggleMenu() {
             const mobileMenu = document.getElementById('mobileMenu');
+            const desktopMenu = document.getElementById('desktopMenu');
+            
             mobileMenu.classList.toggle('hidden');
+            desktopMenu.classList.toggle('hidden');  // Hides desktop menu when mobile menu is shown
         }
     </script>
-</body>

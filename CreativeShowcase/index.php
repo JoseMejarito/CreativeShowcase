@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="anton-regular">
+    
     <?php include 'navbar.php'; ?>
 
     <section id="section1" class="text-center py-10 pb-0 bg-uphsl-blue"> 
