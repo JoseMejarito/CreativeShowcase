@@ -44,23 +44,25 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-20 lg:px-40">
             <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img src="public/news1.png" alt="Event 1" class="w-full h-48 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">Upcoming Art Exhibit</h3>
-                <p class="text-md text-black mt-2">Join us for an exclusive art exhibition showcasing student work. Date: Oct 28, 2024.</p>
+                <img src="public/news1.jpg" alt="Event 1" class="w-full h-50 object-cover mb-4 rounded-md">
+                <h3 class="text-3xl font-bold text-uphsl-maroon">Perps Drag Race 2024</h3>
+                <p class="text-md text-black mt-2">Join us as we celebrate 𝒅𝒊𝒗𝒆𝒓𝒔𝒊𝒕𝒚, 𝒄𝒓𝒆𝒂𝒕𝒊𝒗𝒆 𝒆𝒙𝒑𝒓𝒆𝒔𝒔𝒊𝒐𝒏, and 𝒄𝒐𝒎𝒎𝒖𝒏𝒊𝒕𝒚 𝒆𝒎𝒑𝒐𝒘𝒆𝒓𝒎𝒆𝒏𝒕 like never before. 
+                    <br>Perpetualites, this is your chance to shine, showcase your talents, and embrace your true selves in a safe and inclusive space. 
+                    <br>🌟 Let's uplift each other through creativity and shared performances that reflect the power of acceptance and respect.</p>
                 <a href="#" class="text-uphsl-blue mt-4 inline-block">Read more</a>
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img src="public/news2.png" alt="Event 2" class="w-full h-48 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">CCA Workshop</h3>
-                <p class="text-md text-black mt-2">Register for our upcoming creative workshop to explore new techniques in digital art. Date: Nov 15, 2024.</p>
+                <img src="public/news2.jpg" alt="Event 2" class="w-full h-50 object-cover mb-4 rounded-md">
+                <h3 class="text-3xl font-bold text-uphsl-maroon">Kaalamang Pangkultura! | AGOS PERPETUAL DANCE COMPANY</h3>
+                <p class="text-md text-black mt-2">Halina't makiisa sa 𝘼𝙜𝙤𝙨 𝙋𝙚𝙧𝙥𝙚𝙩𝙪𝙖𝙡 𝘿𝙖𝙣𝙘𝙚 𝘾𝙤𝙢𝙥𝙖𝙣𝙮 sa pagkilala ng ating yaman at pagkakaiba-iba! Tunghayan ang Isang paglalakbay na puno ng saya at paggalang sa ating makulay na sining at kultura!</p>
                 <a href="#" class="text-uphsl-blue mt-4 inline-block">Learn more</a>
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img src="public/news3.png" alt="Event 3" class="w-full h-48 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">Annual CCA Gala</h3>
-                <p class="text-md text-black mt-2">Save the date for our Annual Gala, featuring performances, exhibits, and more. Date: Dec 12, 2024.</p>
+                <img src="public/news3.jpg" alt="Event 3" class="w-full h-50 object-cover mb-4 rounded-md">
+                <h3 class="text-3xl font-bold text-uphsl-maroon">𝐏𝐞𝐫𝐩𝐞𝐭𝐮𝐚𝐥 𝐓𝐡𝐞𝐚𝐭𝐞𝐫 𝐂𝐨𝐥𝐥𝐞𝐜𝐭𝐢𝐯𝐞 | 𝗦𝗘𝗔𝗦𝗢𝗡 𝗢𝗣𝗘𝗡𝗜𝗡𝗚: 𝙈𝙜𝙖 𝙀𝙘𝙝𝙪𝙨𝙚𝙧𝙖𝙣𝙜 𝙋𝙖𝙡𝙖𝙠𝙖</h3>
+                <p class="text-md text-black mt-2">The university theater ensemble Perpetual Theater Collective retold the tale of the Greek god Dionysus in his search for a talented poet in a dystopian wasteland, an adaptation of Aristophanes' classic play The Frogs.</p>
                 <a href="#" class="text-uphsl-blue mt-4 inline-block">Details</a>
             </div>
         </div>
