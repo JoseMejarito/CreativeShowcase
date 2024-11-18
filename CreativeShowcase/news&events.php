@@ -26,41 +26,44 @@
             <h2 class="text-5xl text-uphsl-yellow text-center mb-8">Latest News and Events</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div class="bg-white p-4 rounded-lg shadow-lg">
-                    <img src="public/event1.jpg" alt="Event 1" class="w-full h-48 object-cover mb-4 rounded-md">
-                    <h3 class="text-xl font-bold text-uphsl-maroon">Event Title 1</h3>
-                    <p class="text-sm text-black mt-2">Brief description of event 1, highlighting its key features and importance.</p>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg shadow-lg">
-                    <img src="public/event2.jpg" alt="Event 2" class="w-full h-48 object-cover mb-4 rounded-md">
-                    <h3 class="text-xl font-bold text-uphsl-maroon">Event Title 2</h3>
-                    <p class="text-sm text-black mt-2">Brief description of event 2, focusing on what makes it special.</p>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg shadow-lg">
-                    <img src="public/event3.jpg" alt="Event 3" class="w-full h-48 object-cover mb-4 rounded-md">
-                    <h3 class="text-xl font-bold text-uphsl-maroon">Event Title 3</h3>
-                    <p class="text-sm text-black mt-2">Brief description of event 3, providing key details for attendees.</p>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg hidden md:block">
-                    <img src="public/event4.jpg" alt="Event 4" class="w-full h-48 object-cover mb-4 rounded-md">
-                    <h3 class="text-xl font-bold text-uphsl-maroon">Event Title 4</h3>
-                    <p class="text-sm text-black mt-2">Brief description of event 4, emphasizing its significance.</p>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg hidden md:block">
-                    <img src="public/event5.jpg" alt="Event 5" class="w-full h-48 object-cover mb-4 rounded-md">
-                    <h3 class="text-xl font-bold text-uphsl-maroon">Event Title 5</h3>
-                    <p class="text-sm text-black mt-2">Brief description of event 5, detailing the activities involved.</p>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg hidden md:block">
-                    <img src="public/event6.jpg" alt="Event 6" class="w-full h-48 object-cover mb-4 rounded-md">
-                    <h3 class="text-xl font-bold text-uphsl-maroon">Event Title 6</h3>
-                    <p class="text-sm text-black mt-2">Brief description of event 6, highlighting key speakers or features.</p>
-                </div>
+                <?php
+                // Fetch the latest 6 events from the database
+                $sql = "SELECT 
+                            ne.event_id, 
+                            ne.title, 
+                            ne.content, 
+                            ne.date_posted, 
+                            m.file_path AS image 
+                        FROM 
+                            news_events ne
+                        LEFT JOIN 
+                            media m 
+                        ON 
+                            ne.event_id = m.related_id 
+                        AND 
+                            m.related_table = 'news_events' 
+                        AND 
+                            m.media_type = 'image'
+                        ORDER BY 
+                            ne.date_posted DESC 
+                        LIMIT 6";
+
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo '
+                        <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                            <img src="' . ($row['image'] ? $row['image'] : 'public/default.jpg') . '" alt="' . htmlspecialchars($row['title']) . '" class="w-full h-60 object-cover mb-4 rounded-md">
+                            <h3 class="text-3xl font-bold text-uphsl-maroon">' . htmlspecialchars($row['title']) . '</h3>
+                            <p class="text-md text-black mt-2 flex-grow">' . htmlspecialchars(substr($row['content'], 0, 100)) . '...</p>
+                            <a href="article.php?id=' . $row['event_id'] . '" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                        </div>';
+                    }
+                } else {
+                    echo '<h2 class="text-uphsl-yellow text-center mt-8">No events found.</h2>';
+                }
+                ?>
             </div>
 
             <div class="mt-8 flex justify-center">

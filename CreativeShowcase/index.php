@@ -43,38 +43,55 @@
         <h1 class="text-7xl text-black">NEWS & EVENTS</h1><br>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-20 lg:px-40">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img src="public/news1.jpg" alt="Event 1" class="w-full h-50 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">Perps Drag Race 2024</h3>
-                <p class="text-md text-black mt-2">Join us as we celebrate 𝒅𝒊𝒗𝒆𝒓𝒔𝒊𝒕𝒚, 𝒄𝒓𝒆𝒂𝒕𝒊𝒗𝒆 𝒆𝒙𝒑𝒓𝒆𝒔𝒔𝒊𝒐𝒏, and 𝒄𝒐𝒎𝒎𝒖𝒏𝒊𝒕𝒚 𝒆𝒎𝒑𝒐𝒘𝒆𝒓𝒎𝒆𝒏𝒕 like never before. 
-                    <br>Perpetualites, this is your chance to shine, showcase your talents, and embrace your true selves in a safe and inclusive space. 
-                    <br>🌟 Let's uplift each other through creativity and shared performances that reflect the power of acceptance and respect.</p>
-                <a href="#" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-            </div>
+            <?php
+            $sql = "SELECT 
+                        ne.event_id, 
+                        ne.title, 
+                        ne.content, 
+                        ne.date_posted, 
+                        m.file_path AS image 
+                    FROM 
+                        news_events ne
+                    LEFT JOIN 
+                        media m 
+                    ON 
+                        ne.event_id = m.related_id 
+                    AND 
+                        m.related_table = 'news_events' 
+                    AND 
+                        m.media_type = 'image'
+                    ORDER BY 
+                        ne.date_posted DESC 
+                    LIMIT 3";
+            
+            $result = $conn->query($sql);
 
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img src="public/news2.jpg" alt="Event 2" class="w-full h-50 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">Kaalamang Pangkultura! | AGOS PERPETUAL DANCE COMPANY</h3>
-                <p class="text-md text-black mt-2">Halina't makiisa sa 𝘼𝙜𝙤𝙨 𝙋𝙚𝙧𝙥𝙚𝙩𝙪𝙖𝙡 𝘿𝙖𝙣𝙘𝙚 𝘾𝙤𝙢𝙥𝙖𝙣𝙮 sa pagkilala ng ating yaman at pagkakaiba-iba! Tunghayan ang Isang paglalakbay na puno ng saya at paggalang sa ating makulay na sining at kultura!</p>
-                <a href="#" class="text-uphsl-blue mt-4 inline-block">Learn more</a>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img src="public/news3.jpg" alt="Event 3" class="w-full h-50 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">𝐏𝐞𝐫𝐩𝐞𝐭𝐮𝐚𝐥 𝐓𝐡𝐞𝐚𝐭𝐞𝐫 𝐂𝐨𝐥𝐥𝐞𝐜𝐭𝐢𝐯𝐞 | 𝗦𝗘𝗔𝗦𝗢𝗡 𝗢𝗣𝗘𝗡𝗜𝗡𝗚: 𝙈𝙜𝙖 𝙀𝙘𝙝𝙪𝙨𝙚𝙧𝙖𝙣𝙜 𝙋𝙖𝙡𝙖𝙠𝙖</h3>
-                <p class="text-md text-black mt-2">The university theater ensemble Perpetual Theater Collective retold the tale of the Greek god Dionysus in his search for a talented poet in a dystopian wasteland, an adaptation of Aristophanes' classic play The Frogs.</p>
-                <a href="#" class="text-uphsl-blue mt-4 inline-block">Details</a>
-            </div>
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo '
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                        <img src="' . ($row['image'] ? $row['image'] : 'public/default.jpg') . '" alt="' . htmlspecialchars($row['title']) . '" class="w-full h-60 object-cover mb-4 rounded-md">
+                        <h3 class="text-3xl font-bold text-uphsl-maroon">' . htmlspecialchars($row['title']) . '</h3>
+                        <p class="text-md text-black mt-2 flex-grow">' . htmlspecialchars(substr($row['content'], 0, 100)) . '...</p>
+                        <a href="article.php?id=' . $row['event_id'] . '" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    </div>';
+                }
+            } else {
+                echo '<p class="text-black text-center mt-8">No events found.</p>';
+            }
+            ?>
         </div>
+
 
         <div class="mt-8">
             <a href="news&events.php" class="inline-block bg-uphsl-blue text-white py-3 px-6 rounded-full text-lg">View All Events</a>
         </div>
     </section>
 
+
     <section id="section3" class="text-center py-10 bg-uphsl-maroon">
-        <h1 class="text-5xl text-uphsl-yellow mb-6">BE PART OF CCA</h1>
-        <p class="text-lg text-white mb-4">Join us to explore your creativity and become part of our vibrant community!</p>
+        <h1 class="text-5xl text-white mb-6">BE PART OF CCA</h1>
+        <p class="text-lg text-white mb-4">For Students! Join us to explore your creativity and become part of our vibrant community!</p>
         
         <form action="submit_form.php" method="POST" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
             <div class="mb-4">
@@ -83,8 +100,8 @@
             </div>
             
             <div class="mb-4">
-                <label for="email" class="block text-md text-uphsl-maroon font-semibold mb-2">Email Address</label>
-                <input type="email" id="email" name="email" required class="w-full p-2 border border-gray-300 rounded" placeholder="Enter your email address">
+                <label for="email" class="block text-md text-uphsl-maroon font-semibold mb-2">School Email</label>
+                <input type="email" id="email" name="email" required class="w-full p-2 border border-gray-300 rounded" placeholder="Enter your school email">
             </div>
             
             <div class="mb-4">

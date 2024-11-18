@@ -26,40 +26,40 @@
             <h2 class="text-5xl text-uphsl-yellow text-center mb-8">Join and Explore</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-2xl font-bold text-uphsl-maroon">Graphic Designer</h3>
-                    <p class="text-md text-black mt-2">Work with a dynamic team to create visual content for digital and print platforms.</p>
-                    <a href="#" class="text-uphsl-blue hover:underline mt-4 inline-block">Learn More</a>
+                <!-- Job Listing: Graphic Designer -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Graphic Designer</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Work with a dynamic team to create visual content for digital and print platforms.</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-2xl font-bold text-uphsl-maroon">Video Editor</h3>
-                    <p class="text-md text-black mt-2">Edit high-quality videos for various projects across the department.</p>
-                    <a href="#" class="text-uphsl-blue hover:underline mt-4 inline-block">Learn More</a>
+                <!-- Job Listing: Video Editor -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Video Editor</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Edit high-quality videos for various projects across the department.</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-2xl font-bold text-uphsl-maroon">Marketing Specialist</h3>
-                    <p class="text-md text-black mt-2">Develop and implement marketing strategies to promote events and programs.</p>
-                    <a href="#" class="text-uphsl-blue hover:underline mt-4 inline-block">Learn More</a>
+                <!-- Job Listing: Marketing Specialist -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Marketing Specialist</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Develop and implement marketing strategies to promote events and programs.</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-2xl font-bold text-uphsl-maroon">Photographer</h3>
-                    <p class="text-md text-black mt-2">Capture and edit photographs for exhibitions, performances, and other events.</p>
-                    <a href="#" class="text-uphsl-blue hover:underline mt-4 inline-block">Learn More</a>
+                <!-- Job Listing: Photographer -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Photographer</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Capture and edit photographs for exhibitions, performances, and other events.</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-2xl font-bold text-uphsl-maroon">Content Writer</h3>
-                    <p class="text-md text-black mt-2">Create engaging written content for newsletters, websites, and social media.</p>
-                    <a href="#" class="text-uphsl-blue hover:underline mt-4 inline-block">Learn More</a>
+                <!-- Job Listing: Content Writer -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Content Writer</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Create engaging written content for newsletters, websites, and social media.</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-2xl font-bold text-uphsl-maroon">Event Coordinator</h3>
-                    <p class="text-md text-black mt-2">Plan and execute exhibitions, performances, and workshops.</p>
-                    <a href="#" class="text-uphsl-blue hover:underline mt-4 inline-block">Learn More</a>
+                <!-- Job Listing: Event Coordinator -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Coordinator</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Plan and execute exhibitions, performances, and workshops.</p>
                 </div>
             </div>
         </div>
