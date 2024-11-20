@@ -15,12 +15,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="anton-regular">
+    
     <?php include 'navbar.php'; ?>
 
     <section id="section1" class="text-center py-10 pb-0 bg-uphsl-blue"> 
-        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-white">CENTER FOR CULTURE AND ARTS</h1><br>
+        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-yellow">CENTER FOR CULTURE AND ARTS</h1><br>
         <?php include 'carousel.php'; ?><br>
-        <h3 class="text-5xl text-uphsl-yellow">WHAT IS CCA?</h3><br>
+        <h3 class="text-6xl text-uphsl-yellow">WHAT IS CCA?</h3><br>
         
         <div class="flex flex-col md:flex-row justify-center items-center px-8 md:px-20 lg:px-40 max-w-screen-md mx-auto">
             <p class="text-sm text-white mb-4 md:mr-4">
@@ -42,36 +43,36 @@
         <h1 class="text-7xl text-black">NEWS & EVENTS</h1><br>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-20 lg:px-40">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img src="public/news1.png" alt="Event 1" class="w-full h-48 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">Upcoming Art Exhibit</h3>
-                <p class="text-md text-black mt-2">Join us for an exclusive art exhibition showcasing student work. Date: Oct 28, 2024.</p>
-                <a href="#" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                <img src="public/news1.jpg" alt="Event 1" class="w-full h-60 object-cover mb-4 rounded-md">
+                <h3 class="text-3xl font-bold text-uphsl-maroon">Perps Drag Race 2024</h3>
+                <p class="text-md text-black mt-2 flex-grow">Join us as we celebrate 𝒅𝒊𝒗𝒆𝒓𝒔𝒊𝒕𝒚, 𝒄𝒓𝒆𝒂𝒕𝒊𝒗𝒆 𝒆𝒙𝒑𝒓𝒆𝒔𝒔𝒊𝒐𝒏, and 𝒄𝒐𝒎𝒎𝒖𝒏𝒊𝒕𝒚...</p>
+                <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img src="public/news2.png" alt="Event 2" class="w-full h-48 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">CCA Workshop</h3>
-                <p class="text-md text-black mt-2">Register for our upcoming creative workshop to explore new techniques in digital art. Date: Nov 15, 2024.</p>
-                <a href="#" class="text-uphsl-blue mt-4 inline-block">Learn more</a>
+            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                <img src="public/news2.jpg" alt="Event 2" class="w-full h-60 object-cover mb-4 rounded-md">
+                <h3 class="text-3xl font-bold text-uphsl-maroon">Kaalamang Pangkultura! | AGOS PERPETUAL DANCE COMPANY</h3>
+                <p class="text-md text-black mt-2 flex-grow">Halina't makiisa sa 𝘼𝙜𝙤𝙨 𝙋𝙚𝙧𝙥𝙚𝙩𝙪𝙖𝙡...</p>
+                <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img src="public/news3.png" alt="Event 3" class="w-full h-48 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">Annual CCA Gala</h3>
-                <p class="text-md text-black mt-2">Save the date for our Annual Gala, featuring performances, exhibits, and more. Date: Dec 12, 2024.</p>
-                <a href="#" class="text-uphsl-blue mt-4 inline-block">Details</a>
+            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                <img src="public/news3.jpg" alt="Event 3" class="w-full h-60 object-cover mb-4 rounded-md">
+                <h3 class="text-3xl font-bold text-uphsl-maroon">𝐏𝐞𝐫𝐩𝐞𝐭𝐮𝐚𝐥 𝐓𝐡𝐞𝐚𝐭𝐞𝐫 𝐂𝐨𝐥𝐥𝐞𝐜𝐭𝐢𝐯𝐞 | 𝗦𝗘𝗔𝗦𝗢𝗡...</h3>
+                <p class="text-md text-black mt-2 flex-grow">The university theater ensemble Perpetual Theater...</p>
+                <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
             </div>
         </div>
 
         <div class="mt-8">
-            <a href="#" class="inline-block bg-uphsl-blue text-white py-3 px-6 rounded-full text-lg">View All Events</a>
+            <a href="news&events.php" class="inline-block bg-uphsl-blue text-white py-3 px-6 rounded-full text-lg">View All Events</a>
         </div>
     </section>
 
     <section id="section3" class="text-center py-10 bg-uphsl-maroon">
         <h1 class="text-5xl text-white mb-6">BE PART OF CCA</h1>
-        <p class="text-lg text-white mb-4">Join us to explore your creativity and become part of our vibrant community!</p>
+        <p class="text-lg text-white mb-4">For Students! Join us to explore your creativity and become part of our vibrant community!</p>
         
         <form action="submit_form.php" method="POST" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
             <div class="mb-4">
@@ -80,8 +81,8 @@
             </div>
             
             <div class="mb-4">
-                <label for="email" class="block text-md text-uphsl-maroon font-semibold mb-2">Email Address</label>
-                <input type="email" id="email" name="email" required class="w-full p-2 border border-gray-300 rounded" placeholder="Enter your email address">
+                <label for="email" class="block text-md text-uphsl-maroon font-semibold mb-2">School Email</label>
+                <input type="email" id="email" name="email" required class="w-full p-2 border border-gray-300 rounded" placeholder="Enter your school email">
             </div>
             
             <div class="mb-4">
@@ -93,23 +94,7 @@
         </form>
     </section>
 
-    <footer class="bg-uphsl-blue text-white py-6">
-        <div class="container mx-auto px-6 text-center">
-            <div class="flex justify-center space-x-8 mb-4">
-                <img src="public/cca-logo.png" alt="Logo 1" class="h-12"> <!-- Replace with your actual logo path -->
-                <img src="public/uphsl-logo.png" alt="Logo 2" class="h-12"> <!-- Replace with your actual logo path -->
-            </div>
-            <p class="text-sm mb-2">© 2024 University of Perpetual Help System - Laguna | Center for Culture and Arts. All Rights Reserved.</p>
-            <div class="flex justify-center space-x-4">
-                <a href="#" class="text-uphsl-yellow hover:underline">Privacy Policy</a>
-                <span>|</span>
-                <a href="#" class="text-uphsl-yellow hover:underline">Terms of Service</a>
-                <span>|</span>
-                <a href="#" class="text-uphsl-yellow hover:underline">FAQ's</a>
-            </div>
-        </div>
-    </footer>
-
+    <?php include 'footer.php'; ?>
 
 </body>
 </html>

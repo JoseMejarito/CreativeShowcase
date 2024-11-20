@@ -1,14 +1,13 @@
 <?php
+$servername = "localhost"; 
+$username = "root"; 
+$password = ""; 
+$dbname = "creative_showcase"; 
 
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "creative_showcase";
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-$con = new MySQLi($host, $username, $password, $database);
-
-if ($con->connect_error) {
-    die("Connection failed: " . $con->connect_error);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
 ?>

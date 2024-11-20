@@ -21,20 +21,20 @@
             <button id="menuToggle" class="text-white anton-regular md:hidden" onclick="toggleMenu()">Menu</button>
 
             <div class="hidden md:flex space-x-8 items-center">
-                <a href="#" class="text-white anton-regular text-sm md:text-base lg:text-lg">Exhibition</a>
-                <a href="#" class="text-white anton-regular text-sm md:text-base lg:text-lg">News & Events</a>
-                <a href="#" class="text-white anton-regular text-sm md:text-base lg:text-lg">Collection</a>
-                <a href="#" class="text-white anton-regular text-sm md:text-base lg:text-lg">Opportunity</a>
-                <a href="#" class="text-white anton-regular text-sm md:text-base lg:text-lg">About Us</a>
+                <a href="exhibition.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Exhibition</a>
+                <a href="news&events.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow whitespace-nowrap">News & Events</a>
+                <a href="collection.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Collection</a>
+                <a href="opportunity.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Opportunity</a>
+                <a href="about.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow whitespace-nowrap">About Us</a>
             </div>
         </div>
 
         <div id="mobileMenu" class="hidden flex flex-col space-y-2 mt-2">
-            <a href="#" class="text-white anton-regular">Exhibition</a>
-            <a href="#" class="text-white anton-regular">News & Events</a>
-            <a href="#" class="text-white anton-regular">Collection</a>
-            <a href="#" class="text-white anton-regular">Opportunity</a>
-            <a href="#" class="text-white anton-regular">About Us</a>
+            <a href="exhibition.php" class="text-white anton-regular hover:text-uphsl-yellow">Exhibition</a>
+            <a href="news&events.php" class="text-white anton-regular hover:text-uphsl-yellow">News & Events</a>
+            <a href="collection.php" class="text-white anton-regular hover:text-uphsl-yellow">Collection</a>
+            <a href="opportunity.php" class="text-white anton-regular hover:text-uphsl-yellow">Opportunity</a>
+            <a href="about.php" class="text-white anton-regular hover:text-uphsl-yellow">About Us</a>
         </div>
     </nav>
 

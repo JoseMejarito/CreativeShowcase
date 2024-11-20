@@ -26,12 +26,12 @@
 
         <!-- Slider controls -->
         <button type="button" class="absolute top-1/2 left-4 transform -translate-y-1/2 p-2 bg-white/50 hover:bg-white/75 rounded-full shadow-md" data-carousel-prev>
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg class="hidden w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
         </button>
         <button type="button" class="absolute top-1/2 right-4 transform -translate-y-1/2 p-2 bg-white/50 hover:bg-white/75 rounded-full shadow-md" data-carousel-next>
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg class="hidden w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
         </button>
