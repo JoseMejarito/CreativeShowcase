@@ -10,6 +10,10 @@ include 'connection.php';
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">      
     <link rel="stylesheet" href="style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body class="anton-regular">
     <?php include 'navbar.php'; ?>
@@ -27,20 +31,8 @@ include 'connection.php';
                     <p><strong>Date Created:</strong> November 6, 2024</p>
                 </div>
 
-                <!-- Artwork Description -->
-                <div class="text-lg text-black leading-relaxed space-y-4">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi nec risus eleifend accumsan. Proin vel
-                        massa nec ligula viverra tincidunt ac eget purus. Ut euismod varius orci, at varius mi dictum nec.
-                    </p>
-                    <p>
-                        Cras feugiat scelerisque urna, a volutpat lorem pellentesque eget. Nullam maximus, metus eget dapibus tempus, lorem
-                        augue tempor odio, vel efficitur augue est in nunc.
-                    </p>
-                </div>
-
                 <!-- Carousel Container -->
-                <div class="relative mt-6">
+                <div class="relative mb-6">
                     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
                         <!-- Carousel Images -->
                         <div class="carousel-inner">
@@ -52,19 +44,33 @@ include 'connection.php';
                             </div>
                             <!-- Add more images here if needed -->
                         </div>
-                        <!-- Optional: Hidden Controls (not needed as per request) -->
+                        <!-- Carousel Controls -->
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
                         </button>
                         <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
                         </button>
                     </div>
                 </div>
 
+                <!-- Artwork Description -->
+                <div class="text-lg text-black leading-relaxed space-y-4">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi nec risus eleifend accumsan. Proin vel
+                        massa nec ligula viverra tincidunt ac eget purus. Ut euismod varius orci, at varius mi dictum nec.
+                    </p>
+                    <p>
+                        Cras feugiat scelerisque urna, a volutpat lorem pellentesque eget. Nullam maximus, metus eget dapibus tempus, lorem
+                        augue tempor odio, vel efficitur augue est in nunc.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
+
 
     <?php include 'footer.php'; ?>
     <script>
