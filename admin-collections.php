@@ -31,7 +31,13 @@
                     <img src="public/collection-dance.jpg" alt="Dance" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Dance</h3>
                     <p class="text-md text-black mt-2 flex-grow">Explore breathtaking performances and movements captured through dance.</p>
-                    <a href="#" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    <div class="flex justify-between mt-4">
+                        <a href="#" class="text-uphsl-blue inline-block">Read more</a>
+                        <div>
+                            <a href="#" class="text-black hover:underline mr-2">Edit</a> <!-- Changed to black -->
+                            <a href="#" class="text-uphsl-maroon hover:underline">Delete</a> <!-- Kept as red -->
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Collection Item: Music -->
@@ -39,7 +45,13 @@
                     <img src="public/collection-music.jpg" alt="Music" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Music</h3>
                     <p class="text-md text-black mt-2 flex-grow">Musical compositions and performances that highlight artistic talents and skills.</p>
-                    <a href="#" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    <div class="flex justify-between mt-4">
+                        <a href="#" class="text-uphsl-blue inline-block">Read more</a>
+                        <div>
+                            <a href="#" class="text-black hover:underline mr-2">Edit</a> <!-- Changed to black -->
+                            <a href="#" class="text-uphsl-maroon hover:underline">Delete</a> <!-- Kept as red -->
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Collection Item: Acting -->
@@ -47,7 +59,13 @@
                     <img src="public/collection-acting.jpg" alt="Acting" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Theater</h3>
                     <p class="text-md text-black mt-2 flex-grow">A look into performances that bring stories to life.</p>
-                    <a href="#" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    <div class="flex justify-between mt-4">
+                        <a href="#" class="text-uphsl-blue inline-block">Read more</a>
+                        <div>
+                            <a href="#" class="text-black hover:underline mr-2">Edit</a> <!-- Changed to black -->
+                            <a href="#" class="text-uphsl-maroon hover:underline">Delete</a> <!-- Kept as red -->
+                        </div>
+                    </div>
                 </div>
             </div>
 

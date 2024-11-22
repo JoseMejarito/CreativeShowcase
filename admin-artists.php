@@ -31,42 +31,42 @@
                     <img src="public/person-placeholder.jpg" alt="Artist 1" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 1</h3>
                     <p class="text-md text-black mt-2 flex-grow">Description of artist 1's work or style. Their contribution to the exhibition is notable for its creativity and impact.</p>
-                    <a href="artist-profile.php?id=1" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    <a href="admin-artist-profile.php?id=1" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
                     <img src="public/person-placeholder.jpg" alt="Artist 2" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 2</h3>
                     <p class="text-md text-black mt-2 flex-grow">Description of artist 2's work or style. Their unique approach has captivated audiences and added depth to the exhibition.</p>
-                    <a href="artist-profile.php?id=2" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    <a href="admin-artist-profile.php?id=2" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
                     <img src="public/person-placeholder.jpg" alt="Artist 3" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 3</h3>
                     <p class="text-md text-black mt-2 flex-grow">Description of artist 3's work or style. Their pieces are known for their emotional resonance and striking visuals.</p>
-                    <a href="artist-profile.php?id=3" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    <a href="admin-artist-profile.php?id=3" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
                     <img src="public/person-placeholder.jpg" alt="Artist 4" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 4</h3>
                     <p class="text-md text-black mt-2 flex-grow">Description of artist 4's innovative techniques and contributions to the exhibition, showcasing a unique perspective.</p>
-                    <a href="artist-profile.php?id=4" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    <a href="admin-artist-profile.php?id=4" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
                     <img src="public/person-placeholder.jpg" alt="Artist 5" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 5</h3>
                     <p class="text-md text-black mt-2 flex-grow">Description of artist 5's distinctive style, blending cultural elements with contemporary design.</p>
-                    <a href="artist-profile.php?id=5" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    <a href="admin-artist-profile.php?id=5" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
                     <img src="public/person-placeholder.jpg" alt="Artist 6" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 6</h3>
                     <p class="text-md text-black mt-2 flex-grow">Description of artist 6's compelling visual narrative and their impact on the exhibition's overall theme.</p>
-                    <a href="artist-profile.php?id=6" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    <a href="admin-artist-profile.php?id=6" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
             </div>
