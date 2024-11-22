@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 20, 2024 at 04:50 PM
+-- Generation Time: Nov 22, 2024 at 03:11 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -28,12 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `artists` (
-  `artist_id` int(11) NOT NULL,
+  `artist_id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `bio` text DEFAULT NULL,
   `image_url` varchar(255) DEFAULT NULL,
-  `department_id` int(11) DEFAULT NULL,
-  `group_id` int(11) DEFAULT NULL
+  `department_id` int(11) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -43,7 +44,7 @@ CREATE TABLE `artists` (
 --
 
 CREATE TABLE `collections` (
-  `collection_id` int(11) NOT NULL,
+  `collection_id` int(11) UNSIGNED NOT NULL,
   `collection_name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -66,7 +67,7 @@ INSERT INTO `collections` (`collection_id`, `collection_name`, `description`) VA
 --
 
 CREATE TABLE `departments` (
-  `department_id` int(11) NOT NULL,
+  `department_id` int(11) UNSIGNED NOT NULL,
   `department_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -93,24 +94,17 @@ INSERT INTO `departments` (`department_id`, `department_name`) VALUES
 --
 
 CREATE TABLE `events` (
-  `event_id` int(11) NOT NULL,
+  `event_id` int(11) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `date_start` date NOT NULL,
   `date_end` date DEFAULT NULL,
   `location` varchar(255) NOT NULL,
   `banner_image` varchar(255) DEFAULT NULL,
-  `collection_id` int(11) DEFAULT NULL
+  `collection_id` int(11) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`event_id`, `title`, `description`, `date_start`, `date_end`, `location`, `banner_image`, `collection_id`) VALUES
-(1, 'Dance Showcase 2024', 'A night of stunning dance performances.', '2024-05-01', '2024-05-01', 'Main Auditorium', 'public/dance_showcase.jpg', 1),
-(2, 'Spring Concert', 'A symphonic performance by the orchestra.', '2024-03-21', NULL, 'Concert Hall', 'public/spring_concert.jpg', 2),
-(3, 'Theater Festival', 'A celebration of dramatic arts.', '2024-06-15', '2024-06-20', 'Drama Hall', 'public/theater_festival.jpg', 3);
 
 -- --------------------------------------------------------
 
@@ -119,20 +113,11 @@ INSERT INTO `events` (`event_id`, `title`, `description`, `date_start`, `date_en
 --
 
 CREATE TABLE `groups` (
-  `group_id` int(11) NOT NULL,
+  `group_id` int(11) UNSIGNED NOT NULL,
   `group_name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `collection_id` int(11) DEFAULT NULL
+  `collection_id` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `groups`
---
-
-INSERT INTO `groups` (`group_id`, `group_name`, `description`, `collection_id`) VALUES
-(1, 'Modern Dance Troupe', 'A group specializing in modern and contemporary dance.', 1),
-(2, 'Symphony Orchestra', 'A group of musicians performing classical pieces.', 2),
-(3, 'Drama Society', 'An ensemble producing theatrical performances.', 3);
 
 -- --------------------------------------------------------
 
@@ -141,8 +126,8 @@ INSERT INTO `groups` (`group_id`, `group_name`, `description`, `collection_id`) 
 --
 
 CREATE TABLE `group_artists` (
-  `group_id` int(11) NOT NULL,
-  `artist_id` int(11) NOT NULL
+  `group_id` int(11) UNSIGNED NOT NULL,
+  `artist_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -152,22 +137,14 @@ CREATE TABLE `group_artists` (
 --
 
 CREATE TABLE `media` (
-  `media_id` int(11) NOT NULL,
-  `related_id` int(11) NOT NULL,
+  `media_id` int(11) UNSIGNED NOT NULL,
+  `related_id` int(11) UNSIGNED NOT NULL,
   `related_table` enum('postings','artists','exhibitions') NOT NULL,
   `media_type` enum('image','video') NOT NULL,
   `file_path` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `media`
---
-
-INSERT INTO `media` (`media_id`, `related_id`, `related_table`, `media_type`, `file_path`, `description`) VALUES
-(1, 1, 'postings', 'image', 'public/posting_image1.jpg', NULL),
-(2, 2, 'artists', 'image', 'public/artist_image2.jpg', NULL),
-(3, 1, 'exhibitions', 'video', 'public/exhibition_video1.mp4', NULL);
 
 -- --------------------------------------------------------
 
@@ -176,7 +153,7 @@ INSERT INTO `media` (`media_id`, `related_id`, `related_table`, `media_type`, `f
 --
 
 CREATE TABLE `news` (
-  `news_id` int(11) NOT NULL,
+  `news_id` int(11) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `date_posted` timestamp NOT NULL DEFAULT current_timestamp()
@@ -189,13 +166,13 @@ CREATE TABLE `news` (
 --
 
 CREATE TABLE `postings` (
-  `posting_id` int(11) NOT NULL,
+  `posting_id` int(11) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text DEFAULT NULL,
   `date_posted` timestamp NOT NULL DEFAULT current_timestamp(),
-  `related_id` int(11) DEFAULT NULL,
-  `collection_id` int(11) DEFAULT NULL,
-  `news_id` int(11) DEFAULT NULL
+  `related_id` int(11) UNSIGNED DEFAULT NULL,
+  `collection_id` int(11) UNSIGNED DEFAULT NULL,
+  `news_id` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -205,8 +182,8 @@ CREATE TABLE `postings` (
 --
 
 CREATE TABLE `postings_collections` (
-  `posting_id` int(11) NOT NULL,
-  `collection_id` int(11) NOT NULL
+  `posting_id` int(11) UNSIGNED NOT NULL,
+  `collection_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -288,49 +265,49 @@ ALTER TABLE `postings_collections`
 -- AUTO_INCREMENT for table `artists`
 --
 ALTER TABLE `artists`
-  MODIFY `artist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `artist_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `collections`
 --
 ALTER TABLE `collections`
-  MODIFY `collection_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `collection_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `department_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `event_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `group_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `media_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `media_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `news_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `postings`
 --
 ALTER TABLE `postings`
-  MODIFY `posting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `posting_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
