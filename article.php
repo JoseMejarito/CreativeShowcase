@@ -19,7 +19,7 @@ include 'connection.php';
             <!-- Article Content Section Spans Entire Width -->
             <div class="bg-white p-8 rounded-lg shadow-lg my-8 w-full">
                 <!-- Article Header -->
-                <h1 class="text-4xl font-bold text-uphsl-maroon mb-4">Event/News Title</h1>
+                <h1 class="text-4xl font-bold text-uphsl-maroon mb-4">News Title</h1>
 
                 <!-- Article Info -->
                 <div class="flex justify-between text-sm text-gray-500 mb-6">

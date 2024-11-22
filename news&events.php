@@ -88,6 +88,50 @@
         </div>
     </section>
 
+    <section id="calendar" class="py-10 bg-uphsl-yellow">
+    <div class="max-w-screen-xl mx-auto px-4">
+        <h2 class="text-5xl text-uphsl-blue text-center mb-8">Calendar of Events</h2>
+
+        <div class="grid grid-cols-7 gap-4">
+            <!-- Days of the Week -->
+            <div class="font-bold text-center text-uphsl-maroon">Sun</div>
+            <div class="font-bold text-center text-uphsl-maroon">Mon</div>
+            <div class="font-bold text-center text-uphsl-maroon">Tue</div>
+            <div class="font-bold text-center text-uphsl-maroon">Wed</div>
+            <div class="font-bold text-center text-uphsl-maroon">Thu</div>
+            <div class="font-bold text-center text-uphsl-maroon">Fri</div>
+            <div class="font-bold text-center text-uphsl-maroon">Sat</div>
+
+            <?php
+            // Get the current month and year
+            $month = date('m');
+            $year = date('Y');
+
+            // Get the first day of the month and the number of days in the month
+            $firstDayOfMonth = strtotime("$year-$month-01");
+            $daysInMonth = date('t', $firstDayOfMonth);
+            $firstDayOfWeek = date('w', $firstDayOfMonth);
+
+            // Fill in empty cells for days before the first of the month
+            for ($i = 0; $i < $firstDayOfWeek; $i++) {
+                echo '<div></div>';
+            }
+
+            // Loop through the days of the month
+            for ($day = 1; $day <= $daysInMonth; $day++) {
+                // Here you can customize the event description based on the day
+                $eventDescription = "Event on $day"; // Placeholder event description
+                echo '<div class="bg-white p-4 rounded-lg shadow-lg">';
+                echo "<h3 class='text-lg font-bold text-uphsl-maroon'>$day</h3>";
+                echo "<p class='text-md text-black'>$eventDescription</p>";
+                echo '<a href="article.php" class="text-uphsl-blue mt-2 inline-block">View Details</a>';
+                echo '</div>';
+            }
+            ?>
+        </div>
+    </div>
+</section>
+
     <?php include 'footer.php'; ?>
 </body>
 </html>
