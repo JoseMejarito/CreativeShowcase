@@ -21,25 +21,67 @@
         <div class="mb-4">
             <button class="bg-blue-500 text-white px-4 py-2 rounded">Add New News</button>
         </div>
-        <table class="min-w-full bg-white">
-            <thead>
-                <tr>
-                    <th class="py-2 px-4 border-b">Title</th>
-                    <th class="py-2 px-4 border-b">Date</th>
-                    <th class="py-2 px-4 border-b">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="py-2 px-4 border-b">Sample Artist 1</td>
-                    <td class="py-2 px-4 border-b">November 21, 2024</td>
-                    <td class="py-2 px-4 border-b">
-                        <button class="text-green-500">Edit</button>
-                        <button class="text-red-500 ml-4">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
+    <section id="exhibition" class="py-10 bg-uphsl-blue">
+        <div class="max-w-screen-xl mx-auto px-4">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+               
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/person-placeholder.jpg" alt="Artist 1" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 1</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of artist 1's work or style. Their contribution to the exhibition is notable for its creativity and impact.</p>
+                    <a href="artist-profile.php?id=1" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/person-placeholder.jpg" alt="Artist 2" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 2</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of artist 2's work or style. Their unique approach has captivated audiences and added depth to the exhibition.</p>
+                    <a href="artist-profile.php?id=2" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/person-placeholder.jpg" alt="Artist 3" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 3</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of artist 3's work or style. Their pieces are known for their emotional resonance and striking visuals.</p>
+                    <a href="artist-profile.php?id=3" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/person-placeholder.jpg" alt="Artist 4" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 4</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of artist 4's innovative techniques and contributions to the exhibition, showcasing a unique perspective.</p>
+                    <a href="artist-profile.php?id=4" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/person-placeholder.jpg" alt="Artist 5" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 5</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of artist 5's distinctive style, blending cultural elements with contemporary design.</p>
+                    <a href="artist-profile.php?id=5" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/person-placeholder.jpg" alt="Artist 6" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 6</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of artist 6's compelling visual narrative and their impact on the exhibition's overall theme.</p>
+                    <a href="artist-profile.php?id=6" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+            </div>
+
+            <div class="mt-8 flex justify-center">
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a href="#" class="text-uphsl-yellow hover:underline">1</a></li>
+                        <li><a href="#" class="text-uphsl-yellow hover:underline">2</a></li>
+                        <li><a href="#" class="text-uphsl-yellow hover:underline">3</a></li>
+                        <li><a href="#" class="text-uphsl-yellow hover:underline">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
