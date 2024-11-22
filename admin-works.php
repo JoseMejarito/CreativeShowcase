@@ -21,25 +21,7 @@
         <div class="mb-4">
             <button class="bg-blue-500 text-white px-4 py-2 rounded">Add New Work</button>
         </div>
-        <table class="min-w-full bg-white">
-            <thead>
-                <tr>
-                    <th class="py-2 px-4 border-b">Title</th>
-                    <th class="py-2 px-4 border-b">Date</th>
-                    <th class="py-2 px-4 border-b">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="py-2 px-4 border-b">Sample Work 1</td>
-                    <td class="py-2 px-4 border-b">November 21, 2024</td>
-                    <td class="py-2 px-4 border-b">
-                        <button class="text-green-500">Edit</button>
-                        <button class="text-red-500 ml-4">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        
     </div>
 </body>
 </html>

@@ -20,13 +20,13 @@
     </section>
     <div class="container mx-auto p-6 text-center">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a href="admin-news.php" class="bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center">Manage News</a>
-            <a href="admin-events.php" class="bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center">Manage Events</a>
-            <a href="admin-artists.php" class="bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center">Manage Artists</a>
-            <a href="admin-works.php" class="bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center">Manage Artists' Works</a>
-            <a href="admin-groups.php" class="bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center">Manage Groups</a>
-            <a href="admin-artist-groups.php" class="bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center">Manage Artist Groups</a>
-            <a href="admin-collections.php" class="bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center">Manage Collections</a>
+            <a href="admin-news.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage News</a>
+            <a href="admin-events.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Events</a>
+            <a href="admin-artists.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Artists</a>
+            <a href="admin-works.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Artists' Works</a>
+            <a href="admin-groups.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Groups</a>
+            <a href="admin-artist-groups.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Artist Groups</a>
+            <a href="admin-collections.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Collections</a>
         </div>
     </div>
 </body>
