@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 22, 2024 at 03:11 PM
+-- Generation Time: Nov 23, 2024 at 11:05 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -46,19 +46,9 @@ CREATE TABLE `artists` (
 CREATE TABLE `collections` (
   `collection_id` int(11) UNSIGNED NOT NULL,
   `collection_name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `picture_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `collections`
---
-
-INSERT INTO `collections` (`collection_id`, `collection_name`, `description`) VALUES
-(1, 'Dance', 'Performances showcasing various dance styles.'),
-(2, 'Music', 'Musical performances including instrumental and vocal acts.'),
-(3, 'Theater', 'Theatrical performances and plays.'),
-(4, 'Photography', 'A collection of photographic works.'),
-(5, 'Videography', 'Video projects and short films.');
 
 -- --------------------------------------------------------
 
@@ -271,7 +261,7 @@ ALTER TABLE `artists`
 -- AUTO_INCREMENT for table `collections`
 --
 ALTER TABLE `collections`
-  MODIFY `collection_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `collection_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `departments`
