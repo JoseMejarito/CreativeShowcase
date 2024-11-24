@@ -30,12 +30,9 @@
                     <img src="public/news3.jpg" alt="Event 1" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 1</h3>
                     <p class="text-md text-black mt-2 flex-grow">Brief description of event 1, highlighting its key features and importance.</p>
-                    <div class="flex justify-between mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block">Read more</a>
-                        <div>
-                            <a href="#" class="text-black hover:underline mr-2">Edit</a> <!-- Changed to black -->
-                            <a href="#" class="text-uphsl-maroon hover:underline">Delete</a> <!-- Kept as red -->
-                        </div>
+                    <div class="flex justify-start mt-4">
+                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
+                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
                     </div>
                 </div>
 
@@ -44,12 +41,9 @@
                     <img src="public/news3.jpg" alt="Event 2" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 2</h3>
                     <p class="text-md text-black mt-2 flex-grow">Brief description of event 2, focusing on what makes it special.</p>
-                    <div class="flex justify-between mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block">Read more</a>
-                        <div>
-                            <a href="#" class="text-black hover:underline mr-2">Edit</a> <!-- Changed to black -->
-                            <a href="#" class="text-uphsl-maroon hover:underline">Delete</a> <!-- Kept as red -->
-                        </div>
+                    <div class="flex justify-start mt-4">
+                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
+                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
                     </div>
                 </div>
 
@@ -58,12 +52,9 @@
                     <img src="public/news3.jpg" alt="Event 3" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 3</h3>
                     <p class="text-md text-black mt-2 flex-grow">Brief description of event 3, providing key details for attendees.</p>
-                    <div class="flex justify-between mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block">Read more</a>
-                        <div>
-                            <a href="#" class="text-black hover:underline mr-2">Edit</a> <!-- Changed to black -->
-                            <a href="#" class="text-uphsl-maroon hover:underline">Delete</a> <!-- Kept as red -->
-                        </div>
+                    <div class="flex justify-start mt-4">
+                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
+                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
                     </div>
                 </div>
 
@@ -72,12 +63,9 @@
                     <img src="public/news3.jpg" alt="Event 4" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 4</h3>
                     <p class="text-md text-black mt-2 flex-grow">Brief description of event 4, emphasizing its significance.</p>
-                    <div class="flex justify-between mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block">Read more</a>
-                        <div>
-                            <a href="#" class="text-black hover:underline mr-2">Edit</a> <!-- Changed to black -->
-                            <a href="#" class="text-uphsl-maroon hover:underline">Delete</a> <!-- Kept as red -->
-                        </div>
+                    <div class="flex justify-start mt-4">
+                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
+                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
                     </div>
                 </div>
 
@@ -86,12 +74,9 @@
                     <img src="public/news3.jpg" alt="Event 5" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 5</h3>
                     <p class="text-md text-black mt-2 flex-grow">Brief description of event 5, detailing the activities involved.</p>
-                    <div class="flex justify-between mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block">Read more</a>
-                        <div>
-                            <a href="#" class="text-black hover:underline mr-2">Edit</a> <!-- Changed to black -->
-                            <a href="#" class="text-uphsl-maroon hover:underline">Delete</a> <!-- Kept as red -->
-                        </div>
+                    <div class="flex justify-start mt-4">
+                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
+                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
                     </div>
                 </div>
 
@@ -100,12 +85,9 @@
                     <img src="public/news3.jpg" alt="Event 6" class="w-full h-60 object-cover mb-4 rounded-md">
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 6</h3>
                     <p class="text-md text-black mt-2 flex-grow">Brief description of event 6, highlighting key speakers or features.</p>
-                    <div class="flex justify-between mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block">Read more</a>
-                        <div>
-                            <a href="#" class="text-black hover:underline mr-2">Edit</a> <!-- Changed to black -->
-                            <a href="#" class="text-uphsl-maroon hover:underline">Delete</a> <!-- Kept as red -->
-                        </div>
+                    <div class="flex justify-start mt-4">
+                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
+                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
                     </div>
                 </div>
             </div>
@@ -122,5 +104,6 @@
             </div>
         </div>
     </section>
+
 </body>
 </html>

@@ -29,48 +29,48 @@
                 <!-- Event Item 1 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
                     <img src="public/news3.jpg" alt="Event 1" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 1</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 1, highlighting its key features and importance.</p>
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 1</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 1, highlighting its key features and importance.</p>
                     <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <!-- Event Item 2 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
                     <img src="public/news3.jpg" alt="Event 2" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 2</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 2, focusing on what makes it special.</p>
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 2</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 2, focusing on what makes it special.</p>
                     <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <!-- Event Item 3 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
                     <img src="public/news3.jpg" alt="Event 3" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 3</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 3, providing key details for attendees.</p>
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 3</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 3, providing key details for attendees.</p>
                     <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <!-- Event Item 4 (Hidden on smaller screens) -->
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between hidden md:block">
                     <img src="public/news3.jpg" alt="Event 4" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 4</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 4, emphasizing its significance.</p>
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 4</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 4, emphasizing its significance.</p>
                     <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <!-- Event Item 5 (Hidden on smaller screens) -->
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between hidden md:block">
                     <img src="public/news3.jpg" alt="Event 5" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 5</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 5, detailing the activities involved.</p>
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 5</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 5, detailing the activities involved.</p>
                     <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
                 <!-- Event Item 6 (Hidden on smaller screens) -->
                 <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between hidden md:block">
                     <img src="public/news3.jpg" alt="Event 6" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 6</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 6, highlighting key speakers or features.</p>
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 6</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 6, highlighting key speakers or features.</p>
                     <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
             </div>
@@ -92,6 +92,25 @@
         <div class="max-w-screen-xl mx-auto px-4">
             <h2 class="text-5xl text-uphsl-blue text-center mb-8">Calendar of Events</h2>
 
+            <?php
+            // Get the current month and year
+            $month = date('m');
+            $year = date('Y');
+
+            // Get the first day of the month and the number of days in the month
+            $firstDayOfMonth = strtotime("$year-$month-01");
+            $daysInMonth = date('t', $firstDayOfMonth);
+            $firstDayOfWeek = date('w', $firstDayOfMonth);
+
+            // Get the month name
+            $monthName = date('F', $firstDayOfMonth);
+            ?>
+
+            <!-- Month Header -->
+            <div class="text-3xl text-uphsl-maroon text-center mb-4">
+                <?php echo "$monthName $year"; ?>
+            </div>
+
             <div class="grid grid-cols-7 gap-4">
                 <!-- Days of the Week -->
                 <div class="font-bold text-center text-uphsl-maroon">Sun</div>
@@ -103,15 +122,6 @@
                 <div class="font-bold text-center text-uphsl-maroon">Sat</div>
 
                 <?php
-                // Get the current month and year
-                $month = date('m');
-                $year = date('Y');
-
-                // Get the first day of the month and the number of days in the month
-                $firstDayOfMonth = strtotime("$year-$month-01");
-                $daysInMonth = date('t', $firstDayOfMonth);
-                $firstDayOfWeek = date('w', $firstDayOfMonth);
-
                 // Fill in empty cells for days before the first of the month
                 for ($i = 0; $i < $firstDayOfWeek; $i++) {
                     echo '<div></div>';
@@ -119,12 +129,16 @@
 
                 // Loop through the days of the month
                 for ($day = 1; $day <= $daysInMonth; $day++) {
-                    // Here you can customize the event description based on the day
-                    $eventDescription = "Event on $day"; // Placeholder event description
+                    // Format the event date
+                    $eventDate = date('l, F j, Y', strtotime("$year-$month-$day")); // Full date format
+                    $eventTitle = "Event Title"; // Placeholder event title
+                    $eventDescription = "Event on $eventDate"; // Placeholder event description
+                    
                     echo '<div class="bg-white p-4 rounded-lg shadow-lg">';
-                    echo "<h3 class='text-lg font-bold text-uphsl-maroon'>$day</h3>";
-                    echo "<p class='text-md text-black'>$eventDescription</p>";
-                    echo '<a href="article.php" class="text-uphsl-blue mt-2 inline-block">View Details</a>';
+                    echo "<div class='text-2xl font-bold text-uphsl-maroon mb-2'>$day</div>"; // Display day number
+                    echo "<h3 class='text-lg font-bold text-uphsl-maroon'>$eventTitle</h3>"; // Display event title
+                    echo "<p class='text-md text-black'>$eventDescription</p>"; // Display event description
+                    echo '<a href="event.php" class="text-uphsl-blue mt-2 inline-block hover:underline">View Details</a>';
                     echo '</div>';
                 }
                 ?>

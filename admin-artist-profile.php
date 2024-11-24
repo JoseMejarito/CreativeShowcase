@@ -53,7 +53,7 @@ include 'connection.php';
                         <h3 class="text-3xl font-bold text-uphsl-maroon">Abstract Landscape</h3>
                         <p class="text-md text-black mt-2 flex-grow">A beautiful depiction of nature in abstract forms and vivid colors.</p>
                         <div class="flex justify-between mt-4">
-                            <a href="artwork.php" class="text-uphsl-blue inline-block">Read more</a>
+                            <a href="admin-artwork.php" class="text-uphsl-blue inline-block">Read more</a>
                             <div class="flex space-x-2">
                                 <a href="edit-artwork.php?id=1" class="text-black hover:underline">Edit</a>
                                 <a href="delete-artwork.php?id=1" class="text-uphsl-maroon hover:underline">Delete</a>
@@ -67,7 +67,7 @@ include 'connection.php';
                         <h3 class="text-3xl font-bold text-uphsl-maroon">Modern Portrait</h3>
                         <p class="text-md text-black mt-2 flex-grow">A portrait capturing raw emotion and expressive details.</p>
                         <div class="flex justify-between mt-4">
-                            <a href="artwork.php" class="text-uphsl-blue inline-block">Read more</a>
+                            <a href="admin-artwork.php" class="text-uphsl-blue inline-block">Read more</a>
                             <div class="flex space-x-2">
                                 <a href="edit-artwork.php?id=2" class="text-black hover:underline">Edit</a>
                                 <a href="delete-artwork.php?id=2" class="text-uphsl-maroon hover:underline">Delete</a>
@@ -81,7 +81,7 @@ include 'connection.php';
                         <h3 class="text-3xl font-bold text-uphsl-maroon">Urban Impressions</h3>
                         <p class="text-md text-black mt-2 flex-grow">An artwork reflecting the dynamic energy of city life.</p>
                         <div class="flex justify-between mt-4">
-                            <a href="artwork.php" class="text-uphsl-blue inline-block">Read more</a>
+                            <a href="admin-artwork.php" class="text-uphsl-blue inline-block">Read more</a>
                             <div class="flex space-x-2">
                                 <a href="edit-artwork.php?id=3" class="text-black hover:underline">Edit</a>
                                 <a href="delete-artwork.php?id=3" class="text-uphsl-maroon hover:underline">Delete</a>
