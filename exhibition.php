@@ -18,7 +18,7 @@ include 'connection.php';
         <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">ARTISTS' EXHIBITION</h1><br>
     </section>
     
-    <section id="exhibition" class="py-10 bg-uphsl-blue">
+    <section id="artists" class="py-10 bg-uphsl-blue">
         <div class="max-w-screen-xl mx-auto px-4">
             <h2 class="text-5xl text-uphsl-yellow text-center mb-8">Featured Artists</h2>
 
@@ -64,6 +64,69 @@ include 'connection.php';
                     <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 6</h3>
                     <p class="text-md text-black mt-2 flex-grow">Description of artist 6's compelling visual narrative and their impact on the exhibition's overall theme.</p>
                     <a href="artist-profile.php?id=6" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+            </div>
+
+            <div class="mt-8 flex justify-center">
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a href="#" class="text-uphsl-yellow hover:underline">1</a></li>
+                        <li><a href="#" class="text-uphsl-yellow hover:underline">2</a></li>
+                        <li><a href="#" class="text-uphsl-yellow hover:underline">3</a></li>
+                        <li><a href="#" class="text-uphsl-yellow hover:underline">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <section id="groups" class="py-10 bg-uphsl-blue">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <h2 class="text-5xl text-uphsl-yellow text-center mb-8">Featured Groups</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/cca-photo.jpg" alt="Group 1" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Group Name 1</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of group 1's work or style. Their collective efforts have significantly enhanced the exhibition's atmosphere.</p>
+                    <a href="group-profile.php?id=1" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/cca-photo.jpg" alt="Group 2" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Group Name 2</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of group 2's collaboration and unique contributions to the exhibition, showcasing their synergy and creativity.</p>
+                    <a href="group-profile.php?id=2" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/cca-photo.jpg" alt="Group 3" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Group Name 3</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of group 3's innovative projects and their impact on the exhibition's narrative and audience engagement.</p>
+                    <a href="group-profile.php?id=3" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/cca-photo.jpg" alt="Group 4" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Group Name 4</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of group 4's unique perspective and their contributions that have enriched the exhibition experience.</p>
+                    <a href="group-profile.php?id=4" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/cca-photo.jpg" alt="Group 5" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Group Name 5</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of group 5's collaborative projects that blend various artistic styles and cultural influences.</p>
+                    <a href="group-profile.php?id=5" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                    <img src="public/cca-photo.jpg" alt="Group 6" class="w-full h-60 object-cover mb-4 rounded-md">
+                    <h3 class="text-3xl font-bold text-uphsl-maroon">Group Name 6</h3>
+                    <p class="text-md text-black mt-2 flex-grow">Description of group 6's compelling visual storytelling and their contribution to the exhibition's overall theme.</p>
+                    <a href="group-profile.php?id=6" class="text-uphsl-blue mt-4 inline-block">Read more</a>
                 </div>
 
             </div>
