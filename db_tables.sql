@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 24, 2024 at 01:32 PM
+-- Generation Time: Nov 29, 2024 at 01:52 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -45,7 +45,6 @@ CREATE TABLE `artists` (
   `artist_id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `bio` text DEFAULT NULL,
-  `image_url` varchar(255) DEFAULT NULL,
   `department_id` int(11) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -61,7 +60,8 @@ CREATE TABLE `collections` (
   `collection_id` int(11) UNSIGNED NOT NULL,
   `collection_name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `picture_path` varchar(255) DEFAULT NULL
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -104,7 +104,6 @@ CREATE TABLE `events` (
   `date_start` date NOT NULL,
   `date_end` date DEFAULT NULL,
   `location` varchar(255) NOT NULL,
-  `banner_image` varchar(255) DEFAULT NULL,
   `collection_id` int(11) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -119,8 +118,7 @@ CREATE TABLE `events` (
 CREATE TABLE `groups` (
   `group_id` int(11) UNSIGNED NOT NULL,
   `group_name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
-  `collection_id` int(11) UNSIGNED DEFAULT NULL
+  `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -142,11 +140,14 @@ CREATE TABLE `group_artists` (
 
 CREATE TABLE `media` (
   `media_id` int(11) UNSIGNED NOT NULL,
-  `related_id` int(11) UNSIGNED NOT NULL,
-  `related_table` enum('postings','artists','exhibitions') NOT NULL,
-  `media_type` enum('image','video') NOT NULL,
   `file_path` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
+  `media_type` enum('image','video') NOT NULL,
+  `is_artist` tinyint(1) DEFAULT 0,
+  `is_news` tinyint(1) DEFAULT 0,
+  `is_event` tinyint(1) DEFAULT 0,
+  `is_collection` tinyint(1) DEFAULT 0,
+  `related_id` int(11) UNSIGNED DEFAULT NULL,
   `upload_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -166,27 +167,27 @@ CREATE TABLE `news` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `postings`
+-- Table structure for table `works`
 --
 
-CREATE TABLE `postings` (
-  `posting_id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE `works` (
+  `work_id` int(11) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
-  `content` text DEFAULT NULL,
-  `date_posted` timestamp NOT NULL DEFAULT current_timestamp(),
-  `related_id` int(11) UNSIGNED DEFAULT NULL,
-  `collection_id` int(11) UNSIGNED DEFAULT NULL,
-  `news_id` int(11) UNSIGNED DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `artist_id` int(11) UNSIGNED DEFAULT NULL,
+  `group_id` int(11) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `postings_collections`
+-- Table structure for table `works_collections`
 --
 
-CREATE TABLE `postings_collections` (
-  `posting_id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE `works_collections` (
+  `work_id` int(11) UNSIGNED NOT NULL,
   `collection_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -231,8 +232,7 @@ ALTER TABLE `events`
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
-  ADD PRIMARY KEY (`group_id`),
-  ADD KEY `fk_groups_collection` (`collection_id`);
+  ADD PRIMARY KEY (`group_id`);
 
 --
 -- Indexes for table `group_artists`
@@ -254,19 +254,20 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`news_id`);
 
 --
--- Indexes for table `postings`
+-- Indexes for table `works`
 --
-ALTER TABLE `postings`
-  ADD PRIMARY KEY (`posting_id`),
-  ADD KEY `fk_postings_collection` (`collection_id`),
-  ADD KEY `news_id` (`news_id`);
+ALTER TABLE `works`
+  ADD PRIMARY KEY (`work_id`),
+  ADD KEY `fk_works_artist` (`artist_id`),
+  ADD KEY `fk_works_group` (`group_id`);
 
 --
--- Indexes for table `postings_collections`
+-- Indexes for table `works_collections`
 --
-ALTER TABLE `postings_collections`
-  ADD PRIMARY KEY (`posting_id`,`collection_id`),
-  ADD KEY `collection_id` (`collection_id`);
+ALTER TABLE `works_collections`
+  ADD PRIMARY KEY (`work_id`,`collection_id`),
+  ADD KEY `fk_work_id` (`work_id`),
+  ADD KEY `fk_collection_id` (`collection_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -321,10 +322,10 @@ ALTER TABLE `news`
   MODIFY `news_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `postings`
+-- AUTO_INCREMENT for table `works`
 --
-ALTER TABLE `postings`
-  MODIFY `posting_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `works`
+  MODIFY `work_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -343,12 +344,6 @@ ALTER TABLE `events`
   ADD CONSTRAINT `fk_events_collection` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`collection_id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `groups`
---
-ALTER TABLE `groups`
-  ADD CONSTRAINT `fk_groups_collection` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`collection_id`) ON DELETE SET NULL;
-
---
 -- Constraints for table `group_artists`
 --
 ALTER TABLE `group_artists`
@@ -356,18 +351,18 @@ ALTER TABLE `group_artists`
   ADD CONSTRAINT `group_artists_ibfk_2` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `postings`
+-- Constraints for table `works`
 --
-ALTER TABLE `postings`
-  ADD CONSTRAINT `fk_postings_collection` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`collection_id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `postings_ibfk_1` FOREIGN KEY (`news_id`) REFERENCES `news` (`news_id`) ON DELETE SET NULL;
+ALTER TABLE `works`
+  ADD CONSTRAINT `fk_works_artist` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_works_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `postings_collections`
+-- Constraints for table `works_collections`
 --
-ALTER TABLE `postings_collections`
-  ADD CONSTRAINT `postings_collections_ibfk_1` FOREIGN KEY (`posting_id`) REFERENCES `postings` (`posting_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `postings_collections_ibfk_2` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`collection_id`) ON DELETE CASCADE;
+ALTER TABLE `works_collections`
+  ADD CONSTRAINT `fk_works_collections_collection` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`collection_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_works_collections_work` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

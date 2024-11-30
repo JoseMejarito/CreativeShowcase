@@ -24,7 +24,6 @@
             <a href="admin-events.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Events</a>
             <a href="admin-artists.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Artists</a>
             <a href="admin-groups.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Groups</a>
-            <a href="admin-artist-groups.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Artist Groups</a>
             <a href="admin-collections.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Collections</a>
         </div>
     </div>

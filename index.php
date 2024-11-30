@@ -39,30 +39,47 @@
         <img src="public/cca-cover.png" alt="CCA Cover Image" class="w-screen h-auto">
     </section>
 
-    <section id="section2" class="text-center py-10 bg-uphsl-yellow"> 
-        <h1 class="text-7xl text-black">NEWS & EVENTS</h1><br>
+    <?php
+    // Fetch the latest 3 news entries
+    try {
+        $query = $conn->prepare("
+            SELECT news.news_id, news.title, news.content, media.file_path AS image_path 
+            FROM news 
+            LEFT JOIN media ON media.related_id = news.news_id AND media.is_news = 1 
+            ORDER BY news.date_posted DESC 
+            LIMIT 3
+        ");
+        $query->execute();
+        $result = $query->get_result();
+    } catch (Exception $e) {
+        // Handle exceptions (e.g., database errors)
+        echo "Error fetching news: " . $e->getMessage();
+        $result = null;
+    }
+    ?>
+
+    <section id="section2" class="text-center py-10 bg-uphsl-yellow">
+        <h1 class="text-7xl text-black">LATEST NEWS</h1><br>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-20 lg:px-40">
-            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                <img src="public/news1.jpg" alt="Event 1" class="w-full h-60 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">Perps Drag Race 2024</h3>
-                <p class="text-md text-black mt-2 flex-grow">Join us as we celebrate 𝒅𝒊𝒗𝒆𝒓𝒔𝒊𝒕𝒚, 𝒄𝒓𝒆𝒂𝒕𝒊𝒗𝒆 𝒆𝒙𝒑𝒓𝒆𝒔𝒔𝒊𝒐𝒏, and 𝒄𝒐𝒎𝒎𝒖𝒏𝒊𝒕𝒚...</p>
-                <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                <img src="public/news2.jpg" alt="Event 2" class="w-full h-60 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">Kaalamang Pangkultura! | AGOS PERPETUAL DANCE COMPANY</h3>
-                <p class="text-md text-black mt-2 flex-grow">Halina't makiisa sa 𝘼𝙜𝙤𝙨 𝙋𝙚𝙧𝙥𝙚𝙩𝙪𝙖𝙡...</p>
-                <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                <img src="public/news3.jpg" alt="Event 3" class="w-full h-60 object-cover mb-4 rounded-md">
-                <h3 class="text-3xl font-bold text-uphsl-maroon">𝐏𝐞𝐫𝐩𝐞𝐭𝐮𝐚𝐥 𝐓𝐡𝐞𝐚𝐭𝐞𝐫 𝐂𝐨𝐥𝐥𝐞𝐜𝐭𝐢𝐯𝐞 | 𝗦𝗘𝗔𝗦𝗢𝗡...</h3>
-                <p class="text-md text-black mt-2 flex-grow">The university theater ensemble Perpetual Theater...</p>
-                <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-            </div>
+            <?php if ($result && $result->num_rows > 0): ?>
+                <?php while ($news = $result->fetch_assoc()): ?>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                        <img src="public/<?= htmlspecialchars($news['image_path'] ?? 'default-image.jpg'); ?>" 
+                            alt="<?= htmlspecialchars($news['title']); ?>" 
+                            class="w-full h-60 object-cover mb-4 rounded-md">
+                        <h3 class="text-3xl font-bold text-uphsl-maroon">
+                            <?= htmlspecialchars($news['title']); ?>
+                        </h3>
+                        <p class="text-md text-black mt-2 flex-grow">
+                            <?= htmlspecialchars(substr($news['description'], 0, 100)); ?>...
+                        </p>
+                        <a href="article.php?id=<?= htmlspecialchars($news['news_id']); ?>" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="text-black text-lg">No news available at the moment.</p>
+            <?php endif; ?>
         </div>
 
         <div class="mt-8">
