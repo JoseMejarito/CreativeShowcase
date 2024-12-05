@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 29, 2024 at 01:52 PM
+-- Generation Time: Dec 03, 2024 at 05:07 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -148,7 +148,8 @@ CREATE TABLE `media` (
   `is_event` tinyint(1) DEFAULT 0,
   `is_collection` tinyint(1) DEFAULT 0,
   `related_id` int(11) UNSIGNED DEFAULT NULL,
-  `upload_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_group` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

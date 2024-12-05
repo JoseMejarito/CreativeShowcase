@@ -21,127 +21,103 @@
         <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">NEWS & EVENTS</h1><br>
     </section>
 
+    <?php
+    try {
+        $conn = new mysqli("localhost", "root", "", "creative_showcase");
+        if ($conn->connect_error) {
+            throw new Exception("Database connection failed: " . $conn->connect_error);
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        exit;
+    }
+
+    // Fetch the latest news
+    try {
+        $newsQuery = $conn->prepare("
+            SELECT news.news_id, news.title, news.content, media.file_path AS image_path 
+            FROM news 
+            LEFT JOIN media ON media.related_id = news.news_id AND media.is_news = 1 
+            ORDER BY news.date_posted DESC 
+            LIMIT 6
+        ");
+        $newsQuery->execute();
+        $newsResult = $newsQuery->get_result();
+    } catch (Exception $e) {
+        echo "Error fetching news: " . $e->getMessage();
+        $newsResult = null;
+    }
+
+    // Fetch upcoming events
+    try {
+        $eventsQuery = $conn->prepare("
+            SELECT events.event_id, events.title, events.date_start, events.date_end, 
+                events.location, media.file_path AS image_path 
+            FROM events 
+            LEFT JOIN media ON media.related_id = events.event_id AND media.is_event = 1 
+            WHERE events.date_end >= CURDATE()
+            ORDER BY events.date_start ASC 
+            LIMIT 6
+        ");
+        $eventsQuery->execute();
+        $eventsResult = $eventsQuery->get_result();
+    } catch (Exception $e) {
+        echo "Error fetching events: " . $e->getMessage();
+        $eventsResult = null;
+    }
+    ?>
+
     <section id="news" class="py-10 bg-uphsl-blue">
         <div class="max-w-screen-xl mx-auto px-4">
             <h2 class="text-5xl text-uphsl-yellow text-center mb-8">Latest News</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <!-- News Item 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/news3.jpg" alt="Event 1" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 1</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 1, highlighting its key features and importance.</p>
-                    <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <!-- News Item 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/news3.jpg" alt="Event 2" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 2</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 2, focusing on what makes it special.</p>
-                    <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <!-- News Item 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/news3.jpg" alt="Event 3" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 3</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 3, providing key details for attendees.</p>
-                    <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <!-- News Item 4 (Hidden on smaller screens) -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between hidden md:block">
-                    <img src="public/news3.jpg" alt="Event 4" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 4</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 4, emphasizing its significance.</p>
-                    <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <!-- News Item 5 (Hidden on smaller screens) -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between hidden md:block">
-                    <img src="public/news3.jpg" alt="Event 5" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 5</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 5, detailing the activities involved.</p>
-                    <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <!-- News Item 6 (Hidden on smaller screens) -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between hidden md:block">
-                    <img src="public/news3.jpg" alt="Event 6" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">News Title 6</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of News 6, highlighting key speakers or features.</p>
-                    <a href="article.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-            </div>
-
-            <div class="mt-8 flex justify-center">
-                <nav>
-                    <ul class="flex space-x-4">
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">1</a></li>
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">2</a></li>
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">3</a></li>
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">Next</a></li>
-                    </ul>
-                </nav>
+                <?php if ($newsResult && $newsResult->num_rows > 0): ?>
+                    <?php while ($news = $newsResult->fetch_assoc()): ?>
+                        <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                            <img src="public/<?= htmlspecialchars($news['image_path'] ?? 'default-image.jpg'); ?>" 
+                                alt="<?= htmlspecialchars($news['title']); ?>" 
+                                class="w-full h-60 object-cover mb-4 rounded-md">
+                            <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($news['title']); ?></h3>
+                            <p class="text-md text-black mt-2 flex-grow">
+                                <?= htmlspecialchars(substr($news['description'], 0, 100)); ?>...
+                            </p>
+                            <a href="article.php?id=<?= htmlspecialchars($news['news_id']); ?>" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p class="text-uphsl-yellow text-center">No news available at the moment.</p>
+                <?php endif; ?>
             </div>
         </div>
     </section>
 
     <section id="calendar" class="py-10 bg-uphsl-yellow">
         <div class="max-w-screen-xl mx-auto px-4">
-            <h2 class="text-5xl text-uphsl-blue text-center mb-8">Calendar of Events</h2>
+            <h2 class="text-5xl text-uphsl-blue text-center mb-8">Upcoming Events</h2>
 
-            <?php
-            // Get the current month and year
-            $month = date('m');
-            $year = date('Y');
-
-            // Get the first day of the month and the number of days in the month
-            $firstDayOfMonth = strtotime("$year-$month-01");
-            $daysInMonth = date('t', $firstDayOfMonth);
-            $firstDayOfWeek = date('w', $firstDayOfMonth);
-
-            // Get the month name
-            $monthName = date('F', $firstDayOfMonth);
-            ?>
-
-            <!-- Month Header -->
-            <div class="text-3xl text-uphsl-maroon text-center mb-4">
-                <?php echo "$monthName $year"; ?>
-            </div>
-
-            <div class="grid grid-cols-7 gap-4">
-                <!-- Days of the Week -->
-                <div class="font-bold text-center text-uphsl-maroon">Sun</div>
-                <div class="font-bold text-center text-uphsl-maroon">Mon</div>
-                <div class="font-bold text-center text-uphsl-maroon">Tue</div>
-                <div class="font-bold text-center text-uphsl-maroon">Wed</div>
-                <div class="font-bold text-center text-uphsl-maroon">Thu</div>
-                <div class="font-bold text-center text-uphsl-maroon">Fri</div>
-                <div class="font-bold text-center text-uphsl-maroon">Sat</div>
-
-                <?php
-                // Fill in empty cells for days before the first of the month
-                for ($i = 0; $i < $firstDayOfWeek; $i++) {
-                    echo '<div></div>';
-                }
-
-                // Loop through the days of the month
-                for ($day = 1; $day <= $daysInMonth; $day++) {
-                    // Format the event date
-                    $eventDate = date('l, F j, Y', strtotime("$year-$month-$day")); // Full date format
-                    $eventTitle = "Event Title"; // Placeholder event title
-                    $eventDescription = "Event on $eventDate"; // Placeholder event description
-                    
-                    echo '<div class="bg-white p-4 rounded-lg shadow-lg">';
-                    echo "<div class='text-2xl font-bold text-uphsl-maroon mb-2'>$day</div>"; // Display day number
-                    echo "<h3 class='text-lg font-bold text-uphsl-maroon'>$eventTitle</h3>"; // Display event title
-                    echo "<p class='text-md text-black'>$eventDescription</p>"; // Display event description
-                    echo '<a href="event.php" class="text-uphsl-blue mt-2 inline-block hover:underline">View Details</a>';
-                    echo '</div>';
-                }
-                ?>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <?php if ($eventsResult && $eventsResult->num_rows > 0): ?>
+                    <?php while ($event = $eventsResult->fetch_assoc()): ?>
+                        <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                            <img src="public/<?= htmlspecialchars($event['image_path'] ?? 'default-image.jpg'); ?>" 
+                                alt="<?= htmlspecialchars($event['title']); ?>" 
+                                class="w-full h-60 object-cover mb-4 rounded-md">
+                            <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($event['title']); ?></h3>
+                            <p class="text-md text-black mt-2">Date: 
+                                <?= htmlspecialchars(date("F j, Y", strtotime($event['date_start']))); ?> 
+                                - <?= htmlspecialchars(date("F j, Y", strtotime($event['date_end']))); ?>
+                            </p>
+                            <p class="text-md text-black mt-2">Location: <?= htmlspecialchars($event['location']); ?></p>
+                            <p class="text-md text-black mt-2 flex-grow">
+                                <?= htmlspecialchars(substr($event['description'], 0, 100)); ?>...
+                            </p>
+                            <a href="event-details.php?id=<?= htmlspecialchars($event['event_id']); ?>" class="text-uphsl-blue mt-4 inline-block">Learn more</a>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p class="text-uphsl-blue text-center">No events available at the moment.</p>
+                <?php endif; ?>
             </div>
         </div>
     </section>
