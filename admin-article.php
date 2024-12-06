@@ -24,57 +24,60 @@ include 'connection.php';
             <!-- Article Content Section Spans Entire Width -->
             <div class="bg-white p-8 rounded-lg shadow-lg my-8 w-full">
                 <!-- Article Header -->
-                <h1 class="text-4xl font-bold text-uphsl-maroon mb-4">Edit Article</h1>
+                <h1 class="text-4xl font-bold text-uphsl-maroon mb-4">News Title</h1>
 
-                <!-- Article Info Form -->
-                <form action="update_article.php" method="POST" onsubmit="return confirmUpdate();">
-                    <div class="flex justify-between text-sm text-gray-500 mb-6">
-                        <div>
-                            <label for="postDate" class="block">Posted on:</label>
-                            <input type="date" id="postDate" name="postDate" value="2024-11-06" class="border rounded p-2" required>
-                        </div>
-                        <div>
-                            <label for="author" class="block">Author:</label>
-                            <input type="text" id="author" name="author" value="John Doe" class="border rounded p-2" required>
-                        </div>
+                <!-- Article Info -->
+                <div class="flex justify-between text-sm text-gray-500 mb-6">
+                    <p><strong>Posted on:</strong> November 6, 2024</p>
+                    <p><strong>Author:</strong> John Doe</p>
+                </div>
+
+                <!-- Media Section (Image or Video) -->
+                <div class="mb-6 w-full">
+                    <div class="w-full">
+                        <!-- Placeholder for Image -->
+                        <img src="public/cca-cover.png" alt="Main Media" class="w-full h-full object-cover rounded-md mb-4">
                     </div>
+                </div>
 
-                    <!-- Editable Article Title -->
-                    <div class="mb-6">
-                        <label for="title" class="block">Article Title:</label>
-                        <input type="text" id="title" name="title" value="Your Article Title Here" class="border rounded p-2 w-full" required>
-                    </div>
+                <!-- Article Content -->
+                <div class="text-lg text-black leading-relaxed space-y-4">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi nec risus eleifend accumsan. Proin vel
+                        massa nec ligula viverra tincidunt ac eget purus. Ut euismod varius orci, at varius mi dictum nec. Fusce vel leo
+                        ut justo gravida interdum. Cras feugiat scelerisque urna, a volutpat lorem pellentesque eget. Nullam maximus, metus
+                        eget dapibus tempus, lorem augue tempor odio, vel efficitur augue est in nunc.
+                
+                        Morbi vulputate, arcu et sodales pretium, libero dui sodales nulla, in facilisis enim felis eget ante. In feugiat,
+                        ante at convallis consequat, urna leo tincidunt urna, at sollicitudin mi elit vitae odio. Phasellus fringilla enim
+                        vitae nibh pharetra, ac rhoncus arcu fermentum. Donec vehicula diam ac feugiat sodales.
+                    
+                        Integer quis quam ac sapien laoreet lobortis in non leo. Sed vulputate, lorem sed ultricies vulputate, risus turpis
+                        ultricies velit, nec dictum orci nunc a nulla. Aliquam erat volutpat. Aenean convallis enim et dui tristique, nec
+                        vulputate urna interdum. Vivamus quis felis ut mi cursus cursus in nec orci.
+                    </p>
+                </div>
 
-                    <!-- Media Section (Image or Video) -->
-                    <div class="mb-6 w-full">
+                <div class="flex flex-col md:flex-row md:space-x-4">
+                    <div class="mb-6 w-full md:w-1/3">
                         <div class="w-full">
-                            <label for="image" class="block">Article Image URL:</label>
-                            <input type="text" id="image" name="image" value="public/cca-cover.png" class="border rounded p-2 w-full" required>
-                            <img src="public/cca-cover.png" alt="Article Image" class="w-full h-full object-cover rounded-md mb-4 mt-2">
+                            <!-- Placeholder for Banner Image -->
+                            <img src="public/cca-cover.png" alt="Sub Media 1" class="w-full h-full object-cover rounded-md mb-4">
                         </div>
+                    </div>
+                    <div class="mb-6 w-full md:w-1/3">
                         <div class="w-full">
-                            <label for="video" class="block">Video Embed URL:</label>
-                            <input type="text" id="video" name="video" value="https://www.youtube.com/embed/your-video-id" class="border rounded p-2 w-full" required>
-                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/your-video-id" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded-md mt-2"></iframe>
+                            <!-- Placeholder for Banner Image -->
+                            <img src="public/cca-cover.png" alt="Sub Media 2" class="w-full h-full object-cover rounded-md mb-4">
                         </div>
                     </div>
-
-                    <!-- Article Content -->
-                    <div class="text-lg text-black leading-relaxed space-y-4">
-                        <label for="content" class="block">Article Content:</label>
-                        <textarea id="content" name="content" rows="10" class="border rounded p-2 w-full" required>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi nec risus eleifend accumsan. Proin vel
-                            massa nec ligula viverra tincidunt ac eget purus. Ut euismod varius orci, at varius mi dictum nec. Fusce vel leo
-                            ut justo gravida interdum. Cras feugiat scelerisque urna, a volutpat lorem pellentesque eget. Nullam maximus, metus
-                            eget dapibus tempus, lorem augue tempor odio, vel efficitur augue est in nunc.
-                        </textarea>
+                    <div class="mb-6 w-full md:w-1/3">
+                        <div class="w-full">
+                            <!-- Placeholder for Banner Image -->
+                            <img src="public/cca-cover.png" alt="Sub Media 3" class="w-full h-full object-cover rounded-md mb-4">
+                        </div>
                     </div>
-
-                    <!-- Update Button -->
-                    <div class="mt-6">
-                        <button type="submit" class="bg-uphsl-maroon text-white px-4 py-2 rounded">Update Article</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </section>

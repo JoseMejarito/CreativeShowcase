@@ -43,38 +43,47 @@
     // Fetch the latest 3 news entries
     try {
         $query = $conn->prepare("
-            SELECT news.news_id, news.title, news.content, media.file_path AS image_path 
-            FROM news 
-            LEFT JOIN media ON media.related_id = news.news_id AND media.is_news = 1 
-            ORDER BY news.date_posted DESC 
+            SELECT 
+                n.news_id, 
+                n.title, 
+                n.content, 
+                n.main_media AS image_path 
+            FROM news n 
+            ORDER BY n.date_posted DESC 
             LIMIT 3
         ");
         $query->execute();
         $result = $query->get_result();
     } catch (Exception $e) {
         // Handle exceptions (e.g., database errors)
-        echo "Error fetching news: " . $e->getMessage();
+        echo "<p class='text-red-600'>Error fetching news: " . htmlspecialchars($e->getMessage()) . "</p>";
         $result = null;
     }
     ?>
 
     <section id="section2" class="text-center py-10 bg-uphsl-yellow">
-        <h1 class="text-7xl text-black">LATEST NEWS</h1><br>
+        <h1 class="text-7xl text-black font-anton">LATEST NEWS</h1>
+        <br>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-20 lg:px-40">
             <?php if ($result && $result->num_rows > 0): ?>
                 <?php while ($news = $result->fetch_assoc()): ?>
                     <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                        <img src="public/<?= htmlspecialchars($news['image_path'] ?? 'default-image.jpg'); ?>" 
+                        <img 
+                            src="<?= htmlspecialchars($news['image_path'] ?? 'default-image.jpg'); ?>" 
                             alt="<?= htmlspecialchars($news['title']); ?>" 
                             class="w-full h-60 object-cover mb-4 rounded-md">
+                        
                         <h3 class="text-3xl font-bold text-uphsl-maroon">
                             <?= htmlspecialchars($news['title']); ?>
                         </h3>
+                        
                         <p class="text-md text-black mt-2 flex-grow">
-                            <?= htmlspecialchars(substr($news['description'], 0, 100)); ?>...
+                            <?= htmlspecialchars(substr($news['content'], 0, 100)); ?>...
                         </p>
-                        <a href="article.php?id=<?= htmlspecialchars($news['news_id']); ?>" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                        
+                        <a href="article.php?id=<?= htmlspecialchars($news['news_id']); ?>" 
+                        class="text-uphsl-blue mt-4 inline-block">Read more</a>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
@@ -83,7 +92,8 @@
         </div>
 
         <div class="mt-8">
-            <a href="news&events.php" class="inline-block bg-uphsl-blue text-white py-3 px-6 rounded-full text-lg">View All Events</a>
+            <a href="news&events.php" 
+            class="inline-block bg-uphsl-blue text-white py-3 px-6 rounded-full text-lg">View All News</a>
         </div>
     </section>
 

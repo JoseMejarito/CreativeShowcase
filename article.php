@@ -31,11 +31,7 @@ include 'connection.php';
                 <div class="mb-6 w-full">
                     <div class="w-full">
                         <!-- Placeholder for Image -->
-                        <img src="public/cca-cover.png" alt="Article Image" class="w-full h-full object-cover rounded-md mb-4">
-                    </div>
-                    <!-- Optional: Video Embed (use the iframe tag for YouTube, Vimeo, etc.) -->
-                    <div class="w-full">
-                        <iframe width="100%" height="400" src="https://www.youtube.com/embed/your-video-id" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded-md"></iframe>
+                        <img src="public/cca-cover.png" alt="Main Media" class="w-full h-full object-cover rounded-md mb-4">
                     </div>
                 </div>
 
@@ -46,19 +42,36 @@ include 'connection.php';
                         massa nec ligula viverra tincidunt ac eget purus. Ut euismod varius orci, at varius mi dictum nec. Fusce vel leo
                         ut justo gravida interdum. Cras feugiat scelerisque urna, a volutpat lorem pellentesque eget. Nullam maximus, metus
                         eget dapibus tempus, lorem augue tempor odio, vel efficitur augue est in nunc.
-                    </p>
-
-                    <p>
+                
                         Morbi vulputate, arcu et sodales pretium, libero dui sodales nulla, in facilisis enim felis eget ante. In feugiat,
                         ante at convallis consequat, urna leo tincidunt urna, at sollicitudin mi elit vitae odio. Phasellus fringilla enim
                         vitae nibh pharetra, ac rhoncus arcu fermentum. Donec vehicula diam ac feugiat sodales.
-                    </p>
-
-                    <p>
+                    
                         Integer quis quam ac sapien laoreet lobortis in non leo. Sed vulputate, lorem sed ultricies vulputate, risus turpis
                         ultricies velit, nec dictum orci nunc a nulla. Aliquam erat volutpat. Aenean convallis enim et dui tristique, nec
                         vulputate urna interdum. Vivamus quis felis ut mi cursus cursus in nec orci.
                     </p>
+                </div>
+
+                <div class="flex flex-col md:flex-row md:space-x-4">
+                    <div class="mb-6 w-full md:w-1/3">
+                        <div class="w-full">
+                            <!-- Placeholder for Banner Image -->
+                            <img src="public/cca-cover.png" alt="Sub Media 1" class="w-full h-full object-cover rounded-md mb-4">
+                        </div>
+                    </div>
+                    <div class="mb-6 w-full md:w-1/3">
+                        <div class="w-full">
+                            <!-- Placeholder for Banner Image -->
+                            <img src="public/cca-cover.png" alt="Sub Media 2" class="w-full h-full object-cover rounded-md mb-4">
+                        </div>
+                    </div>
+                    <div class="mb-6 w-full md:w-1/3">
+                        <div class="w-full">
+                            <!-- Placeholder for Banner Image -->
+                            <img src="public/cca-cover.png" alt="Sub Media 3" class="w-full h-full object-cover rounded-md mb-4">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

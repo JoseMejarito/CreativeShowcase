@@ -19,59 +19,56 @@ include 'connection.php';
     </section>
     
     <?php
-    // Error reporting
+    // Enable error reporting for debugging
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
+    // Database connection
     try {
         $conn = new mysqli("localhost", "root", "", "creative_showcase");
         if ($conn->connect_error) {
             throw new Exception("Database connection failed: " . $conn->connect_error);
         }
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        echo "<p class='text-red-600'>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
         exit;
     }
 
-    // Fetch Artists with their media
+    // Fetch Artists with media
     try {
         $artistQuery = $conn->prepare("
             SELECT 
-                artists.artist_id, 
-                artists.name, 
-                artists.bio, 
-                media.file_path AS profile_image 
-            FROM 
-                artists 
-            LEFT JOIN 
-                media ON media.related_id = artists.artist_id AND media.is_artist = 1 
+                a.artist_id, 
+                a.name, 
+                a.bio, 
+                a.main_media AS profile_image 
+            FROM artists a 
+            ORDER BY a.name ASC 
             LIMIT 6
         ");
         $artistQuery->execute();
         $artistResult = $artistQuery->get_result();
     } catch (Exception $e) {
-        echo "Error fetching artists: " . $e->getMessage();
+        echo "<p class='text-red-600'>Error fetching artists: " . htmlspecialchars($e->getMessage()) . "</p>";
         $artistResult = null;
     }
 
-    // Fetch Groups with their media
+    // Fetch Groups with media
     try {
         $groupQuery = $conn->prepare("
             SELECT 
-                groups.group_id, 
-                groups.group_name AS name, 
-                groups.description, 
-                media.file_path AS image 
-            FROM 
-                groups 
-            LEFT JOIN 
-                media ON media.related_id = groups.group_id AND media.is_group = 1 
+                g.group_id, 
+                g.group_name AS name, 
+                g.description, 
+                g.main_media AS image 
+            FROM groups g 
+            ORDER BY g.group_name ASC 
             LIMIT 6
         ");
         $groupQuery->execute();
         $groupResult = $groupQuery->get_result();
     } catch (Exception $e) {
-        echo "Error fetching groups: " . $e->getMessage();
+        echo "<p class='text-red-600'>Error fetching groups: " . htmlspecialchars($e->getMessage()) . "</p>";
         $groupResult = null;
     }
     ?>
@@ -84,14 +81,15 @@ include 'connection.php';
                 <?php if ($artistResult && $artistResult->num_rows > 0): ?>
                     <?php while ($artist = $artistResult->fetch_assoc()): ?>
                         <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                            <img src="public/<?= htmlspecialchars($artist['profile_image'] ?? 'default-image.jpg'); ?>" 
+                            <img src="<?= htmlspecialchars($artist['profile_image'] ?? 'default-image.jpg'); ?>" 
                                 alt="<?= htmlspecialchars($artist['name']); ?>" 
                                 class="w-full h-60 object-cover mb-4 rounded-md">
                             <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($artist['name']); ?></h3>
                             <p class="text-md text-black mt-2 flex-grow">
                                 <?= htmlspecialchars(substr($artist['bio'], 0, 100)); ?>...
                             </p>
-                            <a href="artist-profile.php?id=<?= htmlspecialchars($artist['artist_id']); ?>" class="text-uphsl-blue mt-4 inline-block">View Profile</a>
+                            <a href="artist-profile.php?id=<?= htmlspecialchars($artist['artist_id']); ?>" 
+                            class="text-uphsl-blue mt-4 inline-block">View Profile</a>
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -109,14 +107,15 @@ include 'connection.php';
                 <?php if ($groupResult && $groupResult->num_rows > 0): ?>
                     <?php while ($group = $groupResult->fetch_assoc()): ?>
                         <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                            <img src="public/<?= htmlspecialchars($group['image'] ?? 'default-image.jpg'); ?>" 
+                            <img src="<?= htmlspecialchars($group['image'] ?? 'default-image.jpg'); ?>" 
                                 alt="<?= htmlspecialchars($group['name']); ?>" 
                                 class="w-full h-60 object-cover mb-4 rounded-md">
                             <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($group['name']); ?></h3>
                             <p class="text-md text-black mt-2 flex-grow">
                                 <?= htmlspecialchars(substr($group['description'], 0, 100)); ?>...
                             </p>
-                            <a href="group-details.php?id=<?= htmlspecialchars($group['group_id']); ?>" class="text-uphsl-blue mt-4 inline-block">Learn more</a>
+                            <a href="group-details.php?id=<?= htmlspecialchars($group['group_id']); ?>" 
+                            class="text-uphsl-blue mt-4 inline-block">Learn more</a>
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>

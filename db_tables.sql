@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 03, 2024 at 05:07 PM
+-- Generation Time: Dec 06, 2024 at 03:56 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -47,7 +47,8 @@ CREATE TABLE `artists` (
   `bio` text DEFAULT NULL,
   `department_id` int(11) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `main_media` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -61,7 +62,8 @@ CREATE TABLE `collections` (
   `collection_name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `main_media` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -106,7 +108,11 @@ CREATE TABLE `events` (
   `location` varchar(255) NOT NULL,
   `collection_id` int(11) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `main_media` varchar(255) NOT NULL,
+  `sub_media1` varchar(255) NOT NULL,
+  `sub_media2` varchar(255) DEFAULT NULL,
+  `sub_media3` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -118,7 +124,8 @@ CREATE TABLE `events` (
 CREATE TABLE `groups` (
   `group_id` int(11) UNSIGNED NOT NULL,
   `group_name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `main_media` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -135,34 +142,19 @@ CREATE TABLE `group_artists` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `media`
---
-
-CREATE TABLE `media` (
-  `media_id` int(11) UNSIGNED NOT NULL,
-  `file_path` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
-  `media_type` enum('image','video') NOT NULL,
-  `is_artist` tinyint(1) DEFAULT 0,
-  `is_news` tinyint(1) DEFAULT 0,
-  `is_event` tinyint(1) DEFAULT 0,
-  `is_collection` tinyint(1) DEFAULT 0,
-  `related_id` int(11) UNSIGNED DEFAULT NULL,
-  `upload_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `is_group` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `news`
 --
 
 CREATE TABLE `news` (
   `news_id` int(11) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
+  `author` varchar(255) DEFAULT NULL,
   `content` text NOT NULL,
-  `date_posted` timestamp NOT NULL DEFAULT current_timestamp()
+  `date_posted` timestamp NOT NULL DEFAULT current_timestamp(),
+  `main_media` varchar(255) NOT NULL,
+  `sub_media1` varchar(255) NOT NULL,
+  `sub_media2` varchar(255) DEFAULT NULL,
+  `sub_media3` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -178,7 +170,11 @@ CREATE TABLE `works` (
   `artist_id` int(11) UNSIGNED DEFAULT NULL,
   `group_id` int(11) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `main_media` varchar(255) NOT NULL,
+  `sub_media1` varchar(255) NOT NULL,
+  `sub_media2` varchar(255) DEFAULT NULL,
+  `sub_media3` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -243,12 +239,6 @@ ALTER TABLE `group_artists`
   ADD KEY `artist_id` (`artist_id`);
 
 --
--- Indexes for table `media`
---
-ALTER TABLE `media`
-  ADD PRIMARY KEY (`media_id`);
-
---
 -- Indexes for table `news`
 --
 ALTER TABLE `news`
@@ -309,12 +299,6 @@ ALTER TABLE `events`
 --
 ALTER TABLE `groups`
   MODIFY `group_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `media`
---
-ALTER TABLE `media`
-  MODIFY `media_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `news`

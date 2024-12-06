@@ -32,7 +32,7 @@ include 'connection.php';
                 <div class="mb-6 w-full">
                     <div class="w-full">
                         <!-- Placeholder for Banner Image -->
-                        <img src="public/cca-cover.png" alt="Event Banner" class="w-full h-full object-cover rounded-md mb-4">
+                        <img src="public/cca-cover.png" alt="Main Media" class="w-full h-full object-cover rounded-md mb-4">
                     </div>
                 </div>
 
@@ -41,13 +41,32 @@ include 'connection.php';
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi nec risus eleifend accumsan. Proin vel
                         massa nec ligula viverra tincidunt ac eget purus. Ut euismod varius orci, at varius mi dictum nec.
-                    </p>
-                    <p>
+
                         Cras feugiat scelerisque urna, a volutpat lorem pellentesque eget. Nullam maximus, metus eget dapibus tempus, lorem
                         augue tempor odio, vel efficitur augue est in nunc.
                     </p>
                 </div>
 
+                <div class="flex flex-col md:flex-row md:space-x-4">
+                    <div class="mb-6 w-full md:w-1/3">
+                        <div class="w-full">
+                            <!-- Placeholder for Banner Image -->
+                            <img src="public/cca-cover.png" alt="Sub Media 1" class="w-full h-full object-cover rounded-md mb-4">
+                        </div>
+                    </div>
+                    <div class="mb-6 w-full md:w-1/3">
+                        <div class="w-full">
+                            <!-- Placeholder for Banner Image -->
+                            <img src="public/cca-cover.png" alt="Sub Media 2" class="w-full h-full object-cover rounded-md mb-4">
+                        </div>
+                    </div>
+                    <div class="mb-6 w-full md:w-1/3">
+                        <div class="w-full">
+                            <!-- Placeholder for Banner Image -->
+                            <img src="public/cca-cover.png" alt="Sub Media 3" class="w-full h-full object-cover rounded-md mb-4">
+                        </div>
+                    </div>
+                </div>
                 <!-- Collection Info (Optional) -->
                 <div class="mt-6">
                     <h3 class="text-2xl font-bold text-uphsl-maroon">Collection</h3>
