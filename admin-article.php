@@ -21,6 +21,7 @@ include 'connection.php';
 
     <?php
 
+    // Check if the news ID is provided
     if (isset($_GET['id'])) {
         $id = intval($_GET['id']);
         $query = $conn->prepare("SELECT * FROM news WHERE news_id = ?");
@@ -28,6 +29,10 @@ include 'connection.php';
         $query->execute();
         $result = $query->get_result();
         $news = $result->fetch_assoc();
+
+        if (!$news) {
+            die("No news article found with the provided ID.");
+        }
     } else {
         die("News ID not provided.");
     }
@@ -49,6 +54,13 @@ include 'connection.php';
                     if (!in_array($fileType, $allowedTypes)) {
                         throw new Exception("Invalid file type: " . $fileType);
                     }
+
+                    // Optional: Check file size here (e.g., 5MB max)
+                    if ($file['size'] > 5 * 1024 * 1024) {
+                        throw new Exception("File size exceeds the maximum allowed size of 5MB.");
+                    }
+
+                    // Generate unique file path
                     $filePath = $target_dir . uniqid() . "-" . basename($file["name"]);
                     if (move_uploaded_file($file["tmp_name"], $filePath)) {
                         return $filePath;
@@ -65,8 +77,8 @@ include 'connection.php';
             $sub_media2 = handleFileUpload($_FILES['sub_media2'], ['image/jpeg', 'image/png'], $news['sub_media2']);
             $sub_media3 = handleFileUpload($_FILES['sub_media3'], ['image/jpeg', 'image/png'], $news['sub_media3']);
 
-            // Update query
-            $updateQuery = $conn->prepare("UPDATE news SET title = ?, content = ?, author = ?, main_media = ?, sub_media1 = ?, sub_media2 = ?, sub_media3 = ? WHERE id = ?");
+            // Update query (corrected column name `news_id`)
+            $updateQuery = $conn->prepare("UPDATE news SET title = ?, content = ?, author = ?, main_media = ?, sub_media1 = ?, sub_media2 = ?, sub_media3 = ? WHERE news_id = ?");
             $updateQuery->bind_param("sssssssi", $title, $content, $author, $main_media, $sub_media1, $sub_media2, $sub_media3, $id);
 
             if ($updateQuery->execute()) {
@@ -81,9 +93,10 @@ include 'connection.php';
     }
     ?>
 
+    <!-- HTML Form for Editing News -->
     <section class="py-10 bg-uphsl-blue">
         <div class="max-w-screen-xl mx-auto px-4">
-            <form action="edit-news.php?id=<?= $id ?>" method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-lg shadow-lg my-8 w-full">
+            <form action="admin-article.php?id=<?= $id ?>" method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-lg shadow-lg my-8 w-full">
                 <!-- Article Header -->
                 <h1 class="text-4xl font-bold text-uphsl-maroon mb-4">Edit News Article</h1>
 
@@ -135,13 +148,10 @@ include 'connection.php';
 
                 <!-- Submit and Cancel Buttons -->
                 <div class="flex justify-end space-x-4">
-                    <!-- Cancel Button -->
                     <a href="admin-news.php" 
                     class="px-6 py-2 text-gray-600 bg-gray-200 hover:bg-gray-300 rounded-md">
                         Cancel
                     </a>
-
-                    <!-- Submit Button -->
                     <button type="submit" 
                             class="px-6 py-2 text-white bg-uphsl-maroon hover:bg-uphsl-maroon-dark rounded-md">
                         Save Changes
