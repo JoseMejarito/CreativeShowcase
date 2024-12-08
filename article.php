@@ -14,69 +14,88 @@ include 'connection.php';
 <body class="anton-regular">
     <?php include 'navbar.php'; ?>
 
+    <?php
+
+    try {
+        // Get the news ID from the URL
+        if (!isset($_GET['id'])) {
+            throw new Exception("News ID is missing.");
+        }
+        $news_id = intval($_GET['id']);
+
+        // Fetch the news article from the database
+        $stmt = $conn->prepare("SELECT * FROM news WHERE news_id = ?");
+        $stmt->bind_param("i", $news_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            throw new Exception("News article not found.");
+        }
+
+        // Fetch the data
+        $news = $result->fetch_assoc();
+    } catch (Exception $e) {
+        echo "<p>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+        exit;
+    }
+    ?>
+
     <section class="py-10 bg-uphsl-blue">
         <div class="max-w-screen-xl mx-auto px-4">
             <!-- Article Content Section Spans Entire Width -->
             <div class="bg-white p-8 rounded-lg shadow-lg my-8 w-full">
                 <!-- Article Header -->
-                <h1 class="text-4xl font-bold text-uphsl-maroon mb-4">News Title</h1>
+                <h1 class="text-4xl font-bold text-uphsl-maroon mb-4"><?= htmlspecialchars($news['title']) ?></h1>
 
                 <!-- Article Info -->
                 <div class="flex justify-between text-sm text-gray-500 mb-6">
-                    <p><strong>Posted on:</strong> November 6, 2024</p>
-                    <p><strong>Author:</strong> John Doe</p>
+                    <p><strong>Posted on:</strong> <?= date("F j, Y", strtotime($news['date_posted'])) ?></p>
+                    <p><strong>Author:</strong> <?= htmlspecialchars($news['author']) ?></p>
                 </div>
 
                 <!-- Media Section (Image or Video) -->
                 <div class="mb-6 w-full">
                     <div class="w-full">
-                        <!-- Placeholder for Image -->
-                        <img src="public/cca-cover.png" alt="Main Media" class="w-full h-full object-cover rounded-md mb-4">
+                        <!-- Main Media -->
+                        <?php if (!empty($news['main_media'])): ?>
+                            <img src="<?= htmlspecialchars($news['main_media']) ?>" alt="Main Media" class="w-full h-full object-cover rounded-md mb-4">
+                        <?php else: ?>
+                            <p class="text-gray-500">No main media available.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
 
                 <!-- Article Content -->
-                <div class="text-lg text-black leading-relaxed space-y-4">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi nec risus eleifend accumsan. Proin vel
-                        massa nec ligula viverra tincidunt ac eget purus. Ut euismod varius orci, at varius mi dictum nec. Fusce vel leo
-                        ut justo gravida interdum. Cras feugiat scelerisque urna, a volutpat lorem pellentesque eget. Nullam maximus, metus
-                        eget dapibus tempus, lorem augue tempor odio, vel efficitur augue est in nunc.
-                
-                        Morbi vulputate, arcu et sodales pretium, libero dui sodales nulla, in facilisis enim felis eget ante. In feugiat,
-                        ante at convallis consequat, urna leo tincidunt urna, at sollicitudin mi elit vitae odio. Phasellus fringilla enim
-                        vitae nibh pharetra, ac rhoncus arcu fermentum. Donec vehicula diam ac feugiat sodales.
-                    
-                        Integer quis quam ac sapien laoreet lobortis in non leo. Sed vulputate, lorem sed ultricies vulputate, risus turpis
-                        ultricies velit, nec dictum orci nunc a nulla. Aliquam erat volutpat. Aenean convallis enim et dui tristique, nec
-                        vulputate urna interdum. Vivamus quis felis ut mi cursus cursus in nec orci.
-                    </p>
-                </div>
+                <div class="text-xl text-black text-center leading-relaxed space-y-4">
+                    <p><?= nl2br(htmlspecialchars($news['content'])) ?></p>
+                </div><br><br>
 
-                <div class="flex flex-col md:flex-row md:space-x-4">
-                    <div class="mb-6 w-full md:w-1/3">
-                        <div class="w-full">
-                            <!-- Placeholder for Banner Image -->
-                            <img src="public/cca-cover.png" alt="Sub Media 1" class="w-full h-full object-cover rounded-md mb-4">
-                        </div>
-                    </div>
-                    <div class="mb-6 w-full md:w-1/3">
-                        <div class="w-full">
-                            <!-- Placeholder for Banner Image -->
-                            <img src="public/cca-cover.png" alt="Sub Media 2" class="w-full h-full object-cover rounded-md mb-4">
-                        </div>
-                    </div>
-                    <div class="mb-6 w-full md:w-1/3">
-                        <div class="w-full">
-                            <!-- Placeholder for Banner Image -->
-                            <img src="public/cca-cover.png" alt="Sub Media 3" class="w-full h-full object-cover rounded-md mb-4">
-                        </div>
-                    </div>
+                <!-- Sub Media Section -->
+                <div class="flex flex-wrap justify-center md:justify-start md:space-x-4">
+                    <?php
+                    $availableMedia = [];
+                    for ($i = 1; $i <= 3; $i++) {
+                        if (!empty($news["sub_media$i"])) {
+                            $availableMedia[] = $news["sub_media$i"];
+                        }
+                    }
+
+                    if (empty($availableMedia)): ?>
+                        <p class="text-gray-500 text-center w-full">No additional media available.</p>
+                    <?php else:
+                        foreach ($availableMedia as $index => $subMedia): ?>
+                            <div class="mb-6 w-full md:w-<?= count($availableMedia) === 1 ? '1/2' : '1/3' ?> flex justify-center">
+                                <div class="w-full max-w-sm">
+                                    <img src="<?= htmlspecialchars($subMedia) ?>" alt="Sub Media <?= $index + 1 ?>" class="w-full h-full object-cover rounded-md mb-4">
+                                </div>
+                            </div>
+                        <?php endforeach;
+                    endif; ?>
                 </div>
             </div>
         </div>
     </section>
-
 
     <?php include 'footer.php'; ?>
 </body>

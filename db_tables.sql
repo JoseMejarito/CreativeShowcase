@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2024 at 03:56 PM
+-- Generation Time: Dec 08, 2024 at 09:24 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -106,13 +106,23 @@ CREATE TABLE `events` (
   `date_start` date NOT NULL,
   `date_end` date DEFAULT NULL,
   `location` varchar(255) NOT NULL,
-  `collection_id` int(11) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `main_media` varchar(255) NOT NULL,
   `sub_media1` varchar(255) NOT NULL,
   `sub_media2` varchar(255) DEFAULT NULL,
   `sub_media3` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_collections`
+--
+
+CREATE TABLE `event_collections` (
+  `event_id` int(11) UNSIGNED NOT NULL,
+  `collection_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -156,6 +166,15 @@ CREATE TABLE `news` (
   `sub_media2` varchar(255) DEFAULT NULL,
   `sub_media3` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`news_id`, `title`, `author`, `content`, `date_posted`, `main_media`, `sub_media1`, `sub_media2`, `sub_media3`) VALUES
+(5, 'Test News 1', 'John Doe', 'Brief description', '2024-12-07 11:51:45', 'public/675436d112359-news1.jpg', 'public/675436d113170-cca-cover.png', NULL, NULL),
+(6, 'Test News 2', 'John Doe', 'Brief description of the news', '2024-12-07 11:52:34', 'public/6754370213f9e-news2.jpg', 'public/67543702143ad-cca-cover.png', NULL, NULL),
+(7, 'Test News 3', 'John Doe', 'Brief Description of News 3', '2024-12-07 11:53:51', 'public/6754374f7be9a-news3.jpg', 'public/6754374f7c1b8-cca-cover.png', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -222,8 +241,14 @@ ALTER TABLE `departments`
 -- Indexes for table `events`
 --
 ALTER TABLE `events`
-  ADD PRIMARY KEY (`event_id`),
-  ADD KEY `fk_events_collection` (`collection_id`);
+  ADD PRIMARY KEY (`event_id`);
+
+--
+-- Indexes for table `event_collections`
+--
+ALTER TABLE `event_collections`
+  ADD PRIMARY KEY (`event_id`,`collection_id`),
+  ADD KEY `fk_event_collections_collection` (`collection_id`);
 
 --
 -- Indexes for table `groups`
@@ -304,7 +329,7 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `news_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `news_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `works`
@@ -323,10 +348,11 @@ ALTER TABLE `artists`
   ADD CONSTRAINT `fk_artists_department` FOREIGN KEY (`department_id`) REFERENCES `departments` (`department_id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `events`
+-- Constraints for table `event_collections`
 --
-ALTER TABLE `events`
-  ADD CONSTRAINT `fk_events_collection` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`collection_id`) ON DELETE SET NULL;
+ALTER TABLE `event_collections`
+  ADD CONSTRAINT `fk_event_collections_collection` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`collection_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_event_collections_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `group_artists`
