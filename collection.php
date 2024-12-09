@@ -21,43 +21,66 @@
         <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">COLLECTIONS</h1><br>
     </section>
 
+    <?php
+    $collections = [];
+    $limit = 6; // Number of collections per page
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $offset = ($page - 1) * $limit;
+
+    // Fetch collections from the database with pagination
+    $query = $conn->prepare("SELECT collection_id, main_media, collection_name, description FROM collections LIMIT ? OFFSET ?");
+    $query->bind_param("ii", $limit, $offset);
+    $query->execute();
+    $result = $query->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        $collections[] = $row;
+    }
+
+    // Get the total count for pagination
+    $count_query = $conn->query("SELECT COUNT(*) AS total FROM collections");
+    $total_collections = $count_query->fetch_assoc()['total'];
+    $total_pages = ceil($total_collections / $limit);
+
+    $conn->close();
+    ?>
+
     <section id="collections" class="py-10 bg-uphsl-blue">
         <div class="max-w-screen-xl mx-auto px-4">
             <h2 class="text-5xl text-uphsl-yellow text-center mb-8">Explore Our Collections</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <!-- Collection Item: Dance -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/collection-dance.jpg" alt="Dance" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Dance</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Explore breathtaking performances and movements captured through dance.</p>
-                    <a href="#" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <!-- Collection Item: Music -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/collection-music.jpg" alt="Music" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Music</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Musical compositions and performances that highlight artistic talents and skills.</p>
-                    <a href="#" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <!-- Collection Item: Acting -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/collection-acting.jpg" alt="Acting" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Theater</h3>
-                    <p class="text-md text-black mt-2 flex-grow">A look into performances that bring stories to life.</p>
-                    <a href="#" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
+                <?php foreach ($collections as $collection): ?>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                        <img src="<?= htmlspecialchars($collection['main_media']) ?>" 
+                            alt="<?= htmlspecialchars($collection['collection_name']) ?>" 
+                            class="w-full h-60 object-cover mb-4 rounded-md">
+                        <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($collection['collection_name']) ?></h3>
+                        <p class="text-md text-black mt-2 flex-grow">
+                            <?= htmlspecialchars(substr($collection['description'], 0, 100)) ?>...
+                        </p>
+                        <a href="collection.php?collection_id=<?= htmlspecialchars($collection['collection_id']) ?>" 
+                        class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                    </div>
+                <?php endforeach; ?>
             </div>
 
             <div class="mt-8 flex justify-center">
                 <nav>
                     <ul class="flex space-x-4">
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">1</a></li>
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">2</a></li>
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">3</a></li>
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">Next</a></li>
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <li>
+                                <a href="?page=<?= $i ?>" 
+                                class="text-uphsl-yellow <?= $i === $page ? 'font-bold underline' : 'hover:underline' ?>">
+                                <?= $i ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+                        <?php if ($page < $total_pages): ?>
+                            <li>
+                                <a href="?page=<?= $page + 1 ?>" class="text-uphsl-yellow hover:underline">Next</a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>

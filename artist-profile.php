@@ -29,6 +29,10 @@ include 'connection.php';
                     <h3 class="text-2xl font-bold text-uphsl-maroon text-center">Department</h3>
                     <p class="text-uphsl-blue">College of Computer Studies</p>
                 </div>
+                <div class="mt-6 items-center">
+                    <h3 class="text-2xl font-bold text-uphsl-maroon text-center">Group/s</h3>
+                    <p class="text-uphsl-blue">Dance Troupe</p>
+                </div>
             </div>
 
             <div class="mt-10">

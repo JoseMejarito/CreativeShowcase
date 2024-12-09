@@ -1,8 +1,8 @@
 <?php
 require 'connection.php';
 
-if (isset($_GET['id'])) {
-    $artist_id = (int) $_GET['id'];
+if (isset($_GET['artist_id'])) {
+    $artist_id = (int) $_GET['artist_id'];
 
     $query = $conn->prepare("DELETE FROM artists WHERE artist_id = ?");
     $query->bind_param("i", $artist_id);
