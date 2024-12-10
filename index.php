@@ -25,11 +25,10 @@
         
         <div class="flex flex-col md:flex-row justify-center items-center px-8 md:px-20 lg:px-40 max-w-screen-md mx-auto">
             <p class="text-sm text-white mb-4 md:mr-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a lacinia arcu. Vestibulum a massa et ipsum viverra gravida. 
-                <br>Nulla porttitor urna non dui sollicitudin suscipit quis non odio. Nam sollicitudin enim justo, quis fermentum urna rutrum ac.
+            The UPHSL Center for Culture and Arts is the premier office intended for, but not limited to, various cultural and performing arts groups in the university.
             </p>
             <p class="text-sm text-white mb-4 md:mr-4">
-                Nam ante nibh, sagittis quis laoreet et, rutrum ut nibh. Fusce non enim libero. Aenean ullamcorper elit ut dolor fermentum, sit amet gravida justo malesuada. 
+            The establishment of the office is the university’s response to the call to preserve and promote artistic and cultural traditions and heritages of the community and the nation, and to continually engage young Filipinos in creative production. 
             </p>
         </div><br><br>
     </section>
@@ -97,7 +96,7 @@
         </div>
     </section>
 
-    <section id="section3" class="text-center py-10 bg-uphsl-maroon">
+    <section id="section3" class="text-center py-10 bg-uphsl-blue">
         <h1 class="text-5xl text-white mb-6">BE PART OF CCA</h1>
         <p class="text-lg text-white mb-4">For Students! Join us to explore your creativity and become part of our vibrant community!</p>
         

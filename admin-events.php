@@ -1,6 +1,29 @@
-<?php 
-    include 'connection.php';
- ?>
+<?php
+include 'connection.php'; 
+
+// Define the number of items per page
+$itemsPerPage = 6;
+
+// Get the current page from the URL, default is 1
+$currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+
+// Calculate the OFFSET for the SQL query
+$offset = ($currentPage - 1) * $itemsPerPage;
+
+// Fetch the total number of rows in the events table
+$totalEventsQuery = $conn->query("SELECT COUNT(*) AS total FROM events");
+$totalEvents = $totalEventsQuery->fetch_assoc()['total'];
+
+// Calculate the total number of pages
+$totalPages = ceil($totalEvents / $itemsPerPage);
+
+// Fetch the events for the current page
+$eventsQuery = $conn->prepare("SELECT * FROM events ORDER BY date_start DESC LIMIT ? OFFSET ?");
+$eventsQuery->bind_param("ii", $itemsPerPage, $offset);
+$eventsQuery->execute();
+$events = $eventsQuery->get_result()->fetch_all(MYSQLI_ASSOC);
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,86 +42,84 @@
     </section>
     <div class="container mx-auto p-6 text-center">
         <div class="mb-4">
-            <button class="bg-blue-500 text-white px-4 py-2 rounded">Add New Events</button>
+            <a href="upload-event.php">
+                <button class="bg-blue-500 text-white px-4 py-2 rounded">Add New Event</button>
+            </a>
         </div>
     </div>
+    <?php
+    require 'connection.php';
+
+    // Fetch events from the database
+    $query = $conn->prepare("SELECT event_id, title, description, main_media FROM events ORDER BY created_at DESC LIMIT 12");
+    $query->execute();
+    $result = $query->get_result();
+
+    $events = [];
+    while ($row = $result->fetch_assoc()) {
+        $events[] = $row;
+    }
+
+    $query->close();
+    $conn->close();
+    ?>
+
     <section id="news-events" class="py-10 bg-uphsl-blue">
         <div class="max-w-screen-xl mx-auto px-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <!-- Event Item 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/news3.jpg" alt="Event 1" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 1</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 1, highlighting its key features and importance.</p>
-                    <div class="flex justify-start mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
-                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
+                <?php foreach ($events as $event): ?>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                        <img src="public/<?php echo htmlspecialchars($event['main_media']); ?>" 
+                            alt="<?php echo htmlspecialchars($event['title']); ?>" 
+                            class="w-full h-60 object-cover mb-4 rounded-md">
+                        <h3 class="text-3xl font-bold text-uphsl-maroon">
+                            <?php echo htmlspecialchars($event['title']); ?>
+                        </h3>
+                        <p class="text-md text-black mt-2 flex-grow">
+                            <?php echo htmlspecialchars($event['description']); ?>
+                        </p>
+                        <div class="flex justify-start mt-4">
+                            <a href="admin-edit-event.php?event_id=<?php echo $event['event_id']; ?>" 
+                            class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
+                            <a href="delete-event.php?event_id=<?php echo $event['event_id']; ?>" 
+                            class="text-uphsl-maroon hover:underline" 
+                            onclick="return confirm('Are you sure you want to delete this event?')">Delete</a>
+                        </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
 
-                <!-- Event Item 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/news3.jpg" alt="Event 2" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 2</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 2, focusing on what makes it special.</p>
-                    <div class="flex justify-start mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
-                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
-                    </div>
-                </div>
-
-                <!-- Event Item 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/news3.jpg" alt="Event 3" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 3</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 3, providing key details for attendees.</p>
-                    <div class="flex justify-start mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
-                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
-                    </div>
-                </div>
-
-                <!-- Event Item 4 (Hidden on smaller screens) -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between hidden md:block">
-                    <img src="public/news3.jpg" alt="Event 4" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 4</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 4, emphasizing its significance.</p>
-                    <div class="flex justify-start mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
-                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
-                    </div>
-                </div>
-
-                <!-- Event Item 5 (Hidden on smaller screens) -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between hidden md:block">
-                    <img src="public/news3.jpg" alt="Event 5" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 5</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 5, detailing the activities involved.</p>
-                    <div class="flex justify-start mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
-                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
-                    </div>
-                </div>
-
-                <!-- Event Item 6 (Hidden on smaller screens) -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between hidden md:block">
-                    <img src="public/news3.jpg" alt="Event 6" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Event Title 6</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Brief description of event 6, highlighting key speakers or features.</p>
-                    <div class="flex justify-start mt-4">
-                        <a href="admin-article.php" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
-                        <a href="#" class="text-uphsl-maroon hover:underline">Delete</a>
-                    </div>
-                </div>
+                <?php if (empty($events)): ?>
+                    <p class="col-span-full text-center text-white text-lg">
+                        No events found. Start adding new events to showcase them here!
+                    </p>
+                <?php endif; ?>
             </div>
 
             <div class="mt-8 flex justify-center">
                 <nav>
                     <ul class="flex space-x-4">
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">1</a></li>
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">2</a></li>
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">3</a></li>
-                        <li><a href="#" class="text-uphsl-yellow hover:underline">Next</a></li>
+                        <!-- Previous Button -->
+                        <?php if ($currentPage > 1): ?>
+                            <li>
+                                <a href="?page=<?= $currentPage - 1 ?>" class="text-uphsl-yellow hover:underline">Previous</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <!-- Page Numbers -->
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <li>
+                                <a href="?page=<?= $i ?>" class="<?= $i == $currentPage ? 'font-bold text-white' : 'text-uphsl-yellow' ?> hover:underline">
+                                    <?= $i ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <!-- Next Button -->
+                        <?php if ($currentPage < $totalPages): ?>
+                            <li>
+                                <a href="?page=<?= $currentPage + 1 ?>" class="text-uphsl-yellow hover:underline">Next</a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>

@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve input values
         $name = htmlspecialchars($_POST['name']);
         $bio = htmlspecialchars($_POST['bio']);
-        $department_id = intval($_POST['department_id']); // Ensure department_id is an integer
+        $department_id = intval($_POST['department_id']); 
         $target_dir = "public/";
 
         // Handle image upload

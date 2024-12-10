@@ -21,22 +21,22 @@ body {
 }
 
 .bg-uphsl-blue {
-    background-color: #0E0A64;
+    background-color: #1C4DA1;
 }
 .bg-uphsl-yellow {
-    background-color: #F1F93C;
+    background-color: #FFC63E;
 }
 .bg-uphsl-maroon {
-    background-color: #760101;
+    background-color: #E0B03C;
 }
 .text-uphsl-blue {
-    color: #0E0A64;
+    color: #1C4DA1;
 }
 .text-uphsl-yellow {
-    color: #F1F93C;
+    color: #FFC63E;
 }
 .text-uphsl-maroon {
-    color: #760101;
+    color: #E0B03C;
 }
 
 .tooltip {

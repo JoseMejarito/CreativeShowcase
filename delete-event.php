@@ -1,8 +1,8 @@
 <?php
 require 'connection.php';
 
-if (isset($_GET['id'])) {
-    $event_id = (int) $_GET['id'];
+if (isset($_GET['event_id'])) {
+    $event_id = (int) $_GET['event_id'];
 
     $query = $conn->prepare("DELETE FROM events WHERE event_id = ?");
     $query->bind_param("i", $event_id);
