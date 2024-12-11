@@ -19,58 +19,58 @@ include 'connection.php';
     </section>
     
     <?php
-    // Enable error reporting for debugging
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+        // Enable error reporting for debugging
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
 
-    // Database connection
-    try {
-        $conn = new mysqli("localhost", "root", "", "creative_showcase");
-        if ($conn->connect_error) {
-            throw new Exception("Database connection failed: " . $conn->connect_error);
+        // Database connection
+        try {
+            $conn = new mysqli("localhost", "root", "", "creative_showcase");
+            if ($conn->connect_error) {
+                throw new Exception("Database connection failed: " . $conn->connect_error);
+            }
+        } catch (Exception $e) {
+            echo "<p class='text-red-600'>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+            exit;
         }
-    } catch (Exception $e) {
-        echo "<p class='text-red-600'>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
-        exit;
-    }
 
-    // Fetch Artists with media
-    try {
-        $artistQuery = $conn->prepare("
-            SELECT 
-                a.artist_id, 
-                a.name, 
-                a.bio, 
-                a.main_media AS profile_image 
-            FROM artists a 
-            ORDER BY a.name ASC 
-            LIMIT 6
-        ");
-        $artistQuery->execute();
-        $artistResult = $artistQuery->get_result();
-    } catch (Exception $e) {
-        echo "<p class='text-red-600'>Error fetching artists: " . htmlspecialchars($e->getMessage()) . "</p>";
-        $artistResult = null;
-    }
+        // Fetch Groups with media
+        try {
+            $groupQuery = $conn->prepare("
+                SELECT 
+                    g.group_id, 
+                    g.group_name AS name, 
+                    g.description, 
+                    g.main_media AS image 
+                FROM groups g 
+                ORDER BY g.group_name ASC 
+                LIMIT 6
+            ");
+            $groupQuery->execute();
+            $groupResult = $groupQuery->get_result();
+        } catch (Exception $e) {
+            echo "<p class='text-red-600'>Error fetching groups: " . htmlspecialchars($e->getMessage()) . "</p>";
+            $groupResult = null;
+        }
 
-    // Fetch Groups with media
-    try {
-        $groupQuery = $conn->prepare("
-            SELECT 
-                g.group_id, 
-                g.group_name AS name, 
-                g.description, 
-                g.main_media AS image 
-            FROM groups g 
-            ORDER BY g.group_name ASC 
-            LIMIT 6
-        ");
-        $groupQuery->execute();
-        $groupResult = $groupQuery->get_result();
-    } catch (Exception $e) {
-        echo "<p class='text-red-600'>Error fetching groups: " . htmlspecialchars($e->getMessage()) . "</p>";
-        $groupResult = null;
-    }
+        // Fetch Works with media
+        try {
+            $worksQuery = $conn->prepare("
+                SELECT 
+                    w.work_id, 
+                    w.title, 
+                    w.description, 
+                    w.main_media AS image 
+                FROM works w 
+                ORDER BY w.title ASC 
+                LIMIT 6
+            ");
+            $worksQuery->execute();
+            $worksResult = $worksQuery->get_result();
+        } catch (Exception $e) {
+            echo "<p class='text-red-600'>Error fetching works: " . htmlspecialchars($e->getMessage()) . "</p>";
+            $worksResult = null;
+        }
     ?>
 
     <section id="groups" class="py-10 bg-uphsl-blue">
@@ -87,7 +87,7 @@ include 'connection.php';
                             <p class="text-md text-black mt-2 flex-grow">
                                 <?= htmlspecialchars(substr($group['description'], 0, 100)); ?>...
                             </p>
-                            <a href="group-details.php?id=<?= htmlspecialchars($group['group_id']); ?>" 
+                            <a href="group-profile.php?id=<?= htmlspecialchars($group['group_id']); ?>" 
                             class="text-uphsl-blue mt-4 inline-block">Learn more</a>
                         </div>
                     <?php endwhile; ?>
@@ -98,27 +98,27 @@ include 'connection.php';
         </div>
     </section>
 
-    <section id="artists" class="py-10 bg-uphsl-yellow">
+    <section id="works" class="py-10 bg-uphsl-yellow">
         <div class="max-w-screen-xl mx-auto px-4">
             <h2 class="text-5xl text-uphsl-blue text-center mb-8">Works of CCA</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <?php if ($artistResult && $artistResult->num_rows > 0): ?>
-                    <?php while ($artist = $artistResult->fetch_assoc()): ?>
+                <?php if ($worksResult && $worksResult->num_rows > 0): ?>
+                    <?php while ($work = $worksResult->fetch_assoc()): ?>
                         <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                            <img src="<?= htmlspecialchars($artist['profile_image'] ?? 'default-image.jpg'); ?>" 
-                                alt="<?= htmlspecialchars($artist['name']); ?>" 
+                            <img src="<?= htmlspecialchars($work['image'] ?? 'default-image.jpg'); ?>" 
+                                alt="<?= htmlspecialchars($work['title']); ?>" 
                                 class="w-full h-60 object-cover mb-4 rounded-md">
-                            <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($artist['name']); ?></h3>
+                            <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($work['title']); ?></h3>
                             <p class="text-md text-black mt-2 flex-grow">
-                                <?= htmlspecialchars(substr($artist['bio'], 0, 100)); ?>...
+                                <?= htmlspecialchars(substr($work['description'], 0, 100)); ?>...
                             </p>
-                            <a href="artist-profile.php?id=<?= htmlspecialchars($artist['artist_id']); ?>" 
-                            class="text-uphsl-blue mt-4 inline-block">View Profile</a>
+                            <a href="artwork.php?id=<?= htmlspecialchars($work['work_id']); ?>" 
+                            class="text-uphsl-blue mt-4 inline-block">Learn more</a>
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <p class="text-uphsl-yellow text-center">No artists available at the moment.</p>
+                    <p class="text-uphsl-yellow text-center">No works available at the moment.</p>
                 <?php endif; ?>
             </div>
         </div>

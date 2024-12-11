@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'];
     $main_media = $_FILES['main_media'];
     $artist_ids = isset($_POST['artist_ids']) ? $_POST['artist_ids'] : [];
+    $collection_id = $_POST['collection_id'];  // New collection_id field
 
     // Validate inputs
     if (empty($group_name) || empty($description) || !$main_media['tmp_name']) {
@@ -22,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $media_target_file = $media_target_dir . $media_file_name;
 
     if (move_uploaded_file($main_media['tmp_name'], $media_target_file)) {
-        // Insert group details into `groups` table
-        $query = $conn->prepare("INSERT INTO groups (group_name, description, main_media) VALUES (?, ?, ?)");
-        $query->bind_param("sss", $group_name, $description, $media_file_name);
+        // Insert group details into `groups` table with collection_id
+        $query = $conn->prepare("INSERT INTO groups (group_name, description, main_media, collection_id) VALUES (?, ?, ?, ?)");
+        $query->bind_param("sssi", $group_name, $description, $media_file_name, $collection_id);
 
         if ($query->execute()) {
             $group_id = $query->insert_id; // Get the newly inserted group ID
@@ -85,6 +86,20 @@ $conn->close();
                     <textarea name="description" id="description" rows="5" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></textarea>
                 </div>
+                <!-- Dropdown for Collections -->
+                <div class="mb-4">
+                    <label for="collection_id" class="block text-sm font-medium text-gray-700">Select Collection</label>
+                    <select name="collection_id" id="collection_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                        <option value="">-- Select a Collection --</option>
+                        <?php
+                        $collections_query = $conn->query("SELECT collection_id, collection_name FROM collections");
+                        while ($collection = $collections_query->fetch_assoc()):
+                        ?>
+                            <option value="<?= $collection['collection_id'] ?>"><?= htmlspecialchars($collection['collection_name']) ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <!-- Artist Members Checklist -->
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-gray-700">Members (Artists)</label>
                     <div class="mt-2 grid grid-cols-2 gap-4">

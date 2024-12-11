@@ -1,12 +1,66 @@
-<?php 
-include 'connection.php';
+<?php
+require 'connection.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve form inputs
+    $group_name = $_POST['group_name'];
+    $description = $_POST['description'];
+    $main_media = $_FILES['main_media'];
+    $artist_ids = isset($_POST['artist_ids']) ? $_POST['artist_ids'] : [];
+    $collection_id = $_POST['collection_id'];  // New collection_id field
+
+    // Validate inputs
+    if (empty($group_name) || empty($description) || !$main_media['tmp_name']) {
+        die("Error: All fields are required.");
+    }
+
+    // Handle file upload for main_media
+    $media_target_dir = "public/";
+    if (!is_dir($media_target_dir)) {
+        mkdir($media_target_dir, 0777, true); // Ensure the directory exists
+    }
+    $media_file_name = uniqid() . "_" . basename($main_media['name']);
+    $media_target_file = $media_target_dir . $media_file_name;
+
+    if (move_uploaded_file($main_media['tmp_name'], $media_target_file)) {
+        // Insert group details into `groups` table with collection_id
+        $query = $conn->prepare("INSERT INTO groups (group_name, description, main_media, collection_id) VALUES (?, ?, ?, ?)");
+        $query->bind_param("sssi", $group_name, $description, $media_file_name, $collection_id);
+
+        if ($query->execute()) {
+            $group_id = $query->insert_id; // Get the newly inserted group ID
+
+            // Insert group members into `group_artists`
+            if (!empty($artist_ids)) {
+                $group_artist_query = $conn->prepare("INSERT INTO group_artists (group_id, artist_id) VALUES (?, ?)");
+                foreach ($artist_ids as $artist_id) {
+                    $group_artist_query->bind_param("ii", $group_id, $artist_id);
+                    $group_artist_query->execute();
+                }
+                $group_artist_query->close();
+            }
+
+            header("Location: admin-dashboard.php?message=Group uploaded successfully");
+            exit();
+        } else {
+            echo "Error: Unable to upload group. " . $conn->error;
+        }
+
+        $query->close();
+    } else {
+        echo "Error: Unable to upload main media.";
+    }
+}
+
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCA | Admin Group Profile</title>
+    <title>CCA | Edit Group</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">      
     <link rel="stylesheet" href="style.css">
@@ -14,113 +68,70 @@ include 'connection.php';
 <body class="anton-regular">
     <?php include 'admin-navbar.php'; ?>
 
-    <section class="text-center py-10 pb-0 bg-uphsl-yellow"> 
-        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">Group Name</h1><br>
-    </section>
-
     <section class="py-10 bg-uphsl-blue">
-        <div class="max-w-screen-xl mx-auto px-4">
-            <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col items-center">
-            <img src="public/cca-photo.jpg" class="w-full h-auto max-w-xs object-cover mb-4 rounded-md">
-                <h3 class="text-2xl font-bold text-uphsl-maroon">Group Biography</h3>
-                <p class="text-black">A creative collective known for their innovative approach to art, merging various styles and techniques. Their works have been showcased in numerous exhibitions.</p>
-
-                <div class="mt-6 items-center">
-                    <h3 class="text-2xl font-bold text-uphsl-maroon text-center">Department</h3>
-                    <p class="text-uphsl-blue">College of Fine Arts</p>
+        <div class="max-w-screen-md mx-auto px-4">
+            <!-- Group Edit Form -->
+            <form action="admin-group-profile.php" method="POST" enctype="multipart/form-data" class="bg-white p-5 rounded-lg shadow-lg">
+                <div class="flex flex-col items-center mb-6">
+                    <img id="imagePreview" src="public/person-placeholder.jpg" class="w-64 h-64 object-cover mb-4 rounded-md" alt="Group Image">
+                    <input type="file" name="main_media" id="main_media" class="mb-4" accept="image/*" onchange="previewImage(event)" required>
                 </div>
-            </div>
-
-            <div class="mt-10">
-                <h2 class="text-3xl text-uphsl-yellow text-center mb-8">Works</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                   <!-- Work Item 1 -->
-                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                        <img src="public/news3.jpg" alt="Work 1" class="w-full h-60 object-cover mb-4 rounded-md">
-                        <h3 class="text-3xl font-bold text-uphsl-maroon">Collaborative Piece 1</h3>
-                        <p class="text-md text-black mt-2 flex-grow">A stunning work showcasing the group's unique blend of styles and perspectives.</p>
-                        <a href="artwork.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                    </div>
-
-                    <!-- Work Item 2 -->
-                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                        <img src="public/news3.jpg" alt="Work 2" class="w-full h-60 object-cover mb-4 rounded-md">
-                        <h3 class="text-3xl font-bold text-uphsl-maroon">Collaborative Piece 2</h3>
-                        <p class="text-md text-black mt-2 flex-grow">An exploration of themes that resonate deeply within the community.</p>
-                        <a href="artwork.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                    </div>
-
-                    <!-- Work Item 3 -->
-                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                        <img src="public/news3.jpg" alt="Work 3" class="w-full h-60 object-cover mb-4 rounded-md">
-                        <h3 class="text-3xl font-bold text-uphsl-maroon">Collaborative Piece 3</h3>
-                        <p class="text-md text-black mt-2 flex-grow">A vibrant representation of the group's artistic journey and vision.</p>
-                        <a href="artwork.php" class="text-uphsl-blue mt-4 inline-block">Read more</a>
+                <div class="mb-4">
+                    <label for="group_name" class="block text-sm font-medium text-gray-700">Group Name</label>
+                    <input type="text" name="group_name" id="group_name" required 
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                </div>
+                <div class="mb-4">
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea name="description" id="description" rows="5" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></textarea>
+                </div>
+                <!-- Dropdown for Collections -->
+                <div class="mb-4">
+                    <label for="collection_id" class="block text-sm font-medium text-gray-700">Select Collection</label>
+                    <select name="collection_id" id="collection_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                        <option value="">-- Select a Collection --</option>
+                        <?php
+                        $collections_query = $conn->query("SELECT collection_id, collection_name FROM collections");
+                        while ($collection = $collections_query->fetch_assoc()):
+                        ?>
+                            <option value="<?= $collection['collection_id'] ?>"><?= htmlspecialchars($collection['collection_name']) ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <!-- Artist Members Checklist -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700">Members (Artists)</label>
+                    <div class="mt-2 grid grid-cols-2 gap-4">
+                        <?php
+                        $artists_query = $conn->query("SELECT artist_id, name FROM artists");
+                        while ($artist = $artists_query->fetch_assoc()):
+                        ?>
+                            <div class="flex items-center">
+                                <input type="checkbox" name="artist_ids[]" value="<?= $artist['artist_id'] ?>" 
+                                    id="artist_<?= $artist['artist_id'] ?>" 
+                                    class="mr-2">
+                                <label for="artist_<?= $artist['artist_id'] ?>"><?= htmlspecialchars($artist['name']) ?></label>
+                            </div>
+                        <?php endwhile; ?>
                     </div>
                 </div>
-
-                <!-- Pagination Links (Static for Now) -->
-                <div class="mt-8 flex justify-center">
-                    <a href="#" class="text-uphsl-yellow hover:underline mx-2">Previous</a>
-                    <a href="#" class="text-uphsl-yellow hover :underline mx-2 font-bold">1</a>
-                    <a href="#" class="text-uphsl-yellow hover:underline mx-2">2</a>
-                    <a href="#" class="text-uphsl-yellow hover:underline mx-2">Next</a>
+                <div class="flex justify-between">
+                    <button type="submit" class="px-6 py-2 text-white bg-uphsl-maroon rounded-md">Save Group</button>
+                    <a href="admin-dashboard.php" class="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">Cancel</a>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
 
-    <section id="members" class="py-10 bg-uphsl-blue">
-        <div class="max-w-screen-xl mx-auto px-4">
-            <h2 class="text-5xl text-uphsl-yellow text-center mb-8">Members</h2>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-               
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/person-placeholder.jpg" alt="Artist 1" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 1</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Description of artist 1's work or style. Their contribution to the exhibition is notable for its creativity and impact.</p>
-                    <a href="artist-profile.php?id=1" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/person-placeholder.jpg" alt="Artist 2" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 2</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Description of artist 2's work or style. Their unique approach has captivated audiences and added depth to the exhibition.</p>
-                    <a href="artist-profile.php?id=2" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/person-placeholder.jpg" alt="Artist 3" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 3</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Description of artist 3's work or style. Their pieces are known for their emotional resonance and striking visuals.</p>
-                    <a href="artist-profile.php?id=3" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/person-placeholder.jpg" alt="Artist 4" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 4</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Description of artist 4's innovative techniques and contributions to the exhibition, showcasing a unique perspective.</p>
-                    <a href="artist-profile.php?id=4" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/person-placeholder.jpg" alt="Artist 5" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 5</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Description of artist 5's distinctive style, blending cultural elements with contemporary design.</p>
-                    <a href="artist-profile.php?id=5" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                    <img src="public/person-placeholder.jpg" alt="Artist 6" class="w-full h-60 object-cover mb-4 rounded-md">
-                    <h3 class="text-3xl font-bold text-uphsl-maroon">Artist Name 6</h3>
-                    <p class="text-md text-black mt-2 flex-grow">Description of artist 6's compelling visual narrative and their impact on the exhibition's overall theme.</p>
-                    <a href="artist-profile.php?id=6" class="text-uphsl-blue mt-4 inline-block">Read more</a>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('imagePreview').src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 </body>
 </html>

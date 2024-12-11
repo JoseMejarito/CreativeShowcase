@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 11, 2024 at 05:26 AM
+-- Generation Time: Dec 11, 2024 at 08:30 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -168,15 +168,16 @@ CREATE TABLE `groups` (
   `group_id` int(11) UNSIGNED NOT NULL,
   `group_name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `main_media` varchar(255) NOT NULL
+  `main_media` varchar(255) NOT NULL,
+  `collection_id` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `groups`
 --
 
-INSERT INTO `groups` (`group_id`, `group_name`, `description`, `main_media`) VALUES
-(2, 'Agos Perpetual Dance Company', 'Inspired by free-flowing, fluidity, non-conforming versatility, the university dance ensemble of the University of Perpetual Help System Laguna, is intended to preserve and promote traditional and folk dances, and with integrations of contemporary dance, jazz, and modern dance. The artist-members consist of males and females across levels from Junior High, Senior High, and College, trained and mentored by Mr. Mark Joseph Montiano. The Agos Perpetual Dance Company is under the management of the UPHSL Center for Culture and Arts, headed by the Director for Culture and Arts, Mr. Bryan Neil B. Ladim, LPT MAEd.', '6758f11d687aa_Copy of APDC for Binan Folk Dance Festival.jpg');
+INSERT INTO `groups` (`group_id`, `group_name`, `description`, `main_media`, `collection_id`) VALUES
+(2, 'Agos Perpetual Dance Company', 'Inspired by free-flowing, fluidity, non-conforming versatility, the university dance ensemble of the University of Perpetual Help System Laguna, is intended to preserve and promote traditional and folk dances, and with integrations of contemporary dance, jazz, and modern dance. The artist-members consist of males and females across levels from Junior High, Senior High, and College, trained and mentored by Mr. Mark Joseph Montiano. The Agos Perpetual Dance Company is under the management of the UPHSL Center for Culture and Arts, headed by the Director for Culture and Arts, Mr. Bryan Neil B. Ladim, LPT MAEd.', '6758f11d687aa_Copy of APDC for Binan Folk Dance Festival.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -249,6 +250,13 @@ CREATE TABLE `works` (
   `sub_media3` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `works`
+--
+
+INSERT INTO `works` (`work_id`, `title`, `description`, `created_at`, `updated_at`, `main_media`, `sub_media1`, `sub_media2`, `sub_media3`) VALUES
+(1, '𝗞𝗮𝗮𝗹𝗮𝗺𝗮𝗻𝗴 𝗣𝗮𝗻𝗴𝗸𝘂𝗹𝘁𝘂𝗿𝗮!', '𝙎𝙪𝙢𝙖𝙮𝙖𝙬 𝙨𝙖 𝙢𝙖𝙨𝙞𝙜𝙡𝙖𝙣𝙜 𝙢𝙪𝙣𝙙𝙤 𝙣𝙜 𝙢𝙜𝙖 𝙠𝙖𝙩𝙪𝙩𝙪𝙗𝙤𝙣𝙜 𝙨𝙖𝙮𝙖𝙬 𝙨𝙖 𝙋𝙞𝙡𝙞𝙥𝙞𝙣𝙖𝙨!  🌊\r\nAlam niyo ba…\r\nNa pwedeng ipakita sa pamamagitan ng Sayaw ang ating kultura, tradisyon, at ang mga kwento ng ating mga ninuno! \r\nHalina&amp;amp;#039;t makiisa sa 𝘼𝙜𝙤𝙨 𝙋𝙚𝙧𝙥𝙚𝙩𝙪𝙖𝙡 𝘿𝙖𝙣𝙘𝙚 𝘾𝙤𝙢𝙥𝙖𝙣𝙮 sa pagkilala ng ating yaman at pagkakaiba-iba! Tunghayan ang Isang paglalakbay na puno ng saya at paggalang sa ating makulay na sining at kultura!\r\n𝐔𝐏𝐇𝐒𝐋 𝐂𝐞𝐧𝐭𝐞𝐫 𝐟𝐨𝐫 𝐂𝐮𝐥𝐭𝐮𝐫𝐞 𝐚𝐧𝐝 𝐀𝐫𝐭𝐬\r\n&amp;amp;quot;𝑻𝒉𝒆 𝑯𝒐𝒎𝒆 𝒐𝒇 𝑪𝒖𝒍𝒕𝒖𝒓𝒂𝒍 𝑬𝒙𝒄𝒆𝒍𝒍𝒆𝒏𝒄𝒆,\r\n𝑻𝒉𝒆 𝑪𝒐𝒓𝒆 𝒐𝒇 𝑨𝒓𝒕𝒔 𝑺𝒆𝒓𝒗𝒂𝒏𝒕𝒉𝒐𝒐𝒅&amp;amp;quot;', '2024-12-11 05:13:43', '2024-12-11 05:28:56', 'public/67591f878f26a-464001440_422255447561458_7675050023524009056_n.jpg', 'public/67591f878f89f-463836365_422255550894781_8774288515444647786_n.jpg', 'public/67591f878fca1-463895528_422255620894774_1159525774887308144_n.jpg', 'public/67591f879008f-463865855_422255744228095_1019131971269167205_n.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -260,6 +268,14 @@ CREATE TABLE `works_collections` (
   `collection_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `works_collections`
+--
+
+INSERT INTO `works_collections` (`work_id`, `collection_id`) VALUES
+(1, 1),
+(1, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -270,6 +286,13 @@ CREATE TABLE `work_groups` (
   `work_id` int(11) UNSIGNED NOT NULL,
   `group_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `work_groups`
+--
+
+INSERT INTO `work_groups` (`work_id`, `group_id`) VALUES
+(1, 2);
 
 --
 -- Indexes for dumped tables
@@ -325,7 +348,8 @@ ALTER TABLE `event_groups`
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
-  ADD PRIMARY KEY (`group_id`);
+  ADD PRIMARY KEY (`group_id`),
+  ADD KEY `fk_groups_collection` (`collection_id`);
 
 --
 -- Indexes for table `group_artists`
@@ -411,7 +435,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `works`
 --
 ALTER TABLE `works`
-  MODIFY `work_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `work_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -436,6 +460,12 @@ ALTER TABLE `event_collections`
 ALTER TABLE `event_groups`
   ADD CONSTRAINT `fk_event_groups_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_event_groups_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `groups`
+--
+ALTER TABLE `groups`
+  ADD CONSTRAINT `fk_groups_collection` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`collection_id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `group_artists`

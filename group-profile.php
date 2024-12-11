@@ -25,9 +25,9 @@ include 'connection.php';
                 <h3 class="text-2xl font-bold text-uphsl-maroon">Group Biography</h3>
                 <p class="text-black">A creative collective known for their innovative approach to art, merging various styles and techniques. Their works have been showcased in numerous exhibitions.</p>
 
-                <div class="mt-6 items-center">
-                    <h3 class="text-2xl font-bold text-uphsl-maroon text-center">Department</h3>
-                    <p class="text-uphsl-blue">College of Fine Arts</p>
+                <div class="mt-6 text-center">
+                    <h3 class="text-2xl font-bold text-uphsl-maroon text-center">Collection</h3>
+                    <p class="text-uphsl-blue">Dance</p>
                 </div>
             </div>
 
