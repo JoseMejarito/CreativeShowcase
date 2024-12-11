@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 10, 2024 at 09:42 PM
+-- Generation Time: Dec 11, 2024 at 05:26 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -56,7 +56,15 @@ CREATE TABLE `artists` (
 --
 
 INSERT INTO `artists` (`artist_id`, `name`, `bio`, `department_id`, `created_at`, `updated_at`, `main_media`) VALUES
-(4, 'Mullet Guy', 'Pogi', 1, '2024-12-10 20:18:13', '2024-12-10 20:18:13', 'public/6758a2059fc82-1x1Picture.png');
+(5, 'Elizabeth Marie G. Cristobal', '4th Year BS Psych', 2, '2024-12-11 01:41:41', '2024-12-11 01:41:41', 'public/6758edd56b532-blank-profile-picture.png'),
+(6, 'Charlene Anne B. Dimaano', 'Pioneer member of APDC and PTC', 2, '2024-12-11 01:42:32', '2024-12-11 02:07:44', 'public/6758ee088b15c-blank-profile-picture.png'),
+(7, 'John Kenneth S. Martinez', '3rd Year BS SE/Filipino', 4, '2024-12-11 01:43:27', '2024-12-11 01:43:27', 'public/6758ee3ff2209-blank-profile-picture.png'),
+(8, 'Kathleen Jane T. Valenzuela', '4th Year BS PSYCH', 2, '2024-12-11 01:44:25', '2024-12-11 01:44:25', 'public/6758ee7926190-blank-profile-picture.png'),
+(9, 'Mark Aeron A. Faller', '2nd Year BPE', 4, '2024-12-11 01:46:44', '2024-12-11 01:46:44', 'public/6758ef042054d-blank-profile-picture.png'),
+(10, 'Lynette Gian P. Feliciano', '2nd Year BS BA/HRM', 7, '2024-12-11 01:48:37', '2024-12-11 01:48:37', 'public/6758ef7574e9c-6758edd56b532-blank-profile-picture.png'),
+(11, 'Jean Maica V. Gabarda	', 'Grade 12 HUMSS', 1, '2024-12-11 01:50:08', '2024-12-11 01:50:08', 'public/6758efd062dd2-6758edd56b532-blank-profile-picture.png'),
+(12, 'Alexandra Beatrice G. Pancho', 'I am a 2-year Agos Perpetual Dance Company member (since 2023), and was part of events such as Tagsibol (the group’s first dance concert), Biñan Folk Dance Competition 2024 (the group’s first outside competition),  and many more. Moreover, I am the current Secretary of the group.', 1, '2024-12-11 01:51:20', '2024-12-11 02:09:09', 'public/6758f44594f64-IMG_4675 - Alexandra Beatrice G. Pancho.jpeg'),
+(13, 'Cherrybelle G. Zara', 'Grade 12 TVL HE', 1, '2024-12-11 01:52:30', '2024-12-11 01:52:30', 'public/6758f05ecd2b4-6758ee3ff2209-blank-profile-picture.png');
 
 -- --------------------------------------------------------
 
@@ -128,14 +136,6 @@ CREATE TABLE `events` (
   `main_media` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`event_id`, `title`, `description`, `date_start`, `date_end`, `location`, `created_at`, `updated_at`, `main_media`) VALUES
-(1, 'Test Event', 'Event Description', '2024-12-19', '2024-12-20', 'PAT', '2024-12-10 20:29:39', '2024-12-10 20:29:39', '1733862579_Copy of IMG_9753.JPG'),
-(2, 'Test Event', 'Test Event Description', '2024-12-12', '2024-12-12', 'PAT', '2024-12-10 20:39:44', '2024-12-10 20:39:44', '1733863184_Copy of IMG_9753.JPG');
-
 -- --------------------------------------------------------
 
 --
@@ -176,7 +176,7 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`group_id`, `group_name`, `description`, `main_media`) VALUES
-(1, 'Test Group', 'blahblahblah', '6758a25512f5f_Copy of IMG_9753.JPG');
+(2, 'Agos Perpetual Dance Company', 'Inspired by free-flowing, fluidity, non-conforming versatility, the university dance ensemble of the University of Perpetual Help System Laguna, is intended to preserve and promote traditional and folk dances, and with integrations of contemporary dance, jazz, and modern dance. The artist-members consist of males and females across levels from Junior High, Senior High, and College, trained and mentored by Mr. Mark Joseph Montiano. The Agos Perpetual Dance Company is under the management of the UPHSL Center for Culture and Arts, headed by the Director for Culture and Arts, Mr. Bryan Neil B. Ladim, LPT MAEd.', '6758f11d687aa_Copy of APDC for Binan Folk Dance Festival.jpg');
 
 -- --------------------------------------------------------
 
@@ -194,7 +194,15 @@ CREATE TABLE `group_artists` (
 --
 
 INSERT INTO `group_artists` (`group_id`, `artist_id`) VALUES
-(1, 4);
+(2, 5),
+(2, 6),
+(2, 7),
+(2, 8),
+(2, 9),
+(2, 10),
+(2, 11),
+(2, 12),
+(2, 13);
 
 -- --------------------------------------------------------
 
@@ -233,7 +241,6 @@ CREATE TABLE `works` (
   `work_id` int(11) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `group_id` int(11) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `main_media` varchar(255) NOT NULL,
@@ -251,6 +258,17 @@ CREATE TABLE `works` (
 CREATE TABLE `works_collections` (
   `work_id` int(11) UNSIGNED NOT NULL,
   `collection_id` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `work_groups`
+--
+
+CREATE TABLE `work_groups` (
+  `work_id` int(11) UNSIGNED NOT NULL,
+  `group_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -326,8 +344,7 @@ ALTER TABLE `news`
 -- Indexes for table `works`
 --
 ALTER TABLE `works`
-  ADD PRIMARY KEY (`work_id`),
-  ADD KEY `fk_works_group` (`group_id`);
+  ADD PRIMARY KEY (`work_id`);
 
 --
 -- Indexes for table `works_collections`
@@ -336,6 +353,13 @@ ALTER TABLE `works_collections`
   ADD PRIMARY KEY (`work_id`,`collection_id`),
   ADD KEY `fk_work_id` (`work_id`),
   ADD KEY `fk_collection_id` (`collection_id`);
+
+--
+-- Indexes for table `work_groups`
+--
+ALTER TABLE `work_groups`
+  ADD PRIMARY KEY (`work_id`,`group_id`),
+  ADD KEY `group_id` (`group_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -351,7 +375,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `artists`
 --
 ALTER TABLE `artists`
-  MODIFY `artist_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `artist_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `collections`
@@ -369,13 +393,13 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `event_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `event_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `group_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `group_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -421,17 +445,18 @@ ALTER TABLE `group_artists`
   ADD CONSTRAINT `group_artists_ibfk_2` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `works`
---
-ALTER TABLE `works`
-  ADD CONSTRAINT `fk_works_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`) ON DELETE SET NULL;
-
---
 -- Constraints for table `works_collections`
 --
 ALTER TABLE `works_collections`
   ADD CONSTRAINT `fk_works_collections_collection` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`collection_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_works_collections_work` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `work_groups`
+--
+ALTER TABLE `work_groups`
+  ADD CONSTRAINT `work_groups_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `work_groups_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

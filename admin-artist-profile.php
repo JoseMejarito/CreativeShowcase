@@ -28,11 +28,6 @@ include 'connection.php';
         // Fetch departments
         $departments_query = $conn->query("SELECT department_id, department_name FROM departments");
         
-        // Fetch artist's works
-        $works_query = $conn->prepare("SELECT * FROM works WHERE artist_id = ?");
-        $works_query->bind_param("i", $artist_id);
-        $works_query->execute();
-        $works_result = $works_query->get_result();
         
         // Update artist info
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -106,37 +101,6 @@ include 'connection.php';
                     <a href="admin-artists.php" class="px-6 py-2 text-uphsl-blue border border-uphsl-maroon rounded-md hover:bg-uphsl-blue hover:text-uphsl-blue text-center">Cancel</a>
                 </div>
             </form>
-
-            <!-- Works Section -->
-            <div class="mt-10">
-                <h2 class="text-5xl text-uphsl-yellow text-center mb-8">Works</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <?php if ($works_result && $works_result->num_rows > 0): ?>
-                        <?php while ($work = $works_result->fetch_assoc()): ?>
-                            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                                <img src="<?= htmlspecialchars($work['image_path'] ?? 'public/default-image.jpg') ?>" 
-                                    alt="<?= htmlspecialchars($work['title']) ?>" 
-                                    class="w-full h-60 object-cover mb-4 rounded-md">
-                                <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($work['title']) ?></h3>
-                                <p class="text-md text-black mt-2 flex-grow"><?= htmlspecialchars(substr($work['description'], 0, 150)) ?>...</p>
-                                <div class="flex justify-start mt-4">
-                                    <a href="admin-artwork.php?work_id=<?= $work['work_id'] ?>" 
-                                    class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
-                                    <a href="delete-work.php?work_id=<?= $work['work_id'] ?>" 
-                                    onclick="return confirm('Are you sure you want to delete this work?');"
-                                    class="text-uphsl-maroon hover:underline">Delete</a>
-                                </div>
-                            </div>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <p class="text-white">No works available at the moment.</p>
-                    <?php endif; ?>
-                </div>
-                <a href="upload-work.php?artist_id=<?= $artist_id ?>" 
-                class="mt-8 inline-block px-6 py-2 bg-uphsl-yellow text-black rounded-md hover:bg-yellow-500">
-                    Add New Work
-                </a>
-            </div>
         </div>
     </section>
 

@@ -15,7 +15,7 @@ include 'connection.php';
     <?php include 'navbar.php'; ?>
 
     <section id="section1" class="text-center py-10 pb-0 bg-uphsl-yellow"> 
-        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">ARTISTS' EXHIBITION</h1><br>
+        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">UNIVERSITY RESIDENT GROUPS</h1><br>
     </section>
     
     <?php
@@ -73,9 +73,34 @@ include 'connection.php';
     }
     ?>
 
-    <section id="artists" class="py-10 bg-uphsl-blue">
+    <section id="groups" class="py-10 bg-uphsl-blue">
         <div class="max-w-screen-xl mx-auto px-4">
-            <h2 class="text-5xl text-uphsl-yellow text-center mb-8">Featured Artists</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <?php if ($groupResult && $groupResult->num_rows > 0): ?>
+                    <?php while ($group = $groupResult->fetch_assoc()): ?>
+                        <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                            <img src="public/<?= htmlspecialchars($group['image'] ?? 'default-image.jpg'); ?>" 
+                                alt="<?= htmlspecialchars($group['name']); ?>" 
+                                class="w-full h-60 object-cover mb-4 rounded-md">
+                            <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($group['name']); ?></h3>
+                            <p class="text-md text-black mt-2 flex-grow">
+                                <?= htmlspecialchars(substr($group['description'], 0, 100)); ?>...
+                            </p>
+                            <a href="group-details.php?id=<?= htmlspecialchars($group['group_id']); ?>" 
+                            class="text-uphsl-blue mt-4 inline-block">Learn more</a>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p class="text-uphsl-blue text-center">No groups available at the moment.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+
+    <section id="artists" class="py-10 bg-uphsl-yellow">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <h2 class="text-5xl text-uphsl-blue text-center mb-8">Works of CCA</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <?php if ($artistResult && $artistResult->num_rows > 0): ?>
@@ -94,32 +119,6 @@ include 'connection.php';
                     <?php endwhile; ?>
                 <?php else: ?>
                     <p class="text-uphsl-yellow text-center">No artists available at the moment.</p>
-                <?php endif; ?>
-            </div>
-        </div>
-    </section>
-
-    <section id="groups" class="py-10 bg-uphsl-yellow">
-        <div class="max-w-screen-xl mx-auto px-4">
-            <h2 class="text-5xl text-uphsl-blue text-center mb-8">Featured Groups</h2>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <?php if ($groupResult && $groupResult->num_rows > 0): ?>
-                    <?php while ($group = $groupResult->fetch_assoc()): ?>
-                        <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                            <img src="<?= htmlspecialchars($group['image'] ?? 'default-image.jpg'); ?>" 
-                                alt="<?= htmlspecialchars($group['name']); ?>" 
-                                class="w-full h-60 object-cover mb-4 rounded-md">
-                            <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($group['name']); ?></h3>
-                            <p class="text-md text-black mt-2 flex-grow">
-                                <?= htmlspecialchars(substr($group['description'], 0, 100)); ?>...
-                            </p>
-                            <a href="group-details.php?id=<?= htmlspecialchars($group['group_id']); ?>" 
-                            class="text-uphsl-blue mt-4 inline-block">Learn more</a>
-                        </div>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <p class="text-uphsl-blue text-center">No groups available at the moment.</p>
                 <?php endif; ?>
             </div>
         </div>
