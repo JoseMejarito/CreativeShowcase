@@ -118,7 +118,7 @@
                                 <?= htmlspecialchars(date('F j, Y', strtotime($event['date_end']))); ?><br>
                                 <strong>Location:</strong> <?= htmlspecialchars($event['location']); ?>
                             </p>
-                            <a href="event.php?id=<?= htmlspecialchars($event['event_id']); ?>" 
+                            <a href="event.php?event_id=<?= htmlspecialchars($event['event_id']); ?>" 
                             class="text-uphsl-blue mt-4 inline-block">View Details</a>
                         </div>
                     <?php endwhile; ?>

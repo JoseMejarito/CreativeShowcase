@@ -1,141 +1,192 @@
-<?php 
+<?php
 include 'connection.php';
+
+// Check if an event ID is provided for editing
+if (isset($_GET['event_id'])) {
+    $eventId = $_GET['event_id'];
+
+    // Fetch the existing event details
+    $eventQuery = $conn->prepare("SELECT title, description, date_start, date_end, location, main_media FROM events WHERE event_id = ?");
+    $eventQuery->bind_param("i", $eventId);
+    $eventQuery->execute();
+    $eventResult = $eventQuery->get_result();
+    $event = $eventResult->fetch_assoc();
+
+    // Fetch collections and groups for checkboxes
+    $collections = $conn->query("SELECT collection_id, collection_name FROM collections");
+    $groups = $conn->query("SELECT group_id, group_name FROM groups");
+
+    // Fetch selected collections and groups for the event
+    $selectedCollections = $conn->query("SELECT collection_id FROM event_collections WHERE event_id = $eventId");
+    $selectedGroups = $conn->query("SELECT group_id FROM event_groups WHERE event_id = $eventId");
+
+    $selectedCollectionIds = [];
+    while ($row = $selectedCollections->fetch_assoc()) {
+        $selectedCollectionIds[] = $row['collection_id'];
+    }
+
+    $selectedGroupIds = [];
+    while ($row = $selectedGroups->fetch_assoc()) {
+        $selectedGroupIds[] = $row['group_id'];
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $date_start = $_POST['date_start'];
+        $date_end = $_POST['date_end'];
+        $location = $_POST['location'];
+        $main_media = $_FILES['main_media'];
+
+        // Check if a new media file is uploaded
+        if ($main_media['error'] == UPLOAD_ERR_OK) {
+            // Upload new main media
+            $uploadDir = 'public/';
+            $mediaName = time() . '_' . basename($main_media['name']);
+            $mediaPath = $uploadDir . $mediaName;
+
+            if (move_uploaded_file($main_media['tmp_name'], $mediaPath)) {
+                // Update event details in `events` table
+                $query = $conn->prepare(
+                    "UPDATE events SET title = ?, description = ?, date_start = ?, date_end = ?, location = ?, main_media = ? WHERE event_id = ?"
+                );
+                $query->bind_param("ssssssi", $title, $description, $date_start, $date_end, $location, $mediaName, $eventId);
+            } else {
+                echo "Error: Unable to upload main media.";
+            }
+        } else {
+            // Update event details without changing the media
+            $query = $conn->prepare(
+                "UPDATE events SET title = ?, description = ?, date_start = ?, date_end = ?, location = ? WHERE event_id = ?"
+            );
+            $query->bind_param("ssssi", $title, $description, $date_start, $date_end, $location, $eventId);
+        }
+
+        if ($query->execute()) {
+            // Clear existing collections and groups
+            $conn->query("DELETE FROM event_collections WHERE event_id = $eventId");
+            $conn->query("DELETE FROM event_groups WHERE event_id = $eventId");
+
+            // Insert new collections
+            if (isset($_POST['collections'])) {
+                foreach ($_POST['collections'] as $collection_id) {
+                    $conn->query("INSERT INTO event_collections (event_id, collection_id) VALUES ($eventId, $collection_id)");
+                }
+            }
+
+            // Insert new groups
+            if (isset($_POST['groups'])) {
+                foreach ($_POST['groups'] as $group_id) {
+                    $conn->query("INSERT INTO event_groups (event_id, group_id) VALUES ($eventId, $group_id)");
+                }
+            }
+
+            header("Location: admin-dashboard.php?message=Event updated successfully");
+        } else {
+            echo "Error: Unable to update event.";
+        }
+        $query->close();
+    }
+} else {
+    echo "Error: No event ID provided.";
+}
+
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCA | Admin Edit Event</title>
+    <title>CCA | Edit Events</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">      
     <link rel="stylesheet" href="style.css">
-    <script>
-        function confirmUpdate() {
-            return confirm("Are you sure you want to update this event?");
-        }
-    </script>
 </head>
 <body class="anton-regular">
     <?php include 'admin-navbar.php'; ?>
 
-    <?php
-    if (isset($_GET['event_id'])) {
-        $id = intval($_GET['event_id']);
-        $query = $conn->prepare("SELECT * FROM events WHERE event_id = ?");
-        $query->bind_param("i", $id);
-        $query->execute();
-        $result = $query->get_result();
-        $event = $result->fetch_assoc();
-
-        if (!$event) {
-            die("No event found with the provided ID.");
-        }
-    } else {
-        die("Event ID not provided.");
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        try {
-            $title = htmlspecialchars($_POST['title']);
-            $description = htmlspecialchars($_POST['description']);
-            $start_date = htmlspecialchars($_POST['start_date']);
-            $end_date = htmlspecialchars($_POST['end_date']);
-            $location = htmlspecialchars($_POST['location']);
-            $target_dir = "public/";
-
-            function handleFileUpload($file, $allowedTypes, $existingFile) {
-                global $target_dir;
-                if (!empty($file['tmp_name'])) {
-                    $fileType = mime_content_type($file['tmp_name']);
-                    if (!in_array($fileType, $allowedTypes)) {
-                        throw new Exception("Invalid file type: " . $fileType);
-                    }
-                    if ($file['size'] > 5 * 1024 * 1024) {
-                        throw new Exception("File size exceeds the maximum allowed size of 5MB.");
-                    }
-                    $filePath = $target_dir . uniqid() . "-" . basename($file["name"]);
-                    if (move_uploaded_file($file["tmp_name"], $filePath)) {
-                        return $filePath;
-                    } else {
-                        throw new Exception("Failed to upload file: " . $file['name']);
-                    }
-                }
-                return $existingFile;
-            }
-
-            $banner_image = handleFileUpload($_FILES['banner_image'], ['image/jpeg', 'image/png'], $event['banner_image']);
-
-            $updateQuery = $conn->prepare("UPDATE events SET title = ?, description = ?, start_date = ?, end_date = ?, location = ?, banner_image = ? WHERE event_id = ?");
-            $updateQuery->bind_param("ssssssi", $title, $description, $start_date, $end_date, $location, $banner_image, $id);
-
-            if ($updateQuery->execute()) {
-                header("Location: admin-events.php?message=Event updated successfully");
-                exit;
-            } else {
-                throw new Exception("Database error: " . $conn->error);
-            }
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-    ?>
-
     <section class="py-10 bg-uphsl-blue">
         <div class="max-w-screen-xl mx-auto px-4">
-            <form action="admin-edit-event.php?id=<?= $id ?>" method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-lg shadow-lg my-8 w-full">
+            <!-- Event Edit Form Section -->
+            <div class="bg-white p-8 rounded-lg shadow-lg my-8 w-full">
                 <h1 class="text-4xl font-bold text-uphsl-maroon mb-4">Edit Event</h1>
 
-                <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                    <input type="text" name="title" id="title" value="<?= htmlspecialchars($event['title']) ?>" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div>
+                <form action="admin-edit-event.php?event_id=<?php echo $eventId; ?>" method="POST" enctype="multipart/form-data">
+                    <!-- Title -->
+                    <div class="mb-4">
+                        <label for="title" class="block text-lg font-semibold text-gray-700">Title</label>
+                        <input type="text" id="title" name="title" class="w-full p-4 rounded-lg border" value="<?php echo htmlspecialchars($event['title']); ?>" required>
+                    </div>
 
-                <div class="mb-4">
-                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea name="description" id="description" rows="5" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"><?= htmlspecialchars($event['description']) ?></textarea>
-                </div>
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <label for="description" class="block text-lg font-semibold text-gray-700">Description</label>
+                        <textarea id="description" name="description" rows="6" class="w-full p-4 rounded-lg border" required><?php echo htmlspecialchars($event['description']); ?></textarea>
+                    </div>
 
-                <div class="mb-4">
-                    <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
-                    <input type="date" name="start_date" id="start_date" value="<?= htmlspecialchars($event['start_date']) ?>" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div>
+                    <!-- Date Start -->
+                    <div class="mb-4">
+                        <label for="date_start" class="block text-lg font-semibold text-gray-700">Start Date</label>
+                        <input type="date" id="date_start" name="date_start" class="w-full p-4 rounded-lg border" value="<?php echo htmlspecialchars($event['date_start']); ?>" required>
+                    </div>
 
-                <div class="mb-4">
-                    <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
-                    <input type="date" name="end_date" id="end_date" value="<?= htmlspecialchars($event['end_date']) ?>" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div>
+                    <!-- Date End -->
+                    <div class="mb-4">
+                        <label for="date_end" class="block text-lg font-semibold text-gray-700">End Date</label>
+                        <input type="date" id="date_end" name="date_end" class="w-full p-4 rounded-lg border" value="<?php echo htmlspecialchars($event['date_end']); ?>">
+                    </div>
 
-                <div class="mb-4">
-                    <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
-                    <input type="text" name="location" id="location" value="<?= htmlspecialchars($event['location']) ?>" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div>
+                    <!-- Location -->
+                    <div class="mb-4">
+                        <label for="location" class="block text-lg font-semibold text-gray-700">Location</label>
+                        <input type="text" id="location" name="location" class="w-full p-4 rounded-lg border" value="<?php echo htmlspecialchars($event['location']); ?>" required>
+                    </div>
 
-                <div class="mb-4">
-                    <label for="banner_image" class="block text-sm font-medium text-gray-700">Banner Image</label>
-                    <input type="file" name="banner_image" id="banner_image" 
-                        class="mt-1 block w-full text-sm text-gray-500">
-                    <?php if ($event['banner_image']): ?>
-                        <img src="<?= $event['banner_image'] ?>" alt="Banner Image" class="mt-2 w-full h-auto object-cover rounded-md">
-                    <?php endif; ?>
-                </div>
+                    <!-- Main Media Edit -->
+                    <div class="mb-4">
+                        <label for="main_media" class="block text-lg font-semibold text-gray-700">Main Media (Optional)</label>
+                        <input type="file" id="main_media" name="main_media" class="w-full p-4 rounded-lg border" accept="image/*,video/*">
+                    </div>
 
-                <div class="flex justify-end space-x-4">
-                    <a href="admin-events.php" class="px-6 py-2 text-gray-600 bg-gray-200 hover:bg-gray-300 rounded-md">
-                        Cancel
-                    </a>
-                    <button type="submit" class="px-6 py-2 text-white bg-uphsl-maroon hover:bg-uphsl-maroon-dark rounded-md">
-                        Save Changes
-                    </button>
-                </div>
-            </form>
+                    <!-- Collections Checklist -->
+                    <div class="mb-4">
+                        <label class="block text-lg font-semibold text-gray-700">Collections</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <?php
+                            while ($row = $collections->fetch_assoc()) {
+                                $checked = in_array($row['collection_id'], $selectedCollectionIds) ? 'checked' : '';
+                                echo "<div>
+                                    <input type='checkbox' id='collection_{$row['collection_id']}' name='collections[]' value='{$row['collection_id']}' class='mr-2' $checked>
+                                    <label for='collection_{$row['collection_id']}'>{$row['collection_name']}</label>
+                                  </div>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- Groups Checklist -->
+                    <div class="mb-4">
+                        <label class="block text-lg font-semibold text-gray-700">Groups</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <?php
+                            while ($row = $groups->fetch_assoc()) {
+                                $checked = in_array($row['group_id'], $selectedGroupIds) ? 'checked' : '';
+                                echo "<div>
+                                    <input type='checkbox' id='group_{$row['group_id']}' name='groups[]' value='{$row['group_id']}' class='mr-2' $checked>
+                                    <label for='group_{$row['group_id']}'>{$row['group_name']}</label>
+                                  </div>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="bg-uphsl-blue text-white py-3 px-6 rounded-md hover:bg-uphsl-blue">Update Event</button>
+                </form>
+            </div>
         </div>
     </section>
-
 </body>
 </html>

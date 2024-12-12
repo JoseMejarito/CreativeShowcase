@@ -69,6 +69,13 @@
                 </p>
             </div>
 
+            <div class="flex flex-col items-center text-center mb-10">
+                <img src="public/director-photo.jpg" alt="Director Photo" class="w-48 h-48 object-cover rounded-full shadow-lg mb-4">
+                <p class="text-2xl text-white font-semibold">
+                    Headed by the Director for Culture and Arts, Mr. Bryan Neil B. Ladim, LPT MAEd
+                </p>
+            </div>
+
             <div class="mt-8 flex justify-center">
                 <img src="public/cca-photo.jpg" alt="CCA Photo" class="rounded-lg shadow-lg w-full md:w-3/4 lg:w-2/3 xl:w-3/4">
             </div>

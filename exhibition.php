@@ -87,7 +87,7 @@ include 'connection.php';
                             <p class="text-md text-black mt-2 flex-grow">
                                 <?= htmlspecialchars(substr($group['description'], 0, 100)); ?>...
                             </p>
-                            <a href="group-profile.php?id=<?= htmlspecialchars($group['group_id']); ?>" 
+                            <a href="group-profile.php?group_id=<?= htmlspecialchars($group['group_id']); ?>" 
                             class="text-uphsl-blue mt-4 inline-block">Learn more</a>
                         </div>
                     <?php endwhile; ?>

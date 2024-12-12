@@ -1,6 +1,48 @@
 <?php 
 include 'connection.php';
+
+// Check if event_id is provided in the URL
+if (!isset($_GET['event_id']) || !is_numeric($_GET['event_id']) || $_GET['event_id'] <= 0) {
+    die("Invalid Event ID.");
+}
+
+$event_id = intval($_GET['event_id']);
+
+// Fetch event details
+$event_query = $conn->prepare("SELECT e.title, e.description, e.date_start, e.date_end, e.location, e.main_media FROM events e WHERE e.event_id = ?");
+$event_query->bind_param("i", $event_id);
+$event_query->execute();
+$event_result = $event_query->get_result();
+
+if ($event_result->num_rows === 0) {
+    die("Event not found.");
+}
+
+$event = $event_result->fetch_assoc();
+
+// Fetch associated groups
+$group_query = $conn->prepare(
+    "SELECT g.group_id, g.group_name 
+     FROM groups g 
+     INNER JOIN event_groups eg ON g.group_id = eg.group_id 
+     WHERE eg.event_id = ?"
+);
+$group_query->bind_param("i", $event_id);
+$group_query->execute();
+$groups_result = $group_query->get_result();
+
+// Fetch associated collections
+$collection_query = $conn->prepare(
+    "SELECT c.collection_id, c.collection_name 
+     FROM collections c 
+     INNER JOIN event_collections ec ON c.collection_id = ec.collection_id 
+     WHERE ec.event_id = ?"
+);
+$collection_query->bind_param("i", $event_id);
+$collection_query->execute();
+$collections_result = $collection_query->get_result();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,60 +61,45 @@ include 'connection.php';
             <!-- Event Content Section -->
             <div class="bg-white p-8 rounded-lg shadow-lg my-8 w-full">
                 <!-- Event Header -->
-                <h1 class="text-4xl font-bold text-uphsl-maroon mb-4">Event Title</h1>
+                <h1 class="text-4xl font-bold text-uphsl-maroon mb-4">
+                    <?= htmlspecialchars($event['title']) ?>
+                </h1>
+
+                <div class="mt-6">
+                    <h3 class="text-xl font-bold text-uphsl-maroon">Presented By</h3>
+                    <?php while ($group = $groups_result->fetch_assoc()): ?>
+                        <p class="text-uphsl-blue hover:underline">
+                            <?= htmlspecialchars($group['group_name']) ?>
+                        </p>
+                    <?php endwhile; ?>
+                </div>
+                <!-- Collection Info -->
+                <div class="mt-6">
+                    <h3 class="text-xl font-bold text-uphsl-maroon">Collection</h3>
+                    <?php while ($collection = $collections_result->fetch_assoc()): ?>
+                        <p class="text-uphsl-blue hover:underline">
+                            <?= htmlspecialchars($collection['collection_name']) ?>
+                        </p>
+                    <?php endwhile; ?>
+                </div><br>
 
                 <!-- Event Info -->
                 <div class="flex justify-between text-sm text-gray-500 mb-6">
-                    <p><strong>Date Start:</strong> November 6, 2024</p>
-                    <p><strong>Date End:</strong> November 8, 2024</p>
-                    <p><strong>Location:</strong> Event Location</p>
-                </div>
-
-                <!-- Banner Image -->
-                <div class="mb-6 w-full">
-                    <div class="w-full">
-                        <!-- Placeholder for Banner Image -->
-                        <img src="public/cca-cover.png" alt="Main Media" class="w-full h-full object-cover rounded-md mb-4">
-                    </div>
+                    <p><strong>Date Start:</strong> <?= htmlspecialchars($event['date_start']) ?></p>
+                    <p><strong>Date End:</strong> <?= htmlspecialchars($event['date_end']) ?></p>
+                    <p><strong>Location:</strong> <?= htmlspecialchars($event['location']) ?></p>
                 </div>
 
                 <!-- Event Description -->
-                <div class="text-lg text-black leading-relaxed space-y-4">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi nec risus eleifend accumsan. Proin vel
-                        massa nec ligula viverra tincidunt ac eget purus. Ut euismod varius orci, at varius mi dictum nec.
+                <div class="text-2xl text-black text-center leading-relaxed space-y-4">
+                    <p><?= nl2br(htmlspecialchars($event['description'])) ?></p>
+                </div><br>
 
-                        Cras feugiat scelerisque urna, a volutpat lorem pellentesque eget. Nullam maximus, metus eget dapibus tempus, lorem
-                        augue tempor odio, vel efficitur augue est in nunc.
-                    </p>
-                </div>
-
-                <div class="flex flex-col md:flex-row md:space-x-4">
-                    <div class="mb-6 w-full md:w-1/3">
-                        <div class="w-full">
-                            <!-- Placeholder for Banner Image -->
-                            <img src="public/cca-cover.png" alt="Sub Media 1" class="w-full h-full object-cover rounded-md mb-4">
-                        </div>
+                <!-- Main Media -->
+                <div class="mb-6 w-full">
+                    <div class="w-full">
+                        <img src="public/<?= htmlspecialchars($event['main_media']) ?>" alt="Main Media" class="w-49 h-49 object-cover rounded-md mb-4">
                     </div>
-                    <div class="mb-6 w-full md:w-1/3">
-                        <div class="w-full">
-                            <!-- Placeholder for Banner Image -->
-                            <img src="public/cca-cover.png" alt="Sub Media 2" class="w-full h-full object-cover rounded-md mb-4">
-                        </div>
-                    </div>
-                    <div class="mb-6 w-full md:w-1/3">
-                        <div class="w-full">
-                            <!-- Placeholder for Banner Image -->
-                            <img src="public/cca-cover.png" alt="Sub Media 3" class="w-full h-full object-cover rounded-md mb-4">
-                        </div>
-                    </div>
-                </div>
-                <!-- Collection Info (Optional) -->
-                <div class="mt-6">
-                    <h3 class="text-2xl font-bold text-uphsl-maroon">Collection</h3>
-                    <p class="text-uphsl-blue hover:underline">Music</p>
-                    <p class="text-uphsl-blue hover:underline">Dance</p>
-                    <p class="text-uphsl-blue hover:underline">Theater</p>
                 </div>
 
             </div>
@@ -82,3 +109,11 @@ include 'connection.php';
     <?php include 'footer.php'; ?>
 </body>
 </html>
+
+<?php
+// Close database connections
+$event_query->close();
+$group_query->close();
+$collection_query->close();
+$conn->close();
+?>

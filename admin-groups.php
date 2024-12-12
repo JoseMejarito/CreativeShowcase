@@ -50,7 +50,7 @@
                         <h3 class="text-3xl font-bold text-uphsl-maroon"><?= htmlspecialchars($group['group_name']) ?></h3>
                         <p class="text-md text-black mt-2 flex-grow"><?= htmlspecialchars($group['description']) ?></p>
                         <div class="flex justify-start mt-4">
-                            <a href="admin-group-profile.php?id=<?= $group['group_id'] ?>" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
+                            <a href="admin-group-profile.php?group_id=<?= $group['group_id'] ?>" class="text-uphsl-blue inline-block hover:underline mr-2">Edit</a>
                             <a href="delete-group.php?id=<?= $group['group_id'] ?>" class="text-uphsl-maroon inline-block hover:underline" onclick="return confirm('Are you sure you want to delete this group?')">Delete</a>
                         </div>
                     </div>
