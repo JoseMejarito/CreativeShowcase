@@ -59,7 +59,7 @@
                         <p class="text-md text-black mt-2 flex-grow">
                             <?= htmlspecialchars(substr($collection['description'], 0, 100)) ?>...
                         </p>
-                        <a href="collection.php?collection_id=<?= htmlspecialchars($collection['collection_id']) ?>" 
+                        <a href="collection-profile.php?collection_id=<?= htmlspecialchars($collection['collection_id']) ?>" 
                         class="text-uphsl-blue mt-4 inline-block">Read more</a>
                     </div>
                 <?php endforeach; ?>
