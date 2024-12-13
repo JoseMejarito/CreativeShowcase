@@ -43,7 +43,7 @@ include 'connection.php';
                     g.description, 
                     g.main_media AS image 
                 FROM groups g 
-                ORDER BY g.group_name ASC 
+                ORDER BY g.group_id ASC 
                 LIMIT 6
             ");
             $groupQuery->execute();
