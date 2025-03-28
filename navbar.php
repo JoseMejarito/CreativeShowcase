@@ -9,11 +9,8 @@
             <a href="index.php">
                 <img src="public/uphsl-logo.png" alt="UPHSL Logo" class="h-12 w-12 object-contain">
             </a>
-            <a href="index.php">
-                <img src="public/cca-logo.png" alt="CCA Logo" class="h-10 w-10 object-contain">
-            </a>
             <div class="text-left">
-                <a href="index.php" class="text-white text-lg font-bold anton-regular">CCA | CREATIVE SHOWCASE</a><br>
+                <a href="index.php" class="text-white text-lg font-bold anton-regular">CREATIVE SHOWCASE</a><br>
                 <a href="index.php" class="text-uphsl-yellow text-sm anton-regular">By UPHSL - JONELTA</a>
             </div>
         </div>
@@ -21,19 +18,17 @@
             <button id="menuToggle" class="text-white anton-regular md:hidden" onclick="toggleMenu()">Menu</button>
 
             <div class="hidden md:flex space-x-8 items-center">
-                <a href="exhibition.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Exhibition</a>
                 <a href="news&events.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow whitespace-nowrap">News & Events</a>
+                <a href="exhibition.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Exhibition</a>
                 <a href="collection.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Collection</a>
-                <a href="opportunity.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Opportunity</a>
                 <a href="about.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow whitespace-nowrap">About Us</a>
             </div>
         </div>
 
         <div id="mobileMenu" class="hidden flex flex-col space-y-2 mt-2">
-            <a href="exhibition.php" class="text-white anton-regular hover:text-uphsl-yellow">Exhibition</a>
             <a href="news&events.php" class="text-white anton-regular hover:text-uphsl-yellow">News & Events</a>
+            <a href="exhibition.php" class="text-white anton-regular hover:text-uphsl-yellow">Exhibition</a>
             <a href="collection.php" class="text-white anton-regular hover:text-uphsl-yellow">Collection</a>
-            <a href="opportunity.php" class="text-white anton-regular hover:text-uphsl-yellow">Opportunity</a>
             <a href="about.php" class="text-white anton-regular hover:text-uphsl-yellow">About Us</a>
         </div>
     </nav>
