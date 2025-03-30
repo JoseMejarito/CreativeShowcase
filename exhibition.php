@@ -6,7 +6,7 @@ include 'connection.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCA | Exhibition</title>
+    <title>Exhibition</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">      
     <link rel="stylesheet" href="style.css">
@@ -100,7 +100,7 @@ include 'connection.php';
 
     <section id="works" class="py-10 bg-uphsl-yellow">
         <div class="max-w-screen-xl mx-auto px-4">
-            <h2 class="text-5xl text-uphsl-blue text-center mb-8">Works of CCA</h2>
+            <h2 class="text-5xl text-uphsl-blue text-center mb-8">Works in UPHSL</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <?php if ($worksResult && $worksResult->num_rows > 0): ?>

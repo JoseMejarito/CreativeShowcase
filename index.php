@@ -101,7 +101,7 @@
         <h1 class="text-5xl text-uphsl-yellow mb-6">LET US KNOW WHAT YOU THINK!</h1>
         <p class="text-lg text-white mb-4">For Students! Let us know what is on your mind!</p>
         
-        <form action="submit_form.php" method="POST" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <form action="send_feedback.php" method="POST" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
             <div class="mb-4">
                 <label for="name" class="block text-md text-uphsl-maroon font-semibold mb-2">Full Name</label>
                 <input type="text" id="name" name="name" required class="w-full p-2 border border-gray-300 rounded" placeholder="Enter your full name">
@@ -114,10 +114,10 @@
             
             <div class="mb-4">
                 <label for="message" class="block text-md text-uphsl-maroon font-semibold mb-2">Your Message</label>
-                <textarea id="message" name="message" rows="4" required class="w-full p-2 border border-gray-300 rounded" placeholder="Let us know what is on your mind..."></textarea>
+                <textarea id="message" name="message" rows="4" required class="w-full p-2 border border-gray-300 rounded" placeholder="Send us a message..."></textarea>
             </div>
             
-            <button type="submit" class="bg-uphsl-blue text-white py-2 px-4 rounded-full text-lg hover:bg-uphsl-yellow transition duration-300">Join Us</button>
+            <button type="submit" class="bg-uphsl-blue text-white py-2 px-4 rounded-full text-lg hover:bg-uphsl-yellow transition duration-300">Send</button>
         </form>
     </section>
 
