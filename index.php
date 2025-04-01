@@ -99,7 +99,7 @@
 
     <section id="section3" class="text-center py-10 bg-uphsl-blue">
         <h1 class="text-5xl text-uphsl-yellow mb-6">LET US KNOW WHAT YOU THINK!</h1>
-        <p class="text-lg text-white mb-4">For Students! Let us know what is on your mind!</p>
+        <p class="text-lg text-white mb-4">Send us a message and let us know what is on your mind!</p>
         
         <form action="send_feedback.php" method="POST" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
             <div class="mb-4">

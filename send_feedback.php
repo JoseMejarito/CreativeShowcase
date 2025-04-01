@@ -1,10 +1,30 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
+
+// Load environment variables
+function loadEnv($filePath) {
+    if (!file_exists($filePath)) {
+        die(".env file not found.");
+    }
+
+    $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) continue; // Skip comments
+        list($key, $value) = explode('=', $line, 2);
+        putenv(trim($key) . '=' . trim($value));
+    }
+}
+
+// Call the function to load .env
+loadEnv(__DIR__ . '/.env');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = htmlspecialchars($_POST["name"]);
@@ -16,8 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Invalid email address.");
     }
 
-    // Admin Email (Replace with your Gmail address)
-    $adminEmail = "c19-1072-812@uphsl.edu.ph";
+    // Admin Email (Loaded from .env)
+    $adminEmail = getenv('ADMIN_EMAIL');
 
     // Create a new PHPMailer instance
     $mail = new PHPMailer(true);
@@ -25,16 +45,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // SMTP Configuration
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
+        $mail->Host       = getenv('SMTP_HOST');
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'mejaritog@gmail.com'; // Replace with your Gmail
-        $mail->Password   = 'tmzu hvws zpyf eigk';    // Use Gmail App Password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Username   = getenv('SMTP_USER');
+        $mail->Password   = getenv('SMTP_PASS');
+        $mail->SMTPSecure = getenv('SMTP_SECURE');
+        $mail->Port       = getenv('SMTP_PORT');
+
+        // Enable Debugging (Remove in production)
+        $mail->SMTPDebug = 2; // Debug Level
+        $mail->Debugoutput = 'html';
 
         // Email Content
-        $mail->setFrom('mejaritog@gmail.com', 'Creative Showcase Feedback'); // Use your Gmail
-        $mail->addReplyTo($email, $name); // Allows admin to reply directly
+        $mail->setFrom(getenv('SMTP_FROM_EMAIL'), getenv('SMTP_FROM_NAME'));
+        $mail->addReplyTo($email, $name);
         $mail->addAddress($adminEmail);
         $mail->Subject = "New Feedback from $name";
 
@@ -46,8 +70,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->AltBody = "Full Name: $name\nEmail: $email\n\nMessage:\n$message"; // Plain text fallback
 
         // Send Email
-        $mail->send();
-        echo "Feedback sent successfully!";
+        if ($mail->send()) {
+            echo "<script>
+                        alert('Feedback sent successfully!');
+                        window.history.back();
+                    </script>";
+        } else {
+            echo "Error: " . $mail->ErrorInfo;
+        }
     } catch (Exception $e) {
         echo "Error: " . $mail->ErrorInfo;
     }

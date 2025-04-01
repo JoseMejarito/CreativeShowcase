@@ -21,6 +21,7 @@
                 <a href="news&events.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow whitespace-nowrap">News & Events</a>
                 <a href="exhibition.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Exhibition</a>
                 <a href="collection.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Collection</a>
+                <a href="discussion.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Discussion</a>
                 <a href="about.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow whitespace-nowrap">About Us</a>
             </div>
         </div>
@@ -29,6 +30,7 @@
             <a href="news&events.php" class="text-white anton-regular hover:text-uphsl-yellow">News & Events</a>
             <a href="exhibition.php" class="text-white anton-regular hover:text-uphsl-yellow">Exhibition</a>
             <a href="collection.php" class="text-white anton-regular hover:text-uphsl-yellow">Collection</a>
+            <a href="discussion.php" class="text-white anton-regular hover:text-uphsl-yellow">Discussion</a>
             <a href="about.php" class="text-white anton-regular hover:text-uphsl-yellow">About Us</a>
         </div>
     </nav>
