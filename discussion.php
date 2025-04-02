@@ -21,14 +21,14 @@
         <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">University Forum</h1><br>
     </section>
 
-    <section id="forum" class="w-full h-screen max-w-7xl mx-auto px-4">
-        <div class="relative w-full h-full border rounded-lg overflow-hidden shadow-lg">
+    <section id="forum" class="h-screen bg-uphsl-yellow">
+        <div class="w-full h-full">
             <iframe 
-                src="http://flarum.localhost"
-                class="w-full h-full min-h-[600px] md:min-h-[800px] border-0"
-            ></iframe>
+                src="http://flarum.localhost" class="w-full h-full border-0">
+            </iframe>
         </div>
     </section>
+
 
     <?php include 'footer.php'; ?>
 

@@ -19,18 +19,18 @@
 
             <div class="hidden md:flex space-x-8 items-center">
                 <a href="news&events.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow whitespace-nowrap">News & Events</a>
+                <a href="discussion.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Discussion</a>
                 <a href="exhibition.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Exhibition</a>
                 <a href="collection.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Collection</a>
-                <a href="discussion.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow">Discussion</a>
                 <a href="about.php" class="text-white anton-regular text-sm md:text-base lg:text-lg hover:text-uphsl-yellow whitespace-nowrap">About Us</a>
             </div>
         </div>
 
         <div id="mobileMenu" class="hidden flex flex-col space-y-2 mt-2">
             <a href="news&events.php" class="text-white anton-regular hover:text-uphsl-yellow">News & Events</a>
+            <a href="discussion.php" class="text-white anton-regular hover:text-uphsl-yellow">Discussion</a>
             <a href="exhibition.php" class="text-white anton-regular hover:text-uphsl-yellow">Exhibition</a>
             <a href="collection.php" class="text-white anton-regular hover:text-uphsl-yellow">Collection</a>
-            <a href="discussion.php" class="text-white anton-regular hover:text-uphsl-yellow">Discussion</a>
             <a href="about.php" class="text-white anton-regular hover:text-uphsl-yellow">About Us</a>
         </div>
     </nav>

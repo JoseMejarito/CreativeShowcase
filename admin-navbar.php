@@ -9,11 +9,9 @@
             <a href="admin-dashboard.php">
                 <img src="public/uphsl-logo.png" alt="UPHSL Logo" class="h-12 w-12 object-contain">
             </a>
-            <a href="admin-dashboard.php">
-                <img src="public/cca-logo.png" alt="CCA Logo" class="h-10 w-10 object-contain">
-            </a>
+            
             <div class="text-left">
-                <a href="admin-dashboard.php" class="text-white text-lg font-bold anton-regular">CCA | ADMIN DASHBOARD</a><br>
+                <a href="admin-dashboard.php" class="text-white text-lg font-bold anton-regular">CREATIVE SHOWCASE | ADMIN PANEL</a><br>
                 <a href="admin-dashboard.php" class="text-uphsl-yellow text-sm anton-regular">By UPHSL - JONELTA</a>
             </div>
         </div>

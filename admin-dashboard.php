@@ -16,7 +16,7 @@
 <body class="bg-gray-100 anton-regular bg-uphsl-blue">
     <?php include 'admin-navbar.php'; ?>
     <section id="section1" class="text-center py-10 pb-0 bg-uphsl-yellow"> 
-        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">ADMIN DASHBOARD</h1><br>
+        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">ADMIN PANEL</h1><br>
     </section>
     <div class="container mx-auto p-6 text-center">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -28,5 +28,17 @@
             <a href="admin-works.php" class="flex items-center justify-center bg-uphsl-yellow text-uphsl-blue py-4 px-6 rounded-lg text-center text-2xl md:text-3xl lg:text-3xl whitespace-nowrap overflow-hidden text-ellipsis">Manage Works</a>
         </div>
     </div>
+
+    <section class="h-screen bg-uphsl-yellow">
+        <div class="w-full h-full">
+            <h2 class="text-5xl text-uphsl-blue text-center py-5">FORUM MANAGEMENT</h2>
+            <iframe 
+                src="http://flarum.localhost" class="w-full h-full border-0">
+            </iframe>
+        </div>
+    </section>
+
+
+
 </body>
 </html>

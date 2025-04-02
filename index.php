@@ -19,8 +19,8 @@
     <?php include 'navbar.php'; ?>
 
     <section id="section1" class="text-center py-10 pb-0 bg-uphsl-blue"> 
-        <h1 class="text-3xl md:text-4xl lg:text-6xl xl:text-7xl text-uphsl-yellow">UNIVERSITY OF PERPETUAL HELP SYSTEM LAGUNA</h1><br>
-        <p class="text-white text-3xl mb-6">"Creative Showcase: Showcasing Creativity in UPHSL"</p>
+        <h1 class="text-4xl md:text-5xl lg:text-7xl xl:text-8xl text-uphsl-yellow">CREATIVE SHOWCASE</h1><br>
+        <p class="text-white text-3xl mb-6">UNIVERSITY OF PERPETUAL HELP SYSTEM LAGUNA</p>
         <?php include 'carousel.php'; ?><br>
         <h3 class="text-6xl text-uphsl-yellow">WHO WE ARE</h3><br>
         
