@@ -1,6 +1,12 @@
 <?php
 require 'connection.php';
 
+session_start();
+    if (!isset($_SESSION['admin_id'])) {
+        header("Location: admin-login-form.php");
+        exit;
+    }
+
 if (!isset($_GET['work_id'])) {
     die("Work ID is required.");
 }

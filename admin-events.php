@@ -1,6 +1,12 @@
 <?php
 include 'connection.php'; 
 
+session_start();
+    if (!isset($_SESSION['admin_id'])) {
+        header("Location: admin-login-form.php");
+        exit;
+    }
+
 // Define the number of items per page
 $itemsPerPage = 6;
 

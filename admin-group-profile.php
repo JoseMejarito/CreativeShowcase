@@ -1,6 +1,12 @@
 <?php
 require 'connection.php';
 
+session_start();
+    if (!isset($_SESSION['admin_id'])) {
+        header("Location: admin-login-form.php");
+        exit;
+    }
+
 $group_id = $_GET['group_id'] ?? null; // Get the group ID from the URL
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

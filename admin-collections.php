@@ -1,6 +1,12 @@
 <?php
 require 'connection.php';
 
+session_start();
+    if (!isset($_SESSION['admin_id'])) {
+        header("Location: admin-login-form.php");
+        exit;
+    }
+
 // Pagination setup
 $items_per_page = 9; // Number of collections per page
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

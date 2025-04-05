@@ -1,6 +1,12 @@
 <?php 
 include 'connection.php';
 
+session_start();
+    if (!isset($_SESSION['admin_id'])) {
+        header("Location: admin-login-form.php");
+        exit;
+    }
+
 $message = ''; // To display error or success messages
 
 // Check if `collection_id` is passed in the URL

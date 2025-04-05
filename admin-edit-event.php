@@ -1,6 +1,12 @@
 <?php
 include 'connection.php';
 
+session_start();
+    if (!isset($_SESSION['admin_id'])) {
+        header("Location: admin-login-form.php");
+        exit;
+    }
+
 // Check if an event ID is provided for editing
 if (isset($_GET['event_id'])) {
     $eventId = $_GET['event_id'];

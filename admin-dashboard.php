@@ -1,6 +1,12 @@
 <!-- admin-dashboard.php -->
  <?php 
     include 'connection.php';
+
+    session_start();
+    if (!isset($_SESSION['admin_id'])) {
+        header("Location: admin-login-form.php");
+        exit;
+    }
  ?>
 
 <!DOCTYPE html>
