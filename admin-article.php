@@ -137,20 +137,41 @@ session_start();
                     <?php endif; ?>
                 </div>
 
-                <!-- Sub Media -->
+                <!-- Sub Media Upload with Preview and Delete -->
                 <div class="flex flex-col md:flex-row md:space-x-4">
                     <?php for ($i = 1; $i <= 3; $i++): ?>
-                        <div class="mb-6 w-full md:w-1/3">
+                        <div class="mb-6 w-full md:w-1/3 relative">
                             <label for="sub_media<?= $i ?>" class="block text-sm font-medium text-gray-700">Sub Media <?= $i ?></label>
-                            <input type="file" name="sub_media<?= $i ?>" id="sub_media<?= $i ?>" 
-                                class="mt-1 block w-full text-sm text-gray-500">
-                            <?php if ($news["sub_media$i"]): ?>
-                                <img src="<?= $news["sub_media$i"] ?>" alt="Sub Media <?= $i ?>" 
-                                    class="mt-2 w-full h-auto object-cover rounded-md">
-                            <?php endif; ?>
+                            
+                            <input 
+                                type="file" 
+                                name="sub_media<?= $i ?>" 
+                                id="sub_media<?= $i ?>" 
+                                accept="image/*"
+                                class="mt-1 block w-full text-sm text-gray-500 file:border file:rounded file:px-2"
+                                onchange="previewImage(event, <?= $i ?>)"
+                            >
+
+                            <!-- Preview Container -->
+                            <div class="relative mt-2" id="preview-container-<?= $i ?>" style="<?= $news["sub_media$i"] ? '' : 'display:none;' ?>">
+                                <!-- "X" Button -->
+                                <button type="button" onclick="removePreview(<?= $i ?>)"
+                                    class="absolute top-0 right-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs z-10 hover:bg-red-600">
+                                    ✕
+                                </button>
+
+                                <!-- Preview Image -->
+                                <img 
+                                    id="preview-image-<?= $i ?>" 
+                                    src="<?= htmlspecialchars($news["sub_media$i"]) ?>" 
+                                    alt="Sub Media <?= $i ?>" 
+                                    class="w-full h-auto object-cover rounded-md"
+                                >
+                            </div>
                         </div>
                     <?php endfor; ?>
                 </div>
+
 
                 <!-- Submit and Cancel Buttons -->
                 <div class="flex justify-end space-x-4">
@@ -166,6 +187,34 @@ session_start();
             </form>
         </div>
     </section>
+
+    <script>
+        function previewImage(event, index) {
+            const input = event.target;
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewImg = document.getElementById('preview-image-' + index);
+                    const container = document.getElementById('preview-container-' + index);
+                    previewImg.src = e.target.result;
+                    container.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePreview(index) {
+            const input = document.getElementById('sub_media' + index);
+            const container = document.getElementById('preview-container-' + index);
+            const previewImg = document.getElementById('preview-image-' + index);
+            
+            input.value = ""; // Clear input
+            previewImg.src = ""; // Clear preview
+            container.style.display = 'none'; // Hide container
+        }
+    </script>
 
 </body>
 </html>

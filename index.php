@@ -21,7 +21,9 @@
     <section id="section1" class="text-center py-10 pb-0 bg-uphsl-blue"> 
         <h1 class="text-4xl md:text-5xl lg:text-7xl xl:text-8xl text-uphsl-yellow">CREATIVE SHOWCASE</h1><br>
         <p class="text-white text-3xl mb-6">UNIVERSITY OF PERPETUAL HELP SYSTEM LAGUNA</p>
+
         <?php include 'carousel.php'; ?><br>
+        
         <h3 class="text-6xl text-uphsl-yellow">WHO WE ARE</h3><br>
         
         <div class="flex flex-col justify-center items-center px-8 md:px-20 lg:px-40 max-w-screen-md mx-auto">

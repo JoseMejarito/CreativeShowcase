@@ -17,11 +17,11 @@
 <body class="anton-regular bg-uphsl-blue">
     <?php include 'navbar.php'; ?>
 
-    <section id="section1" class="text-center py-10 pb-0 bg-uphsl-yellow"> 
-        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">University Forum</h1><br>
-    </section>
+    <!--<section id="section1" class="text-center py-10 pb-0 bg-uphsl-yellow"> 
+        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">Discussion</h1><br>
+    </section>-->
 
-    <section id="forum" class="h-screen bg-uphsl-yellow">
+    <section id="forum" class="h-screen bg-white">
         <div class="w-full h-full">
             <iframe 
                 src="http://flarum.localhost" class="w-full h-full border-0">

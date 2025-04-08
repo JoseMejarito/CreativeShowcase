@@ -46,7 +46,7 @@ include 'connection.php';
             <!-- Article Content Section Spans Entire Width -->
             <div class="bg-white p-8 rounded-lg shadow-lg my-8 w-full">
                 <!-- Article Header -->
-                <h1 class="text-4xl font-bold text-uphsl-maroon mb-4"><?= htmlspecialchars($news['title']) ?></h1>
+                <h1 class="text-5xl font-bold text-uphsl-maroon mb-4"><?= htmlspecialchars($news['title']) ?></h1>
 
                 <!-- Article Info -->
                 <div class="flex justify-between text-sm text-gray-500 mb-6">
@@ -56,15 +56,18 @@ include 'connection.php';
 
                 <!-- Media Section (Image or Video) -->
                 <div class="mb-6 w-full">
-                    <div class="w-full">
+                    <div class="w-full flex justify-center">
                         <!-- Main Media -->
                         <?php if (!empty($news['main_media'])): ?>
-                            <img src="<?= htmlspecialchars($news['main_media']) ?>" alt="Main Media" class="w-full h-full object-cover rounded-md mb-4">
+                            <div class="w-full max-w-md"> <!-- Change max-w-md to adjust size -->
+                                <img src="<?= htmlspecialchars($news['main_media']) ?>" alt="Main Media" class="w-full h-auto object-cover rounded-md mb-4">
+                            </div>
                         <?php else: ?>
                             <p class="text-gray-500">No main media available.</p>
                         <?php endif; ?>
                     </div>
                 </div>
+
 
                 <!-- Article Content -->
                 <div class="text-xl text-black text-center leading-relaxed space-y-4">

@@ -15,7 +15,7 @@ include 'connection.php';
     <?php include 'navbar.php'; ?>
 
     <section id="section1" class="text-center py-10 pb-0 bg-uphsl-yellow"> 
-        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">UNIVERSITY RESIDENT GROUPS</h1><br>
+        <h1 class="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-uphsl-blue">EXHIBITION</h1><br>
     </section>
     
     <?php
@@ -75,7 +75,7 @@ include 'connection.php';
 
     <section id="groups" class="py-10 bg-uphsl-blue">
         <div class="max-w-screen-xl mx-auto px-4">
-
+            <h2 class="text-5xl text-uphsl-yellow text-center mb-8">University Resident Groups</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <?php if ($groupResult && $groupResult->num_rows > 0): ?>
                     <?php while ($group = $groupResult->fetch_assoc()): ?>
